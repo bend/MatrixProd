@@ -39,6 +39,11 @@ free_matrix(matrix* matr);
 int
 get_matrix_elem_at(unsigned int n, unsigned int m, matrix* matr);
 
+/*
+ * Adds an element at position (n,m)
+ * @param n,m the position where to add the element
+ * returns -1 if failed, 0 otherwise
+ */
 int
 set_matrix_elem_at(unsigned int n, unsigned int m, matrix* matr, int val);
 #endif 
