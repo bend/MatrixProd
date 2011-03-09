@@ -31,3 +31,8 @@ set_elem_node(node* n, matrix* matr){
 	n->matr = matr;
 	return 0;
 }
+
+void
+free_node(node* n){
+  	free(node);
+}
