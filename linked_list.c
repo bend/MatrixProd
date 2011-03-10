@@ -23,10 +23,12 @@ free_linked_list(linked_list *ll){
 
 int 
 add_last_linked_list(linked_list *ll, matrix *matr){
-	node *n;
+	node *n, *temp;
 	n = create_node();
 	set_elem_node(n,matr);
+	temp = ll->tail;
 	ll->tail = n;
+	set_next_node(temp,n);
 	if(ll->head == NULL)
 		ll->head = n;
 	return 0;
@@ -34,10 +36,12 @@ add_last_linked_list(linked_list *ll, matrix *matr){
 
 int
 add_first_linked_list(linked_list *ll, matrix *matr){
-  	node *n;
+  	node *n,*temp;
 	n=create_node();
 	set_elem_node(n,matr);
+	temp = ll->head;
 	ll->head = n;
+	set_next_node(n,temp);
 	if(ll->tail == NULL)
 	  	ll->tail = n;
 	return 0;
@@ -54,13 +58,12 @@ get_first_linked_list(linked_list *ll){
 }
 
 matrix*
-remove_element_first_linked_list(linked_list *ll){
+remove_elem_first_linked_list(linked_list *ll){
 	matrix *matr;
 	node *n;
 	matr = ll->head->matr;
 	n= ll->head;
-	ll->head = ll->head->next;
-  	free_node(n);
+	ll->head = n->next;
 	return matr;
 }
 

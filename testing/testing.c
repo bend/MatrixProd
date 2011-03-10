@@ -3,6 +3,7 @@
 
 #include "../matrix.h"
 #include "../node.h"
+#include "../linked_list.h"
 void
 test_create_matrix(){
 	matrix *matr;
@@ -65,7 +66,30 @@ test_node_set_elem(){
 	assert(n1->matr == matr);
 }
 
+void test_linked_list(){
+	linked_list *ll;
+	matrix *m,*m1,*m2;
+	ll = create_linked_list();
+	m=create_matrix(5,5);
+	m1=create_matrix(6,6);
+	m2=create_matrix(7,7);
+	assert(set_matrix_elem_at(0,0,m,1)==0);
+	assert(set_matrix_elem_at(0,0,m1,2)==0);
+	assert(set_matrix_elem_at(0,0,m2,3)==0);
+	
+	assert(add_first_linked_list(ll, m)==0);
+	assert(add_first_linked_list(ll, m1)==0);
+	assert(add_last_linked_list(ll, m2)==0);
+	
+	assert(get_matrix_elem_at(0,0,get_first_linked_list(ll))==2);
+	assert(get_matrix_elem_at(0,0,remove_elem_first_linked_list(ll))==2);
+	
+	assert(get_matrix_elem_at(0,0,get_first_linked_list(ll))==1);
+	assert(get_matrix_elem_at(0,0,remove_elem_first_linked_list(ll))==1);
 
+	assert(get_matrix_elem_at(0,0,get_first_linked_list(ll))==3);
+	assert(get_matrix_elem_at(0,0,remove_elem_first_linked_list(ll))==3);
+}
 
 int 
 main(){
@@ -73,6 +97,7 @@ main(){
 	test_set_get_matrix_elem_at();
 	test_node_set_get();
 	test_node_set_elem();
+	test_linked_list();
 	printf("All tests Succeded\n");
 }
 
