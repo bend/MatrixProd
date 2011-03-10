@@ -72,6 +72,7 @@ main(){
   	test_create_matrix();
 	test_set_get_matrix_elem_at();
 	test_node_set_get();
+	test_node_set_elem();
 	printf("All tests Succeded\n");
 }
 
