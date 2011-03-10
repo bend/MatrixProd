@@ -7,12 +7,20 @@
 void
 test_create_matrix(){
 	matrix *matr;
+	int i,j;
 	matr = create_matrix(10,10);
 	assert(matr!=NULL);
 	assert(matr->n =10);
 	assert(matr->m=10);
 	free_matrix(matr);
-	
+	matr = create_matrix(3,3);
+	for(i=0; i<3;i++)
+	  for(j=0; j<3; j++)
+		matr->matrix[i][j] = 1;
+	for(i=0; i<3; i++)
+	  	for(j=0; j<3; j++)
+		  	assert(matr->matrix[i][j] =1);
+
 	matr = create_matrix(100,100);
 	assert(matr!=NULL);
 	free_matrix(matr);
@@ -40,7 +48,17 @@ test_set_get_matrix_elem_at(){
 
 void
 test_fill_matrix(){
-
+	int i, j,k;
+  	matrix *matr;
+	int  array[9]={1,2,3,4,5,6,7,8,9};
+	k=0;
+	matr = create_matrix(3,3);
+	assert(fill_matrix(matr, array)==0);
+	for(i=0; i<3; i++)
+	  	for(j=0; j<3; j++){
+		  	assert(get_matrix_elem_at(i,j,matr)==array[k]);
+			k++;
+		}
 }
 void
 test_node_create(){

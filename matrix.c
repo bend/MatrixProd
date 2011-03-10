@@ -10,7 +10,7 @@ create_matrix(unsigned int n, unsigned int m){
 	  	perror("malloc error");					/* If not print error			     */
 		exit(-1);
 	}
-	matr->matrix = malloc(sizeof(int)*n);		/* Allocate memory for columns of the matrix*/
+	matr->matrix = malloc(sizeof(int*)*n);		/* Allocate memory for columns of the matrix*/
 	if(matr->matrix == NULL){
 	  	perror("malloc error");
 		free(matr);
@@ -51,11 +51,14 @@ set_matrix_elem_at(unsigned int n, unsigned int m, matrix* matr, int val){
 }
 
 int
-fill_matrix(matrix* matr, int** from){
-	int i, j;
+fill_matrix(matrix* matr, int from[]){
+	int i, j,l;
+	l=0;
 	for(i=0; i<matr->n; i++)
-	  	for(j=0; j<matr->m; j++)
-			set_matrix_elem_at(i,j,matr,from[i][j]);
+	  	for(j=0; j<matr->m; j++){
+			set_matrix_elem_at(i,j,matr,from[l]);
+			l++;
+		}
 	return 0;
 }
 

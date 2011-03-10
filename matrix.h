@@ -55,7 +55,7 @@ set_matrix_elem_at(unsigned int n, unsigned int m, matrix* matr, int val);
  * @return 0 if success, -1 otherwise
  */
 int
-fill_matrix(matrix* matr, int** from);
+fill_matrix(matrix* matr, int from[]);
 
 /*
  * Checks if the two matrices are equal
