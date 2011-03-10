@@ -39,6 +39,10 @@ test_set_get_matrix_elem_at(){
 }
 
 void
+test_fill_matrix(){
+
+}
+void
 test_node_create(){
   node* n;
   n = create_node();
@@ -95,6 +99,7 @@ int
 main(){
   	test_create_matrix();
 	test_set_get_matrix_elem_at();
+	test_fill_matrix();
 	test_node_set_get();
 	test_node_set_elem();
 	test_linked_list();

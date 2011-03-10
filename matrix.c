@@ -49,3 +49,25 @@ set_matrix_elem_at(unsigned int n, unsigned int m, matrix* matr, int val){
   	matr->matrix[n][m] = val;
 	return 0;
 }
+
+int
+fill_matrix(matrix* matr, int** from){
+	int i, j;
+	for(i=0; i<matr->n; i++)
+	  	for(j=0; j<matr->m; j++)
+			set_matrix_elem_at(i,j,matr,from[i][j]);
+	return 0;
+}
+
+int
+equals_matrix(matrix* m1, matrix* m2){
+  	return -1;
+}
+
+int
+muliply_c_l_at(unsigned int l, unsigned int c, matrix *m1, matrix* m2, matrix* res){
+  	return -1;
+}
+
+
+
