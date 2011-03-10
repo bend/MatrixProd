@@ -52,7 +52,7 @@ set_matrix_elem_at(unsigned int n, unsigned int m, matrix* matr, int val){
 
 int
 fill_matrix(matrix* matr, int from[]){
-	int i, j,l;
+	unsigned int i, j,l;
 	l=0;
 	for(i=0; i<matr->n; i++)
 	  	for(j=0; j<matr->m; j++){
@@ -64,7 +64,14 @@ fill_matrix(matrix* matr, int from[]){
 
 int
 equals_matrix(matrix* m1, matrix* m2){
-  	return -1;
+  	unsigned int i,j;
+  	if(m1->n != m2->n || m1->m != m2->m)
+	  	return -1;
+	for(i=0; i<m1->n; i++)
+	  	for(j=0; j<m1->m; j++)
+		  	if(get_matrix_elem_at(i,j,m1) != get_matrix_elem_at(i,j,m2))
+			  	return -1;
+	return 0;
 }
 
 int

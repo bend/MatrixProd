@@ -1,4 +1,4 @@
-#CFLAGS+=-W -Wall -Lpthread -Werror -ansi -pedantic 
+#CFLAGS+=-W -Wall -Lpthread -Lgmp -Werror -ansi -pedantic 
 CFLAGS+=-Wall
 EXEC=matrix
 SOURCES=$(wildcard *.c)

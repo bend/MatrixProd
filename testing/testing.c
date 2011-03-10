@@ -60,6 +60,21 @@ test_fill_matrix(){
 			k++;
 		}
 }
+
+void
+test_equals_matrix(){
+  	matrix *m1,*m2;
+	int array[10]={1,2,3,4,5,6,7,8,9,0};
+	m1 = create_matrix(3,3);
+	m2 = create_matrix(3,3);
+	assert(equals_matrix(m1,m2)==0);
+	assert(fill_matrix(m1, array)==0);
+	assert(fill_matrix(m2, array)==0);
+	assert(equals_matrix(m1,m2)==0);
+	set_matrix_elem_at(0,0,m1,-1);
+	assert(equals_matrix(m2,m1)==-1);
+}
+
 void
 test_node_create(){
   node* n;
@@ -118,6 +133,7 @@ main(){
   	test_create_matrix();
 	test_set_get_matrix_elem_at();
 	test_fill_matrix();
+	test_equals_matrix();
 	test_node_set_get();
 	test_node_set_elem();
 	test_linked_list();
