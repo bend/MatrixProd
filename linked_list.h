@@ -1,13 +1,20 @@
 #ifndef __LINKED_LIST_H__
 #define __LINKED_LIST_H__
 
+#include <stdio.h>
+#include <stdlib.h>
+
+#include "node.h"
+#include "matrix.h"
+
+typedef struct linked_list linked_list;
+
 struct linked_list{
 	node* head;
 	node* tail;
 	unsigned int size;
 };
 
-typedef struct linked_list linked_list;
 
 /*
  * Creates a new linked list
@@ -60,6 +67,7 @@ get_first_linked_list(linked_list *ll);
  * removes the elements at end of the linked_list
  */
 matrix*
-remove_elem_end_linked_list(linked_list *ll)
+remove_elem_first_linked_list(linked_list *ll);
 
 #endif
+

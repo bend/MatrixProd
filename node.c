@@ -34,5 +34,5 @@ set_elem_node(node* n, matrix* matr){
 
 void
 free_node(node* n){
-  	free(node);
+  	free(n);
 }

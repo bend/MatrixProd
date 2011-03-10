@@ -55,6 +55,17 @@ test_node_set_get(){
 	assert(get_next_node(n2)==n1);
 }
 
+void
+test_node_set_elem(){
+  	node *n1;
+	matrix *matr;
+	matr = create_matrix(1,1);
+	set_matrix_elem_at(0,0,matr,5);
+	assert(set_elem_node(n1,matr)==0);
+	assert(n1->matr == matr);
+}
+
+
 
 int 
 main(){
