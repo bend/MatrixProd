@@ -4,3 +4,6 @@
 matrix
 test
 *.dSYM
+testing/test_linked_list
+testing/test_matrix
+

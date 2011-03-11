@@ -6,7 +6,6 @@
 
 struct matrix{
 	int **matrix;
-	short flag;
 	unsigned int n;
 	unsigned int m;
 };
