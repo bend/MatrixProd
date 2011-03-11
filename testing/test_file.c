@@ -1,18 +1,19 @@
 #include <assert.h>
+#include <stdio.h>
 #include "../file_reader.h"
 
 #define PATH "./test.txt"
 
-
+void
 test_file_open_close(){
   	FILE *f,*f1;
 	assert(file_open(f,PATH) == 0);
 	assert(file_open(f1,"") == -1);
 	assert(file_close(f) == 0);
-	assert(file_close(f2) ==EOF);
+	assert(file_close(f1) ==EOF);
 }
 
-
+void
 test_file_read(){
   	FILE *f;
 	int l,c;
@@ -80,4 +81,5 @@ int main(){
 	test_file_open_close();
 	test_file_read();
 	printf("File tests succeded\n");
+	return 0;
 }
