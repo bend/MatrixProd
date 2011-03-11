@@ -21,13 +21,13 @@ struct linked_list{
  * @return the linked_list descriptor
  */
 linked_list*
-create_linked_list();
+linked_list_alloc();
 
 /*
  * Frees the linked_list
  */
 void
-free_linked_list(linked_list *ll);
+linked_list_free(linked_list *ll);
 
 /*
  * Adds the matrix at the end of the list
@@ -36,7 +36,7 @@ free_linked_list(linked_list *ll);
  * @return -1 if failure, 0 otherwise
  */
 int
-add_last_linked_list(linked_list *ll, matrix *matr);
+linked_list_add_last(linked_list *ll, matrix *matr);
 
 /*
  * Adds the matrix at the begining of the list
@@ -45,7 +45,7 @@ add_last_linked_list(linked_list *ll, matrix *matr);
  * @return -1 if failure, 0 otherwise
  */
 int
-add_first_linked_list(linked_list *ll, matrix *matr);
+linked_list_add_first(linked_list *ll, matrix *matr);
 
 /*
  * returns the element at the end of the list, but does not remove it
@@ -53,7 +53,7 @@ add_first_linked_list(linked_list *ll, matrix *matr);
  * @return the matrix that is at the end of the ll.
  */
 matrix*
-get_last_linked_list(linked_list *ll);
+linked_list_get_last(linked_list *ll);
 
 /*
  * returns the element at the begining of the list, but does not remove it
@@ -61,13 +61,13 @@ get_last_linked_list(linked_list *ll);
  * @return the matrix that is at the begining of the ll
  */
 matrix*
-get_first_linked_list(linked_list *ll);
+linked_list_get_first(linked_list *ll);
 
 /*
  * removes the elements at end of the linked_list
  */
 matrix*
-remove_elem_first_linked_list(linked_list *ll);
+linked_list_remove_first(linked_list *ll);
 
 #endif
 

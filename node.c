@@ -1,31 +1,39 @@
 #include "node.h"
 
 node*
-create_node(){
+node_alloc(){
   	node *n;
 	n = malloc(sizeof(node));
 	if(n == NULL){
 	  	perror("malloc error");
 		exit(-1);
 	}
+	n->next = NULL;
+	n->prev = NULL;
 	return n;
 }
 
 int
-set_next_node(node* n, node* next){
+node_set_next(node* n, node* next){
 	if(n == NULL || next == NULL)
 	  	return -1;
 	n->next = next;
+	next->prev = n;
 	return 0;
 }
 
 node*
-get_next_node(node* n){
+node_get_next(node* n){
   	return n->next;
 }
 
+node*
+node_get_prev(node* n){
+	return n->prev;
+}
+
 int
-set_elem_node(node* n, matrix* matr){
+node_set_elem(node* n, matrix* matr){
   	if(n == NULL)
 	  	return -1;
 	n->matr = matr;
@@ -33,6 +41,6 @@ set_elem_node(node* n, matrix* matr){
 }
 
 void
-free_node(node* n){
+node_free(node* n){
   	free(n);
 }

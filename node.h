@@ -10,15 +10,16 @@ typedef struct node node;
 
 struct node{
   node* next;
+  node* prev;
   matrix* matr;
 };
 
 /*
- * Creates the node
+ * Allocate mem to  the node
  * @return a pointer to the node
  */
 node*
-create_node();
+node_alloc();
 
 /*
  * Sets the next node
@@ -26,7 +27,7 @@ create_node();
  * @param next: a pointer to the node that will be the next node to the current node
  */
 int
-set_next_node(node* n, node* next);
+node_set_next(node* n, node* next);
 
 /*
  * Returns the next node
@@ -34,7 +35,16 @@ set_next_node(node* n, node* next);
  * @return a pointer to the next node
  */
 node*
-get_next_node(node* n);
+node_get_next(node* n);
+
+
+/*
+ * Returns the prev node
+ * @param n: a pointer to the node
+ * @return a pointer to the next node
+ */
+node*
+node_get_prev(node* n);
 
 /*
  * Sets the element of the node
@@ -43,12 +53,12 @@ get_next_node(node* n);
  * @return: -1 if failed 0 otherwise
  */
 int
-set_elem_node(node* n, matrix* matr);
+node_set_elem(node* n, matrix* matr);
 
 /*
  * Frees the node
  * @param n: a pointer to the node
  */
 void
-free_node(node* n);
+node_free(node* n);
 #endif

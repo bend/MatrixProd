@@ -20,7 +20,7 @@ typedef struct matrix matrix;
  * @return the matrix descriptor
  */
 matrix*
-create_matrix(unsigned int n, unsigned int m);
+matrix_alloc(unsigned int n, unsigned int m);
 
 /*
  * Frees the matrix
@@ -28,7 +28,7 @@ create_matrix(unsigned int n, unsigned int m);
  * @return 0 if succeeded, -1 otherwise
  */
 int
-free_matrix(matrix* matr);
+matrix_free(matrix* matr);
 
 /*
  * Returns the value stored at position (n,m) in the matrix
@@ -37,7 +37,7 @@ free_matrix(matrix* matr);
  * @return the value stored at(n,m)
  */
 int
-get_matrix_elem_at(unsigned int n, unsigned int m, matrix* matr);
+matrix_get_elem_at(unsigned int n, unsigned int m, matrix* matr);
 
 /*
  * Adds an element at position (n,m)
@@ -45,7 +45,7 @@ get_matrix_elem_at(unsigned int n, unsigned int m, matrix* matr);
  * returns -1 if failed, 0 otherwise
  */
 int
-set_matrix_elem_at(unsigned int n, unsigned int m, matrix* matr, int val);
+matrix_set_elem_at(unsigned int n, unsigned int m, matrix* matr, int val);
 
 /*
  * Fills the matrix with the elements in the tab, 
@@ -55,7 +55,7 @@ set_matrix_elem_at(unsigned int n, unsigned int m, matrix* matr, int val);
  * @return 0 if success, -1 otherwise
  */
 int
-fill_matrix(matrix* matr, int from[]);
+matrix_fill(matrix* matr, int from[]);
 
 /*
  * Checks if the two matrices are equal
@@ -64,7 +64,7 @@ fill_matrix(matrix* matr, int from[]);
  * @return: 0 if equal, -1 otherwise
  */
 int
-equals_matrix(matrix* m1, matrix* m2);
+matrix_equals(matrix* m1, matrix* m2);
 /*
  * Mutiplies the line of the matrix1 by the column of the matrix 2 and puts it in the matrix 3 at position (l,c)
  * @param m1: the first matrix
@@ -73,5 +73,5 @@ equals_matrix(matrix* m1, matrix* m2);
  * @return 0 if success -1 otherwise
  */
 int
-multiply_c_l_at(unsigned int l, unsigned int c, matrix* m1, matrix* m2, matrix* res);
+matrix_compute_cell(unsigned int l, unsigned int c, matrix* m1, matrix* m2, matrix* res);
 #endif 

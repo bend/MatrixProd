@@ -1,8 +1,7 @@
-
 #include "linked_list.h"
 
 linked_list*
-create_linked_list(){
+linked_list_alloc(){
 	linked_list *ll;
 	ll = malloc(sizeof(linked_list));
 	if(ll == NULL){
@@ -16,49 +15,49 @@ create_linked_list(){
 }
 
 void
-free_linked_list(linked_list *ll){
+linked_list_free(linked_list *ll){
   	/*TODO : FREE ALL THE NODES ?*/
   	free(ll);
 }
 
 int 
-add_last_linked_list(linked_list *ll, matrix *matr){
+linked_list_add_last(linked_list *ll, matrix *matr){
 	node *n, *temp;
-	n = create_node();
-	set_elem_node(n,matr);
+	n = node_alloc();
+	node_set_elem(n,matr);
 	temp = ll->tail;
 	ll->tail = n;
-	set_next_node(temp,n);
+	node_set_next(temp,n);
 	if(ll->head == NULL)
 		ll->head = n;
 	return 0;
 }
 
 int
-add_first_linked_list(linked_list *ll, matrix *matr){
+linked_list_add_first(linked_list *ll, matrix *matr){
   	node *n,*temp;
-	n=create_node();
-	set_elem_node(n,matr);
+	n=node_alloc();
+	node_set_elem(n,matr);
 	temp = ll->head;
 	ll->head = n;
-	set_next_node(n,temp);
+	node_set_next(n,temp);
 	if(ll->tail == NULL)
 	  	ll->tail = n;
 	return 0;
 }
 
 matrix*
-get_last_linked_list(linked_list *ll){
+linked_list_get_last(linked_list *ll){
   	return ll->tail->matr;
 }
 
 matrix*
-get_first_linked_list(linked_list *ll){
+linked_list_get_first(linked_list *ll){
 	return ll->head->matr;
 }
 
 matrix*
-remove_elem_first_linked_list(linked_list *ll){
+linked_list_remove_first(linked_list *ll){
 	matrix *matr;
 	node *n;
 	matr = ll->head->matr;

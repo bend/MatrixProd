@@ -1,7 +1,7 @@
 #include "matrix.h"
 
 matrix*
-create_matrix(unsigned int n, unsigned int m){
+matrix_alloc(unsigned int n, unsigned int m){
 	unsigned int i;
 	matrix *matr;
 
@@ -32,18 +32,18 @@ create_matrix(unsigned int n, unsigned int m){
 }
 
 int
-free_matrix(matrix* matr){
+matrix_free(matrix* matr){
   	free(matr);
 	return 1;
 }
 
 int
-get_matrix_elem_at(unsigned int n, unsigned int m, matrix* matr){
+matrix_get_elem_at(unsigned int n, unsigned int m, matrix* matr){
   	return matr->matrix[n][m];
 }
 
 int
-set_matrix_elem_at(unsigned int n, unsigned int m, matrix* matr, int val){
+matrix_set_elem_at(unsigned int n, unsigned int m, matrix* matr, int val){
 	if(matr == NULL || matr->matrix == NULL)
 	  	return -1;
   	matr->matrix[n][m] = val;
@@ -51,31 +51,31 @@ set_matrix_elem_at(unsigned int n, unsigned int m, matrix* matr, int val){
 }
 
 int
-fill_matrix(matrix* matr, int from[]){
+matrix_fill(matrix* matr, int from[]){
 	unsigned int i, j,l;
 	l=0;
 	for(i=0; i<matr->n; i++)
 	  	for(j=0; j<matr->m; j++){
-			set_matrix_elem_at(i,j,matr,from[l]);
+			matrix_set_elem_at(i,j,matr,from[l]);
 			l++;
 		}
 	return 0;
 }
 
 int
-equals_matrix(matrix* m1, matrix* m2){
+matrix_equals(matrix* m1, matrix* m2){
   	unsigned int i,j;
   	if(m1->n != m2->n || m1->m != m2->m)
 	  	return -1;
 	for(i=0; i<m1->n; i++)
 	  	for(j=0; j<m1->m; j++)
-		  	if(get_matrix_elem_at(i,j,m1) != get_matrix_elem_at(i,j,m2))
+		  	if(matrix_get_elem_at(i,j,m1) != matrix_get_elem_at(i,j,m2))
 			  	return -1;
 	return 0;
 }
 
 int
-muliply_c_l_at(unsigned int l, unsigned int c, matrix *m1, matrix* m2, matrix* res){
+matrix_compute_cell(unsigned int l, unsigned int c, matrix *m1, matrix* m2, matrix* res){
   	return -1;
 }
 
