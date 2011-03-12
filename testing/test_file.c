@@ -3,9 +3,9 @@
 #include <stdlib.h>
 #include "../file_reader.h"
 
-#define PATH "./test.txt"
-#define PATH2 "./test2.txt"
-#define PATH3 "./test3.txt"
+#define PATH "./test_files/test.txt"
+#define PATH2 "./test_files/test2.txt"
+#define PATH3 "./test_files/test3.txt"
 
 
 int
@@ -19,7 +19,7 @@ array_equal(int tab1[], int tab2[], int n){
 
 void
 test_file_read(){
-  	FILE *f,*f1,*f2;
+  	FILE *f,*f1,*f2,*f3;
 	unsigned int l,c;
 	int tab[3000];
 	int mat1[2][3] = {{123,47,80,},
@@ -29,8 +29,11 @@ test_file_read(){
 	  				{-93},
 					{42}};
 	int mat3[4] = {1, 2 ,3 ,4};
+	
+	/* Test return value for non existing file*/
+	assert(file_open(&f3,"NULL") == -1);
 	/*Matrix 1 */
-	f = file_open(f, PATH);
+	assert(file_open(&f, PATH)==0);
 	assert(file_read_matrix_size(f,&l,&c)==0);
 	assert(l==2);
 	assert(c==3);
@@ -63,7 +66,7 @@ test_file_read(){
 	file_close(f);
 
 	/*Matrix 4*/
-	f1 = file_open(f1, PATH2);
+ 	assert(file_open(&f1, PATH2)==0);
 	assert(file_read_matrix_size(f1, &l,&c)==0);
 	assert(l==2);
 	assert(c==2);
@@ -71,7 +74,7 @@ test_file_read(){
 	file_close(f1);
 
 	/*Matrix 5*/
-	f2 = file_open(f2, PATH3);
+	assert(file_open(&f2, PATH3)==0);
 	assert(file_read_matrix_size(f2, &l,&c)==0);
 	assert(l==2);
 	assert(c==2);
@@ -100,8 +103,8 @@ test_file_read_next(){
 	matrix_fill(g_m1, mat1);
 	matrix_fill(g_m2, mat2);
 
-	f =file_open(f,PATH);
-	
+	assert(file_open(&f,PATH) == 0);
+
 	assert(file_read_next_matrix(f, matr1)==0);
 	assert(file_read_next_matrix(f,matr2) ==0);
 	

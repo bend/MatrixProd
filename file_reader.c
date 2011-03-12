@@ -1,9 +1,10 @@
 #include "file_reader.h"
 
-FILE*
-file_open(FILE* f, char* path){
-	f = fopen(path, "r");
-	return f;
+int
+file_open(FILE** f, char* path){
+	if((*f = fopen(path, "r"))==NULL)
+		return -1;
+	return 0;
 }
 
 int

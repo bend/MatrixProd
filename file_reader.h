@@ -7,8 +7,8 @@
  * @param path: the path to the file
  * @return the file descriptor
  */
-FILE*
-file_open(FILE* f, char* path);
+int
+file_open(FILE** f, char* path);
 
 /*
  * Closes the file
