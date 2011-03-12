@@ -71,9 +71,9 @@ test_fill_matrix(){
 	int i, j,k;
 	mpz_t v,r;
   	matrix *matr;
+	int  array[9]={1,2,3,4,5,6,7,8,9};
 	mpz_init(v);
 	mpz_init(r);
-	int  array[9]={1,2,3,4,5,6,7,8,9};
 	k=0;
 	assert(matrix_alloc(&matr,3,3)==0);
 	assert(matrix_fill(matr, array)==0);
@@ -89,9 +89,9 @@ test_fill_matrix(){
 void
 test_equals_matrix(){
   	matrix *m1,*m2;
+	int array[10]={1,2,3,4,5,6,7,8,9,0};
 	mpz_t v;
 	mpz_init_set_si(v,-1);
-	int array[10]={1,2,3,4,5,6,7,8,9,0};
 	assert(matrix_alloc(&m1,3,3)==0);
 	assert(matrix_alloc(&m2,3,3)==0);
 	assert(matrix_cmp(m1,m2)==0);
