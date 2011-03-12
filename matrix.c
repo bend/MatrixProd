@@ -70,7 +70,7 @@ matrix_fill(matrix* matr, int from[]){
 }
 
 int
-matrix_equals(matrix* m1, matrix* m2){
+matrix_cmp(matrix* m1, matrix* m2){
   	unsigned int i,j;
 	mpz_t v, v2;
 	mpz_init(v);

@@ -94,12 +94,12 @@ test_equals_matrix(){
 	int array[10]={1,2,3,4,5,6,7,8,9,0};
 	m1 = matrix_alloc(3,3);
 	m2 = matrix_alloc(3,3);
-	assert(matrix_equals(m1,m2)==0);
+	assert(matrix_cmp(m1,m2)==0);
 	assert(matrix_fill(m1, array)==0);
 	assert(matrix_fill(m2, array)==0);
-	assert(matrix_equals(m1,m2)==0);
+	assert(matrix_cmp(m1,m2)==0);
 	matrix_set_elem_at(0,0,m1,v);
-	assert(matrix_equals(m2,m1)==-1);
+	assert(matrix_cmp(m2,m1)==-1);
 }
 
 void
@@ -124,7 +124,7 @@ test_matrix_multiply(){
 	/*
 	matrix_print(result); 
 	*/
-	assert(matrix_equals(result,expected_result)==0);
+	assert(matrix_cmp(result,expected_result)==0);
 
 }
 

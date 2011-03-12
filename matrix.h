@@ -75,7 +75,7 @@ matrix_fill_line(matrix* matr, int line, int from[]);
  * @return: 0 if equal, -1 otherwise
  */
 int
-matrix_equals(matrix* m1, matrix* m2);
+matrix_cmp(matrix* m1, matrix* m2);
 
 
 /*
