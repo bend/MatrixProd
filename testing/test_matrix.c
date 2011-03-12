@@ -102,12 +102,41 @@ test_equals_matrix(){
 	assert(matrix_equals(m2,m1)==-1);
 }
 
+void
+test_matrix_multiply(){
+	matrix *m1, *m2, *result, *expected_result;
+	int cells1[6] = {5,3,2,  4,6,-1 };
+	int cells2[6] = {10,-2,  4,7,  0,-20};
+	int expected_cells[4] = { 62,-29,  64,54};
+
+	/* fimm ùatrices */
+	m1 = matrix_alloc(2,3);
+	assert(matrix_fill(m1, cells1)==0);
+
+	m2 = matrix_alloc(3,2);
+	assert(matrix_fill(m2, cells2)==0);
+
+	expected_result = matrix_alloc(2,2);
+	assert(matrix_fill(expected_result, expected_cells)==0);
+
+	/* multiply and validate */
+	assert(matrix_multiply(result, m1,m2)==0);
+	/* Je pige pas: result est mis dans matrix_multiply, mais apres cet appel
+	 * il est NULL ou alors pointe ver s une matrice 0x0.... */
+
+	matrix_print(result);
+	assert(matrix_equals(result,expected_result)==0);
+
+}
+
+
 int 
 main(){
   	test_create_matrix();
 	test_set_get_matrix_elem_at();
 	test_fill_matrix();
 	test_equals_matrix();
+	test_matrix_multiply();
 	printf("All matrix tests Succeeded\n");
 	return 0;
 }

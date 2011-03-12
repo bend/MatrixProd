@@ -39,10 +39,12 @@ matrix_free(matrix* matr){
 
 int 
 matrix_get_elem_at(mpz_t result, unsigned int l, unsigned int c, matrix* matr){
+	int debug;
 	if ( matr->l-1 < l || matr->c-1 < c) {
 		return -1;
 	}
 	mpz_set(result,matr->matrix[l][c]);
+    debug= mpz_get_si(result);
 	return 0;
 }
 
@@ -88,9 +90,62 @@ matrix_equals(matrix* m1, matrix* m2){
 	return 0;
 }
 
+int 
+matrix_multiply(matrix* result, matrix* m1, matrix* m2){
+	unsigned int i,j;
+	if ( m1->c!=m2->l || m1->l!=m2->c )
+		return -1;
+	result = matrix_alloc(m1->l, m2->c);
+	for (i=0; i<m1->l; i++){
+		for (j=0; j<m2->c; j++){
+			printf("will compute result cell (%i,%i)\n", i, j);
+			if (matrix_compute_cell(result, i, j, m1, m2)==-1)
+				return -1;
+		}
+	}
+	printf("finished computation\n");
+	matrix_print(result);
+	return 0;
+}
+
 int
-matrix_compute_cell(unsigned int l, unsigned int c, matrix *m1, matrix* m2, matrix* res){
-  	return -1;
+matrix_compute_cell(matrix* res, unsigned int l, unsigned int c, matrix *m1, matrix* m2){
+	unsigned int j;
+	mpz_t result, c1, c2;
+	mpz_init_set_si(result,0);
+	mpz_init(c1);
+	mpz_init(c2);
+	for(j=0; j<m1->c; j++) {
+		printf("multiplying cell m1(%i,%i) and m2(%i,%i)\n", l, j,j,c);
+		matrix_get_elem_at(c1,l,j,m1);
+		matrix_get_elem_at(c2,j,c,m2);
+		mpz_addmul(result,c1,c2);
+	}
+	printf("will set result(%i,%i)\n",l,c);
+	matrix_set_elem_at(l,c,res, result);
+	printf("has set result(%i,%i)\n",l,c);
+	return 0;
+}
+
+void
+matrix_print(matrix *m){
+	unsigned int i, j;
+	mpz_t v;
+	mpz_init(v);
+	printf("********************************************************************************\n");
+	printf("Lines:\t %i\n", m->l);
+	printf("Cols:\t %i\n", m->c);
+	printf("Matrix::\n");
+
+	for (i=0; i<m->l; i++){
+		for(j=0; j<m->c;j++){
+			matrix_get_elem_at(v,i,j,m);
+			printf("\t%ld", mpz_get_si(v)); 
+		}
+		printf("\n");
+	}
+	printf("********************************************************************************\n");
+
 }
 
 

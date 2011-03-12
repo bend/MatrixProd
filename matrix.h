@@ -77,6 +77,18 @@ matrix_fill_line(matrix* matr, int line, int from[]);
  */
 int
 matrix_equals(matrix* m1, matrix* m2);
+
+
+/*
+ * Mutiplies 2 matrices and puts the resulting matrix in result
+ * @param result: the resulting matrix
+ * @param m1: the first matrix
+ * @param m2: the second matrix
+ * @return 0 if success -1 otherwise
+ */
+int
+matrix_multiply(matrix* result, matrix* m1, matrix* m2);
+
 /*
  * Mutiplies the line of the matrix1 by the column of the matrix 2 and puts it in the matrix 3 at position (l,c)
  * @param m1: the first matrix
@@ -85,5 +97,12 @@ matrix_equals(matrix* m1, matrix* m2);
  * @return 0 if success -1 otherwise
  */
 int
-matrix_compute_cell(unsigned int l, unsigned int c, matrix* m1, matrix* m2, matrix* res);
+matrix_compute_cell(matrix *res,unsigned int l, unsigned int c, matrix* m1, matrix* m2);
+
+/*
+ * Prints matrix to standard output
+ * @param m: matrix to print
+ */
+void
+matrix_print(matrix *m);
 #endif 
