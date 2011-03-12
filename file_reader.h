@@ -37,5 +37,11 @@ file_read_matrix_size(FILE* f, unsigned int *l, unsigned int *c);
 int
 file_read_line(FILE* f, int tab[], unsigned int size);
 
+/*
+ * Reads the next matrix in the file
+ * @param f: the file descriptor
+ * @param matr: the matrix not initialized
+ * @return 0 if success, -1 otherwise
+ */
 int
-file_read_matrix(FILE* f, matrix* matr, unsigned int l, unsigned int c);
+file_read_next_matrix(FILE* f, matrix* matr);
