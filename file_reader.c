@@ -22,7 +22,7 @@ file_read_matrix_size(FILE* f, unsigned int *l, unsigned int *c){
 	}
 	fseek(f, -1, SEEK_CUR);
 	
-	if(fscanf(f,"%d%c%d",l,&x,c) !=3)
+	if(fscanf(f,"%u%c%u",l,&x,c) !=3)
 	  	return -1;
 	if(x!='x')
 	  	return -1;
@@ -32,7 +32,7 @@ file_read_matrix_size(FILE* f, unsigned int *l, unsigned int *c){
 
 int
 file_read_line(FILE* f, int tab[], unsigned int size){
-	int i;
+	unsigned int i;
   	char t;
 	for(i=0; i<size; i++)
 	  	if(fscanf(f,"%d",&tab[i])==0)
@@ -46,6 +46,21 @@ file_read_line(FILE* f, int tab[], unsigned int size){
 }
 
 int
-file_read_matrix(FILE *f, matrix* matr, unsigned int l, unsigned int c){
-	return -1;
+file_read_matrix(FILE *f, matrix* matr){
+	unsigned int l, c, i;
+	int tab[3000];
+	if(file_read_matrix_size(f, &l, &c)==-1)
+		return -1;
+	if(matrix_alloc(&matr,l,c)==-1)
+		return -1;
+	for(i=0; i<l; i++){
+		if(file_read_line(f, tab, c)==-1){
+			return -1;
+		}
+		else{
+			if(matrix_fill_line(matr,i,tab)==-1)
+				return -1;
+		}
+	}
+	return 0;
 }

@@ -83,6 +83,20 @@ matrix_fill(matrix* matr, int from[]){
 }
 
 int
+matrix_fill_line(matrix* matr, int line, int from[]){
+	mpz_t v;
+	unsigned int i;
+	if(matr->c != sizeof(from)/sizeof(int))
+		return -1;
+	mpz_init(v);
+	for(i=0; i<matr->c; i++){
+		mpz_set_si(v,from[i]);
+		matrix_set_elem_at(line,i,matr,v);
+	}
+	return 0;
+}
+
+int
 matrix_cmp(matrix* m1, matrix* m2){
   	unsigned int i,j;
 	mpz_t v, v2;

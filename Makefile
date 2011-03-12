@@ -1,5 +1,5 @@
-#CFLAGS+=-W -Wall -Lpthread -Lgmp -Werror -ansi -pedantic 
-CFLAGS+=-W -Wall -Lpthread -Lgmp  -ansi -pedantic 
+CFLAGS+=-W -Wall -Lpthread -Lgmp -Werror -ansi -pedantic 
+#CFLAGS+=-W -Wall -Lpthread -Lgmp  -ansi -pedantic 
 LDFLAGS+=-Lpthread -lgmp
 #CFLAGS+=-Wall
 EXEC=matrix
