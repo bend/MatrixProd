@@ -1,5 +1,4 @@
-CFLAGS+=-W -Wall -lpthread -lgmp -Werror -ansi -pedantic 
-#CFLAGS=-W -Wall -Lpthread -lgmp
+CFLAGS+=-W -Wall -lpthread -lgmp -Werror -ansi -pedantic
 EXEC=matrix
 SOURCES=$(wildcard *.c)
 LIBS=$(filter-out ../main.c, $(wildcard ../*.c))
@@ -8,7 +7,7 @@ OBJECTS=$(SOURCES:.c=.o)
 LDFLAGS+=-Lpthread -Lgmp
 all: tests
 debug: CFLAGS+= -DDEBUG -g
-debug: tests
+debug: exec
 
 exec: 
 	@for f in $(SOURCES:.c=) ;  \

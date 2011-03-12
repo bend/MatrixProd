@@ -87,6 +87,28 @@ test_fill_matrix(){
 }
 
 void
+test_fill_line(){
+	
+	int i, j,k;
+	mpz_t v,r;
+  	matrix *matr;
+	int  array[3][3]={{1,2,3},{4,5,6},{7,8,9}};
+	mpz_init(v);
+	mpz_init(r);
+	k=0;
+	assert(matrix_alloc(&matr,3,3)==0);
+	for(i=0; i<3; i++)
+		assert(matrix_fill_line(matr,i, array[i])==0);
+	for(i=0; i<3; i++)
+	  	for(j=0; j<3; j++){
+			mpz_set_si(v,array[i][j]);
+			matrix_get_elem_at(r,i,j,matr);
+		  	assert(mpz_cmp(r,v)==0);
+			k++;
+		}
+}
+
+void
 test_equals_matrix(){
   	matrix *m1,*m2;
 	int array[10]={1,2,3,4,5,6,7,8,9,0};
@@ -134,6 +156,7 @@ main(){
   	test_create_matrix();
 	test_set_get_matrix_elem_at();
 	test_fill_matrix();
+	test_fill_line();
 	test_equals_matrix();
 	test_matrix_multiply();
 	printf("All matrix tests Succeeded\n");

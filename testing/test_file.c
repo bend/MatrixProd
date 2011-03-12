@@ -86,9 +86,35 @@ test_file_read(){
  
 }
 
+void
+test_file_read_next(){
+	FILE *f;
+	matrix *matr1, *matr2;
+	matrix *g_m1, *g_m2;
+ 	int mat1[6] ={123,47,80,19,-14,86};
+    int mat2[3]={12 ,-93,42};
+
+	assert(matrix_alloc(&g_m1,3,3)==0);
+	assert(matrix_alloc(&g_m2,3,1)==0);
+
+	matrix_fill(g_m1, mat1);
+	matrix_fill(g_m2, mat2);
+
+	f =file_open(f,PATH);
+	
+	assert(file_read_next_matrix(f, matr1)==0);
+	assert(file_read_next_matrix(f,matr2) ==0);
+	
+	
+	assert(matrix_cmp(g_m1, matr1)==0);
+	assert(matrix_cmp(g_m2, matr2)==0);
+
+}
+
 	
 int main(){
 	test_file_read();
+	test_file_read_next();
 	printf("All file tests succeded\n");
 	return 0;
 }

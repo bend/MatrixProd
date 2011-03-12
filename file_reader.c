@@ -46,7 +46,7 @@ file_read_line(FILE* f, int tab[], unsigned int size){
 }
 
 int
-file_read_matrix(FILE *f, matrix* matr){
+file_read_next_matrix(FILE *f, matrix* matr){
 	unsigned int l, c, i;
 	int tab[3000];
 	if(file_read_matrix_size(f, &l, &c)==-1)

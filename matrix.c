@@ -86,8 +86,7 @@ int
 matrix_fill_line(matrix* matr, int line, int from[]){
 	mpz_t v;
 	unsigned int i;
-	if(matr->c != sizeof(from)/sizeof(int))
-		return -1;
+	/* TODO check matrix size and compare to tab size */
 	mpz_init(v);
 	for(i=0; i<matr->c; i++){
 		mpz_set_si(v,from[i]);
