@@ -87,7 +87,7 @@ matrix_equals(matrix* m1, matrix* m2);
  * @return 0 if success -1 otherwise
  */
 int
-matrix_multiply(matrix* result, matrix* m1, matrix* m2);
+matrix_multiply(matrix** result, matrix* m1, matrix* m2);
 
 /*
  * Mutiplies the line of the matrix1 by the column of the matrix 2 and puts it in the matrix 3 at position (l,c)

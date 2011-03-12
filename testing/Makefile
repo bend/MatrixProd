@@ -11,7 +11,7 @@ debug: CFLAGS+= -DDEBUG -g
 debug: tests
 
 exec: 
-	for f in $(SOURCES:.c=) ;  \
+	@for f in $(SOURCES:.c=) ;  \
   	  do \
 		$(CC) $(CFLAGS) -o $$f $$f.c $(LIBS) ;\
 	  done

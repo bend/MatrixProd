@@ -120,11 +120,10 @@ test_matrix_multiply(){
 	assert(matrix_fill(expected_result, expected_cells)==0);
 
 	/* multiply and validate */
-	assert(matrix_multiply(result, m1,m2)==0);
-	/* Je pige pas: result est mis dans matrix_multiply, mais apres cet appel
-	 * il est NULL ou alors pointe ver s une matrice 0x0.... */
-
-	matrix_print(result);
+	assert(matrix_multiply(&result, m1,m2)==0);
+	/*
+	matrix_print(result); 
+	*/
 	assert(matrix_equals(result,expected_result)==0);
 
 }
