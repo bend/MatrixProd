@@ -6,9 +6,9 @@
 #include <gmp.h>
 
 struct matrix{
-	int **matrix;
-	unsigned int n;
-	unsigned int m;
+	mpz_t **matrix;
+	unsigned int l;
+	unsigned int c;
 };
 
 typedef struct matrix matrix;

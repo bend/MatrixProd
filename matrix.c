@@ -39,12 +39,10 @@ matrix_free(matrix* matr){
 
 int 
 matrix_get_elem_at(mpz_t result, unsigned int l, unsigned int c, matrix* matr){
-	int debug;
 	if ( matr->l-1 < l || matr->c-1 < c) {
 		return -1;
 	}
 	mpz_set(result,matr->matrix[l][c]);
-    debug= mpz_get_si(result);
 	return 0;
 }
 
