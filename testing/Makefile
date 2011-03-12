@@ -1,5 +1,5 @@
-#CFLAGS+=-W -Wall -Lpthread -Lgmp -Werror -ansi -pedantic 
-CFLAGS=-W -Wall -Lpthread -lgmp
+CFLAGS+=-W -Wall -Lpthread -Lgmp -Werror -ansi -pedantic 
+#CFLAGS=-W -Wall -Lpthread -lgmp
 EXEC=matrix
 SOURCES=$(wildcard *.c)
 LIBS=$(filter-out ../main.c, $(wildcard ../*.c))
