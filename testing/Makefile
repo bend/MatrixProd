@@ -1,5 +1,5 @@
 #CFLAGS+=-W -Wall -Lpthread -Lgmp -Werror -ansi -pedantic 
-CFLAGS+=-Wall
+CFLAGS=-W -Wall -Lpthread -lgmp
 EXEC=matrix
 SOURCES=$(wildcard *.c)
 LIBS=$(filter-out ../main.c, $(wildcard ../*.c))
@@ -13,7 +13,7 @@ debug: tests
 exec: 
 	@for f in $(SOURCES:.c=) ;  \
   	  do \
-		$(CC) -Wall -o $$f $$f.c $(LIBS) ;\
+		$(CC) $(CFLAGS) -o $$f $$f.c $(LIBS) ;\
 	  done
 
 tests: exec

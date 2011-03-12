@@ -1,5 +1,7 @@
 #CFLAGS+=-W -Wall -Lpthread -Lgmp -Werror -ansi -pedantic 
-CFLAGS+=-Wall
+CFLAGS+=-W -Wall -Lpthread -Lgmp  -ansi -pedantic 
+LDFLAGS+=-Lpthread -lgmp
+#CFLAGS+=-Wall
 EXEC=matrix
 SOURCES=$(wildcard *.c)
 OBJECTS=$(SOURCES:.c=.o)
