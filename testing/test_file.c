@@ -8,6 +8,15 @@
 #define PATH3 "./test3.txt"
 
 
+int
+array_equal(int tab1[], int tab2[], int n){
+	int i;
+	for(i=0; i<n; i++)
+		if(tab1[i] != tab2[i])
+			return -1;
+	return 0;
+}
+
 void
 test_file_read(){
   	FILE *f,*f1,*f2;
@@ -77,14 +86,6 @@ test_file_read(){
  
 }
 
-int
-array_equal(int tab1[], int tab2[], int n){
-	int i;
-	for(i=0; i<n; i++)
-		if(tab1[i] != tab2[i])
-			return -1;
-	return 0;
-}
 	
 int main(){
 	test_file_read();

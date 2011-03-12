@@ -1,11 +1,11 @@
-CFLAGS+=-W -Wall -Lpthread -Lgmp -Werror -ansi -pedantic 
+CFLAGS+=-W -Wall -lpthread -lgmp -Werror -ansi -pedantic 
 #CFLAGS=-W -Wall -Lpthread -lgmp
 EXEC=matrix
 SOURCES=$(wildcard *.c)
 LIBS=$(filter-out ../main.c, $(wildcard ../*.c))
 #echo $(filter-out ../main.c, $(LIBS)) ;
 OBJECTS=$(SOURCES:.c=.o)
-
+LDFLAGS+=-Lpthread -Lgmp
 all: tests
 debug: CFLAGS+= -DDEBUG -g
 debug: tests
