@@ -33,10 +33,13 @@ file_read_matrix_size(FILE* f, unsigned int *l, unsigned int *c){
 int
 file_read_line(FILE* f, int tab[], unsigned int size){
 	int i;
-  	
+  	char t;
 	for(i=0; i<size; i++)
 	  	if(fscanf(f,"%d",&tab[i])==0)
 		  	return -1;
+	t = getc(f);
+	if(t!='\n')
+		return -1;
 	return 0;
 		  
 
