@@ -51,9 +51,18 @@ test_set_get_matrix_elem_at(){
 	mpz_init(r);
 	matr = matrix_alloc(1,1);
 	assert(matr!=NULL);
+	/* do we get the correct value back ? */
 	assert(matrix_set_elem_at(0,0,matr,v)==0);
-    matrix_get_elem_at(r,0,0,matr);
+    assert(matrix_get_elem_at(r,0,0,matr)==0);
 	assert(mpz_cmp(r,v)==0);
+
+	/* out of bound access */
+    assert(matrix_get_elem_at(r,1,0,matr)==-1);
+    assert(matrix_get_elem_at(r,1,1,matr)==-1);
+    assert(matrix_get_elem_at(r,0,1,matr)==-1);
+    assert(matrix_get_elem_at(r,5,5,matr)==-1);
+
+	/* free matrix */
 	matrix_free(matr);
 }
 

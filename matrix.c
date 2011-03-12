@@ -39,6 +39,9 @@ matrix_free(matrix* matr){
 
 int 
 matrix_get_elem_at(mpz_t result, unsigned int l, unsigned int c, matrix* matr){
+	if ( matr->l-1 < l || matr->c-1 < c) {
+		return -1;
+	}
 	mpz_set(result,matr->matrix[l][c]);
 	return 0;
 }
@@ -74,12 +77,14 @@ matrix_equals(matrix* m1, matrix* m2){
 	mpz_init(v2);
   	if(m1->l != m2->l || m1->c != m2->c)
 	  	return -1;
-	for(i=0; i<m1->l; i++)
-	  	for(j=0; j<m1->c; j++)
+	for(i=0; i<m1->l; i++){
+	  	for(j=0; j<m1->c; j++){
 			matrix_get_elem_at(v,i,j,m1);
 			matrix_get_elem_at(v2,i,j,m2);
 		  	if (mpz_cmp(v,v2)!=0)
 			  	return -1;
+		}
+	}
 	return 0;
 }
 

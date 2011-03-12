@@ -8,7 +8,7 @@ OBJECTS=$(SOURCES:.c=.o)
 
 all: tests
 debug: CFLAGS+= -DDEBUG -g
-debug: $(EXEC)
+debug: tests
 
 exec: 
 	for f in $(SOURCES:.c=) ;  \
