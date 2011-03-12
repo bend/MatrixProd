@@ -1,34 +1,32 @@
 #include "matrix.h"
 
-matrix*
-matrix_alloc(unsigned int l, unsigned int c){
+int
+matrix_alloc(matrix ** matr,unsigned int l, unsigned int c){
 	unsigned int i;
-	matrix *matr;
-
-  	matr = malloc(sizeof(matrix));				/* Allocate memory for the structure */
-	if(matr == NULL){							/* Check if malloc succeeded	   	 */
+  	*matr = malloc(sizeof(matrix));				/* Allocate memory for the structure */
+	if(*matr == NULL){							/* Check if malloc succeeded	   	 */
 	  	perror("malloc error");					/* If not print error			     */
-		exit(-1);
+		return -1;
 	}
-	matr->matrix = malloc(sizeof(mpz_t*)*l);		/* Allocate memory for columns of the matrix*/
-	if(matr->matrix == NULL){
+	(*matr)->matrix = malloc(sizeof(mpz_t*)*l);		/* Allocate memory for columns of the matrix*/
+	if((*matr)->matrix == NULL){
 	  	perror("malloc error");
 		free(matr);
-		exit(-1);
+		return -1;
 	}
 	
 	for(i=0; i<l; i++){
-		matr->matrix[i] = malloc(sizeof(mpz_t)*c);
-		if(matr->matrix[i] == NULL){
+		(*matr)->matrix[i] = malloc(sizeof(mpz_t)*c);
+		if((*matr)->matrix[i] == NULL){
 		  	perror("malloc error");
 			/*TODO free the other cells allocated ? */
-			free(matr);
-			exit(-1);
+			free(*matr);
+			return -1;
 		}
 	}
-	matr->l = l;
-	matr->c = c;
-	return matr;
+	(*matr)->l = l;
+	(*matr)->c = c;
+	return 0;
 }
 
 int
@@ -107,7 +105,8 @@ matrix_multiply(matrix** result, matrix* m1, matrix* m2){
 	unsigned int i,j;
 	if ( m1->c!=m2->l || m1->l!=m2->c )
 		return -1;
-	*result = matrix_alloc(m1->l, m2->c);
+	if (matrix_alloc(result, m1->l, m2->c)==-1)
+		return -1;
 	for (i=0; i<m1->l; i++){
 		for (j=0; j<m2->c; j++){
 			/*printf("will compute result cell (%i,%i)\n", i, j);*/
