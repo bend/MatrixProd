@@ -27,6 +27,9 @@ matrix_alloc(matrix ** matr,unsigned int l, unsigned int c){
 			free(*matr);
 			return -1;
 		}
+		for(j=0;j<c; j++){
+			mpz_init((*matr)->matrix[i][j]);
+		}
 	}
 	(*matr)->l = l;
 	(*matr)->c = c;
