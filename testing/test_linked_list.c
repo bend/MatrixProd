@@ -30,7 +30,7 @@ test_node_set_elem(){
 	mpz_t v;
 	mpz_init_set_si(v,5);
 	n1 = node_alloc();
-	matr = matrix_alloc(1,1);
+	assert(matrix_alloc(&matr ,1,1)==0);
 	matrix_set_elem_at(0,0,matr,v);
 	assert(node_set_elem(n1,matr)==0);
 	assert(n1->matr == matr);
@@ -48,9 +48,9 @@ void test_linked_list(){
 	mpz_init(r2);
 	mpz_init(r3);
 
-	m=matrix_alloc(5,5);
-	m1=matrix_alloc(6,6);
-	m2=matrix_alloc(7,7);
+	assert(matrix_alloc(&m,5,5)==0);
+	assert(matrix_alloc(&m1,6,6)==0);
+	assert(matrix_alloc(&m2,7,7)==0);
 	assert(matrix_set_elem_at(0,0,m,v1)==0);
 	assert(matrix_set_elem_at(0,0,m1,v2)==0);
 	assert(matrix_set_elem_at(0,0,m2,v3)==0);

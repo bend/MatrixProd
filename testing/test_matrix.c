@@ -11,12 +11,12 @@ test_create_matrix(){
 	int i,j;
 	mpz_t v;
 	mpz_init_set_si(v,0);
-	matr = matrix_alloc(10,10);
+	assert(matrix_alloc(&matr,10,10)==0);
 	assert(matr!=NULL);
 	assert(matr->l =10);
 	assert(matr->c=10);
 	matrix_free(matr);
-	matr = matrix_alloc(3,3);
+	assert(matrix_alloc(&matr,3,3)==0);
 	/* test allocation */
 	for(i=0; i<3;i++){
 	    for(j=0; j<3; j++){
@@ -28,17 +28,17 @@ test_create_matrix(){
 	  	for(j=0; j<3; j++)
 		  	assert(mpz_cmp(matr->matrix[i][j],v)==0);
 
-	matr = matrix_alloc(100,100);
+	assert(matrix_alloc(&matr,100,100)==0);
 	assert(matr!=NULL);
 	matrix_free(matr);
 	
-	matr = matrix_alloc(1000,100);
+	assert(matrix_alloc(&matr,1000,100)==0);
 	assert(matr!=NULL);
 	assert(matr->l=1000);
 	assert(matr->c=100);
 	matrix_free(matr);
 	
-	matr = matrix_alloc(3000,3000);
+	assert(matrix_alloc(&matr, 3000,3000)==0);
 	assert(matr!=NULL);
 	matrix_free(matr);
 }
@@ -49,7 +49,7 @@ test_set_get_matrix_elem_at(){
 	mpz_t v,r;
 	mpz_init_set_si(v,5);
 	mpz_init(r);
-	matr = matrix_alloc(1,1);
+	assert(matrix_alloc(&matr, 1,1)==0);
 	assert(matr!=NULL);
 	/* do we get the correct value back ? */
 	assert(matrix_set_elem_at(0,0,matr,v)==0);
@@ -75,7 +75,7 @@ test_fill_matrix(){
 	mpz_init(r);
 	int  array[9]={1,2,3,4,5,6,7,8,9};
 	k=0;
-	matr = matrix_alloc(3,3);
+	assert(matrix_alloc(&matr,3,3)==0);
 	assert(matrix_fill(matr, array)==0);
 	for(i=0; i<3; i++)
 	  	for(j=0; j<3; j++){
@@ -92,8 +92,8 @@ test_equals_matrix(){
 	mpz_t v;
 	mpz_init_set_si(v,-1);
 	int array[10]={1,2,3,4,5,6,7,8,9,0};
-	m1 = matrix_alloc(3,3);
-	m2 = matrix_alloc(3,3);
+	assert(matrix_alloc(&m1,3,3)==0);
+	assert(matrix_alloc(&m2,3,3)==0);
 	assert(matrix_cmp(m1,m2)==0);
 	assert(matrix_fill(m1, array)==0);
 	assert(matrix_fill(m2, array)==0);
@@ -110,13 +110,13 @@ test_matrix_multiply(){
 	int expected_cells[4] = { 62,-29,  64,54};
 
 	/* fimm ùatrices */
-	m1 = matrix_alloc(2,3);
+	assert(matrix_alloc(&m1 ,2,3)==0);
 	assert(matrix_fill(m1, cells1)==0);
 
-	m2 = matrix_alloc(3,2);
+	assert(matrix_alloc(&m2 ,3,2)==0);
 	assert(matrix_fill(m2, cells2)==0);
 
-	expected_result = matrix_alloc(2,2);
+	assert(matrix_alloc(&expected_result ,2,2)==0);
 	assert(matrix_fill(expected_result, expected_cells)==0);
 
 	/* multiply and validate */

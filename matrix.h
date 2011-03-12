@@ -19,8 +19,8 @@ typedef struct matrix matrix;
  * @param n: the number of columns
  * @return the matrix descriptor
  */
-matrix*
-matrix_alloc(unsigned int l, unsigned int c);
+int
+matrix_alloc(matrix **matr, unsigned int l, unsigned int c);
 
 /*
  * Frees the matrix
