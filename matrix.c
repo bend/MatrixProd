@@ -2,7 +2,7 @@
 
 int
 matrix_alloc(matrix ** matr,unsigned int l, unsigned int c){
-	unsigned int i;
+	unsigned int i, j;
   	*matr = malloc(sizeof(matrix));				/* Allocate memory for the structure */
 	if(*matr == NULL){							/* Check if malloc succeeded	   	 */
 	  	perror("malloc error");					/* If not print error			     */
@@ -11,7 +11,7 @@ matrix_alloc(matrix ** matr,unsigned int l, unsigned int c){
 	(*matr)->matrix = malloc(sizeof(mpz_t*)*l);		/* Allocate memory for columns of the matrix*/
 	if((*matr)->matrix == NULL){
 	  	perror("malloc error");
-		free(matr);
+		free(*matr);
 		return -1;
 	}
 	
@@ -19,7 +19,11 @@ matrix_alloc(matrix ** matr,unsigned int l, unsigned int c){
 		(*matr)->matrix[i] = malloc(sizeof(mpz_t)*c);
 		if((*matr)->matrix[i] == NULL){
 		  	perror("malloc error");
-			/*TODO free the other cells allocated ? */
+			/*free the other cells allocated ? */
+			for(j=0; j<i; j++)
+			{
+				free((*matr)->matrix[j]);
+			}
 			free(*matr);
 			return -1;
 		}
