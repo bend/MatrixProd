@@ -45,24 +45,20 @@ file_read_line(FILE* f, int tab[], unsigned int size){
 }
 
 int
-file_read_next_matrix(FILE *f, matrix* matr){
+file_read_next_matrix(FILE *f, matrix** matr){
 	unsigned int l, c, i;
 	int tab[3000];
 	if(file_read_matrix_size(f, &l, &c)==-1)
 		return -1;
-	printf("matrix size %d x %d\n",l,c);
-	if(matrix_alloc(&matr,l,c)==-1)
+	if(matrix_alloc(matr,l,c)==-1)
 		return -1;
-	printf("allocated matrix size %dx%d",matr->l, matr->c);
 	for(i=0; i<l; i++){
 		if(file_read_line(f, tab, c)==-1){
 			return -1;
 		}else{
-			printf("line %d : %d %d %d",i,tab[0],tab[1],tab[2]);
-			if(matrix_fill_line(matr,i,tab)==-1)
+			if(matrix_fill_line(*matr,i,tab)==-1)
 				return -1;
 		}
-		printf("\n");
 	}
 	return 0;
 }

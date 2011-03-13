@@ -44,4 +44,4 @@ file_read_line(FILE* f, int tab[], unsigned int size);
  * @return 0 if success, -1 otherwise
  */
 int
-file_read_next_matrix(FILE* f, matrix* matr);
+file_read_next_matrix(FILE* f, matrix** matr);

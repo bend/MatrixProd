@@ -131,7 +131,7 @@ test_matrix_multiply(){
 	int cells2[6] = {10,-2,  4,7,  0,-20};
 	int expected_cells[4] = { 62,-29,  64,54};
 
-	/* fimm ùatrices */
+	/* fill matrices */
 	assert(matrix_alloc(&m1 ,2,3)==0);
 	assert(matrix_fill(m1, cells1)==0);
 
@@ -147,7 +147,6 @@ test_matrix_multiply(){
 	matrix_print(result); 
 	*/
 	assert(matrix_cmp(result,expected_result)==0);
-
 }
 
 
