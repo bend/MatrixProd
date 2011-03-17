@@ -14,6 +14,7 @@ my_sem_init(my_sem** sem, unsigned int nb){
 		perror("sem_open error");
 		return -1;
 	}
+	sem_unlink(MUTEX_FREE);
 	(*sem)->mutex_free = sem_open(MUTEX_FREE, O_CREAT|O_EXCL, 0666, 1);
 	if((*sem)->mutex_free  == NULL){
 		sem_close((*sem)->mutex);
@@ -30,11 +31,15 @@ my_sem_wait(my_sem *sem, unsigned int nb){
 		perror("sem_wait error");
 		return -1;
 	}
-	sem->value+=nb;
-	if((sem->value -(int)nb) >=0){
+	if((sem->value - (int)nb) >0){
 		sem->value-=nb;
+		if(sem_post(sem->mutex)==-1){
+			perror("sem_post error");
+			return -1;
+		}
 		return 0;
 	}
+	sem->value-=nb;
 	if(sem_post(sem->mutex) == -1){
 		perror("sem_error");
 		return -1;
@@ -53,13 +58,13 @@ my_sem_post(my_sem *sem, unsigned int nb){
 		return -1;
 	}
 	sem->value+=nb;
-	if(sem->value > 0){
+	if(sem->value >= 0){
 		if(sem_post(sem->mutex_free)==-1){
 			perror("sem_post error");
 			return -1;
 		}
 	}
-	if(sem_post(sem->mutex)==0){
+	if(sem_post(sem->mutex)==-1){
 		perror("sem_wait error");
 		return -1;
 	}
@@ -68,14 +73,14 @@ my_sem_post(my_sem *sem, unsigned int nb){
 
 int
 my_sem_close(my_sem *sem){
-	if(sem_close(sem->mutex_free) == -1){
+	/*if(sem_close(sem->mutex_free) == -1){
 		perror("sem_close error");
 		return -1;
 	}
 	if(sem_close(sem->mutex) == -1){
 		perror("sem_close error");
 		return -1;
-	}
+	}*/
 	free(sem);
 	return 0;
 }
