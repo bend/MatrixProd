@@ -1,0 +1,300 @@
+#LyX 1.6.5 created this file. For more info see http://www.lyx.org/
+\lyxformat 345
+\begin_document
+\begin_header
+\textclass article
+\use_default_options true
+\language english
+\inputencoding auto
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\paperfontsize default
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_amsmath 1
+\use_esint 1
+\cite_engine basic
+\use_bibtopic false
+\paperorientation portrait
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\defskip medskip
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\author "" 
+\end_header
+
+\begin_body
+
+\begin_layout Section
+INIT
+\end_layout
+
+\begin_layout Standard
+struct avec champs
+\end_layout
+
+\begin_layout Itemize
+list_access_mutex = 1
+\end_layout
+
+\begin_layout Itemize
+has_adjacent_mutex = 1
+\end_layout
+
+\begin_layout Itemize
+next_adjacent_node_pointer
+\end_layout
+
+\begin_layout Itemize
+can_produce_sem = args:prod_num
+\end_layout
+
+\begin_layout Itemize
+linked_list :
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+head: node de type head 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Initialisation à implémenter
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+tail: node de type tail 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Initialisation à implémenter
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+size: 0
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+A retirer
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+producer_finished = FALSE
+\end_layout
+
+\begin_layout Standard
+Node structure:
+\end_layout
+
+\begin_layout Itemize
+matr: pointer to matrix
+\end_layout
+
+\begin_layout Itemize
+type: head, tail, free, reserved
+\end_layout
+
+\begin_layout Itemize
+next
+\end_layout
+
+\begin_layout Itemize
+prev
+\end_layout
+
+\begin_layout Section
+Producer
+\end_layout
+
+\begin_layout Enumerate
+down can_produce_sem
+\end_layout
+
+\begin_layout Enumerate
+test si matrice disponible dans le fichier
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Si non, arreter.
+\end_layout
+
+\begin_layout Enumerate
+Si oui,
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+lire matrix dans le fichier
+\end_layout
+
+\begin_layout Enumerate
+placer la matrice dans une structure
+\end_layout
+
+\begin_layout Enumerate
+create new node of type 'tail': tail2
+\end_layout
+
+\begin_layout Enumerate
+put matrice in tail node (linked_list.tail.matr=matrix)
+\end_layout
+
+\begin_layout Enumerate
+set_next(linked_list.tail, tail2);
+\end_layout
+
+\begin_layout Enumerate
+linked_list.tail=tail2
+\end_layout
+
+\begin_layout Enumerate
+change type of old tail node: linked_list.tail.prev.type=free
+\end_layout
+
+\begin_layout Enumerate
+up has_adjacent_mutex
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Section
+Consumer
+\end_layout
+
+\begin_layout Enumerate
+found=false
+\end_layout
+
+\begin_layout Enumerate
+while ! found
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+down list_access_mutex
+\end_layout
+
+\begin_layout Enumerate
+search_adjacent_and_mark (sets found and empty_list)
+\end_layout
+
+\begin_layout Enumerate
+up list_access_mutex
+\end_layout
+
+\begin_layout Enumerate
+if (empty_list and state.producer_finished) 
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+up has_adjacent_mutex
+\end_layout
+
+\begin_layout Enumerate
+return
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+else
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+if !found { down has_adjacent_mutex }
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Enumerate
+Compute mres
+\end_layout
+
+\begin_layout Enumerate
+down list_access_mutex
+\end_layout
+
+\begin_layout Enumerate
+free m1
+\end_layout
+
+\begin_layout Enumerate
+node1.matr=mres
+\end_layout
+
+\begin_layout Enumerate
+set_next(node1, node2.next)
+\end_layout
+
+\begin_layout Enumerate
+node1.type=free
+\end_layout
+
+\begin_layout Enumerate
+if found adjacent matrices
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+up has_adjacent_mutex
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+up list_access_mutex
+\end_layout
+
+\begin_layout Enumerate
+free node2
+\end_layout
+
+\begin_layout Enumerate
+up can_produce_sem
+\end_layout
+
+\begin_layout Section
+Todo
+\end_layout
+
+\begin_layout Itemize
+Halt of all threads in case of errors
+\end_layout
+
+\end_body
+\end_document
