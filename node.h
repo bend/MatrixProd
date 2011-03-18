@@ -12,6 +12,7 @@ struct node{
   node* next;
   node* prev;
   matrix* matr;
+  short type;
 };
 
 /*
