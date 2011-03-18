@@ -31,7 +31,7 @@ my_sem_wait(my_sem *sem, unsigned int nb){
 		perror("sem_wait error");
 		return -1;
 	}
-	if((sem->value - (int)nb) >0){
+	if((sem->value - (int)nb) >0 ){
 		sem->value-=nb;
 		if(sem_post(sem->mutex)==-1){
 			perror("sem_post error");
@@ -53,12 +53,14 @@ my_sem_wait(my_sem *sem, unsigned int nb){
 
 int
 my_sem_post(my_sem *sem, unsigned int nb){
+	int initial_val;
 	if(sem_wait(sem->mutex) == -1){
 		perror("sem_wait error");
 		return -1;
 	}
+	initial_val = sem->value;
 	sem->value+=nb;
-	if(sem->value >= 0){
+	if(sem->value >= 0 && initial_val<=0){			/* Must accept 0 because the waitinf thread has already decremented the vailue of the sem by calling my_sem_wait*/
 		if(sem_post(sem->mutex_free)==-1){
 			perror("sem_post error");
 			return -1;
@@ -70,6 +72,7 @@ my_sem_post(my_sem *sem, unsigned int nb){
 	}
 	return 0;
 }
+
 
 int
 my_sem_close(my_sem *sem){

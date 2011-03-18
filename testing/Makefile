@@ -6,7 +6,7 @@ LIBS=$(filter-out ../main.c, $(wildcard ../*.c))
 OBJECTS=$(SOURCES:.c=.o)
 LDFLAGS+=-Lpthread -Lgmp
 all: tests
-debug: CFLAGS+= -DDEBUG -g
+debug: CFLAGS= -g -DDEBUG -lgmp -lpthread
 debug: exec
 
 exec: 
