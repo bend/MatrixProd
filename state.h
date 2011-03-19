@@ -2,6 +2,7 @@
 #define __STAT_H__
 
 #include "stdbool.h"
+#include <fcntl.h>  /*needed on linux for O_ constants */
 #include "semaphore.h"
 
 #include "node.h"

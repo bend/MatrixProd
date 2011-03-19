@@ -1,6 +1,7 @@
 #ifndef __MY_SEM_H__
 #define __MY_SEM_H__
 
+#include <fcntl.h>  /*needed on linux for O_ constants */
 #include <semaphore.h>
 #include <stdlib.h>
 #include <stdio.h>
