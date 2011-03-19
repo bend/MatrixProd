@@ -12,7 +12,6 @@ typedef struct linked_list linked_list;
 struct linked_list{
 	node* head;
 	node* tail;
-	unsigned int size;
 };
 
 
