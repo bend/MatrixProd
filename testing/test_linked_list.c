@@ -74,8 +74,8 @@ void test_linked_list(){
 
 	matrix_get_elem_at(r3,0,0,linked_list_get_first(ll));
 	assert(mpz_cmp(r3,v3)==0);
-	/*matrix_get_elem_at(r3,0,0,linked_list_remove_first(ll));
-	assert(mpz_cmp(r3,v3)==0);*/
+	matrix_get_elem_at(r3,0,0,linked_list_remove_first(ll));
+	assert(mpz_cmp(r3,v3)==0);
 }
 
 

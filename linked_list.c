@@ -14,10 +14,10 @@ linked_list_alloc(linked_list **ll){
 		return -1;
 	if(node_alloc(&t) == -1)
 		return -1;
-	(*ll)->size = 0;
 	h->t= head;
 	t->t = tail;
 	(*ll)->head = h;
+	node_set_next(h,t);
 	(*ll)->tail = t;
 	return 0;
 }
