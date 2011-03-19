@@ -21,7 +21,21 @@ int consumer_start(state * state){
 		 * */
 		if (state->ll->head->next->t!=tail) {
 			/* compute the multiplication of m1 and m2 */
-			matrix_multiply(&result, node1->matr, node2->matr);
+#ifdef DEBUG			
+	printf("will call multiply on these matrices\n");
+	matrix_print(node1->matr);
+	printf("-------------------------------------\n");
+	matrix_print(node2->matr);
+#endif
+			if (matrix_multiply(&result, node1->matr, node2->matr)==-1){
+				perror("multiplication failed!\n");
+				/*FIXME: noeed some cleanup here */
+				exit(1);
+			}
+#ifdef DEBUG
+	printf("done multiplying 2 matrices, will put result back in list\n");
+	matrix_print(result);
+#endif
 
 			/*************************************************************************
 			 *                 LOCK ACCESS TO LIST

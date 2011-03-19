@@ -117,15 +117,24 @@ matrix_cmp(matrix* m1, matrix* m2){
 int 
 matrix_multiply(matrix** result, matrix* m1, matrix* m2){
 	unsigned int i,j;
-	if ( m1->c!=m2->l || m1->l!=m2->c )
+	if ( m1->c!=m2->l)
+	{
+		perror("lines and columns don't match for multiplication\n");
 		return -1;
+	}
 	if (matrix_alloc(result, m1->l, m2->c)==-1)
+	{
+		perror("error allocatinig memory to result matrix\n");
 		return -1;
+	}
 	for (i=0; i<m1->l; i++){
 		for (j=0; j<m2->c; j++){
 			/*printf("will compute result cell (%i,%i)\n", i, j);*/
 			if (matrix_compute_cell(*result, i, j, m1, m2)==-1)
+			{
+				perror("Error computing cell\n" );
 				return -1;
+			}
 		}
 	}
 	/*printf("finished computation\n");*/
