@@ -30,7 +30,7 @@ int consumer_start(state * state){
 			if (matrix_multiply(&result, node1->matr, node2->matr)==-1){
 				perror("multiplication failed!\n");
 				/*FIXME: noeed some cleanup here */
-				exit(1);
+				exit(1);/* FIXME Needs return -1 instead of exit ??*/
 			}
 #ifdef DEBUG
 	printf("done multiplying 2 matrices, will put result back in list\n");
@@ -70,7 +70,7 @@ consumer_search_adjacent_and_mark(state* state, node** n1, node** n2){
 	/* iterate over list starting at first matrix node */
 	current_node=state->ll->head->next;
 	while(current_node->next->t!=tail && found==false){
-		if ( current_node->t==unreserved &&	current_node->next->t==unreserved) {
+		if (current_node->t==unreserved && current_node->next->t==unreserved) {
 			/* two adjacent unreserved nodes found!
 			 *  take matrices and mark nodes as reserved */
 			*n1=current_node;

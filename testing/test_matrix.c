@@ -159,5 +159,5 @@ main(){
 	test_equals_matrix();
 	test_matrix_multiply();
 	printf("All matrix tests Succeeded\n");
-	return 0;
+	return EXIT_SUCCESS;
 }

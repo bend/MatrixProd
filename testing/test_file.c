@@ -115,5 +115,5 @@ int main(){
 	test_file_read();
 	test_file_read_next();
 	printf("All file tests succeded\n");
-	return 0;
+	return EXIT_SUCCESS;
 }

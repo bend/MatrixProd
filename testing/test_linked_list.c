@@ -1,5 +1,6 @@
 #include <assert.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 #include "../matrix.h"
 #include "../node.h"
@@ -86,6 +87,6 @@ main(){
 	test_node_set_elem();
 	test_linked_list();
 	printf("All linked list tests Succeeded\n");
-	return 0;
+	return EXIT_SUCCESS;
 }
 

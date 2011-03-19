@@ -1,7 +1,10 @@
 #include "../my_sem.h"
 #include <stdio.h>
+#include <stdlib.h>
 #include <assert.h>
 #include <pthread.h>
+#include <unistd.h>  
+
 
 my_sem *sem;
 
@@ -46,5 +49,5 @@ int main(){
 	test_init_close();
 	test_sem();
 	printf("All semaphores tests succeded\n");
-	return 1;
+	return EXIT_SUCCESS;
 }

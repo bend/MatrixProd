@@ -22,21 +22,21 @@ struct producer{
  * @return : 0 if success, -1 otherwise
  */
 int
-producer_init(char* filename,state* s,producer** p);
+producer_alloc(char* filename,state* s,producer** p);
 
 /*
  * Starts the producer
  * TODO
  */
 int
-producer_start();
+producer_start(producer* p);
 
 /*
  * Stop the producer
  * TODO
  */
 int
-producer_halt();
+producer_halt(producer* p);
 
 
 #endif
