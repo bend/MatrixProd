@@ -5,6 +5,7 @@
 #include "linked_list.h"
 #include "matrix.h"
 #include "node.h"
+#include "state.h"
 
 typedef struct producer producer;
 

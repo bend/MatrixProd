@@ -12,6 +12,7 @@ producer_init(char* filename,state* s,producer** p){
 	}
 	if(file_open(&(*p)->f,filename) ==-1)
 		return -1;
+	(*p)->s = s;
 	return 0;
 }
 
