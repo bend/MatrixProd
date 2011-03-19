@@ -17,11 +17,12 @@ struct linked_list{
 
 
 /*
- * Creates a new linked list
- * @return the linked_list descriptor
+ * Creates a new linked list with 2 nodes : tail and head
+ * @param ll: a pointer to the pointer of the ll
+ * @return 0 if success, -1 otherwise
  */
-linked_list*
-linked_list_alloc();
+int
+linked_list_alloc(linked_list **ll);
 
 /*
  * Frees the linked_list

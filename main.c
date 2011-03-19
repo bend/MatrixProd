@@ -1,4 +1,3 @@
-#include "matrix_mult.h"
 
 
 int main(){

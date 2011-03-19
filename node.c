@@ -1,16 +1,15 @@
 #include "node.h"
 
-node*
-node_alloc(){
-  	node *n;
-	n = malloc(sizeof(node));
+int
+node_alloc(node** n){
+	*n = malloc(sizeof(node));
 	if(n == NULL){
 	  	perror("malloc error");
-		exit(-1);
+		return -1;
 	}
-	n->next = NULL;
-	n->prev = NULL;
-	return n;
+	(*n)->next = NULL;
+	(*n)->prev = NULL;
+	return 0;
 }
 
 int

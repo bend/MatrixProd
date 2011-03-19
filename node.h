@@ -5,6 +5,12 @@
 #include <stdlib.h>
 #include "matrix.h"
 
+typedef enum {
+	head,
+	tail,
+	unreserved,
+	reserved
+}type;
 
 typedef struct node node;
 
@@ -12,15 +18,17 @@ struct node{
   node* next;
   node* prev;
   matrix* matr;
-  short type;
+  type t;
 };
+
 
 /*
  * Allocate mem to  the node
- * @return a pointer to the node
+ * @param n: a pointer to the pointer of the node
+ * @return 0 if success, -1 otherwise
  */
-node*
-node_alloc();
+int
+node_alloc(node** n);
 
 /*
  * Sets the next node

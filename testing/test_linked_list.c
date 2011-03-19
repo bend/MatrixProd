@@ -7,15 +7,15 @@
 void
 test_node_create(){
   node* n;
-  n = node_alloc();
+  assert(node_alloc(&n)==0);
   assert(n!=NULL);
 }
 
 void 
 test_node_set_get(){
 	node *n1,*n2;
-	n1=node_alloc();
-	n2=node_alloc();
+	assert(node_alloc(&n1)==0);
+	assert(node_alloc(&n2)==0);
 	assert(node_set_next(n1,n2)==0);
 	assert(node_get_next(n1)==n2);
 	assert(node_set_next(n2,n1)==0);
@@ -29,7 +29,7 @@ test_node_set_elem(){
 	matrix *matr;
 	mpz_t v;
 	mpz_init_set_si(v,5);
-	n1 = node_alloc();
+	assert( node_alloc(&n1)==0);
 	assert(matrix_alloc(&matr ,1,1)==0);
 	matrix_set_elem_at(0,0,matr,v);
 	assert(node_set_elem(n1,matr)==0);
@@ -40,13 +40,16 @@ void test_linked_list(){
 	linked_list *ll;
 	matrix *m,*m1,*m2;
 	mpz_t v1,v2,v3,r1,r2,r3;
-	ll = linked_list_alloc();
 	mpz_init_set_si(v1,1);
 	mpz_init_set_si(v2,2);
 	mpz_init_set_si(v3,3);
 	mpz_init(r1);
 	mpz_init(r2);
 	mpz_init(r3);
+
+	assert(linked_list_alloc(&ll)==0);
+	assert(ll->head->t == head);
+	assert(ll->tail->t == tail);
 
 	assert(matrix_alloc(&m,5,5)==0);
 	assert(matrix_alloc(&m1,6,6)==0);
@@ -63,7 +66,7 @@ void test_linked_list(){
 	assert(mpz_cmp(r1,v2)==0);
 	matrix_get_elem_at(r1,0,0,linked_list_remove_first(ll));
 	assert(mpz_cmp(r1,v2)==0);
-	              
+	             
 	matrix_get_elem_at(r2,0,0,linked_list_get_first(ll));
 	assert(mpz_cmp(r2,v1)==0);
 	matrix_get_elem_at(r2,0,0,linked_list_remove_first(ll));
@@ -71,13 +74,14 @@ void test_linked_list(){
 
 	matrix_get_elem_at(r3,0,0,linked_list_get_first(ll));
 	assert(mpz_cmp(r3,v3)==0);
-	matrix_get_elem_at(r3,0,0,linked_list_remove_first(ll));
-	assert(mpz_cmp(r3,v3)==0);
+	/*matrix_get_elem_at(r3,0,0,linked_list_remove_first(ll));
+	assert(mpz_cmp(r3,v3)==0);*/
 }
 
 
 int 
 main(){
+	test_node_create();
 	test_node_set_get();
 	test_node_set_elem();
 	test_linked_list();

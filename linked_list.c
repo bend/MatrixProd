@@ -1,17 +1,25 @@
 #include "linked_list.h"
 
-linked_list*
-linked_list_alloc(){
-	linked_list *ll;
-	ll = malloc(sizeof(linked_list));
-	if(ll == NULL){
+int
+linked_list_alloc(linked_list **ll){
+	/* TODO ADD HEAD AND TAIL NODE */
+
+	node *h, *t;
+	*ll = malloc(sizeof(linked_list));
+	if(*ll == NULL){
 	  	perror("malloc failed");
-		exit(-1);
+		return -1;
 	}
-	ll->size = 0;
-	ll->head = NULL;
-	ll->tail = NULL;
-	return ll;
+	if(node_alloc(&h) == -1)
+		return -1;
+	if(node_alloc(&t) == -1)
+		return -1;
+	(*ll)->size = 0;
+	h->t= head;
+	t->t = tail;
+	(*ll)->head = h;
+	(*ll)->tail = t;
+	return 0;
 }
 
 void
@@ -22,47 +30,48 @@ linked_list_free(linked_list *ll){
 
 int 
 linked_list_add_last(linked_list *ll, matrix *matr){
-	node *n, *temp;
-	n = node_alloc();
-	node_set_elem(n,matr);
-	temp = ll->tail;
+	node *n;
+	if(node_alloc(&n)==-1)
+		return -1;
+	node_set_elem(ll->tail,matr);
+	ll->tail->t =unreserved;
+	node_set_next(ll->tail, n);
+	n->t = tail;
 	ll->tail = n;
-	node_set_next(temp,n);
-	if(ll->head == NULL)
-		ll->head = n;
 	return 0;
 }
 
 int
 linked_list_add_first(linked_list *ll, matrix *matr){
-  	node *n,*temp;
-	n=node_alloc();
-	node_set_elem(n,matr);
-	temp = ll->head;
+  	node *n;
+	if(node_alloc(&n) == -1)
+		return -1;
+	node_set_elem(ll->head,matr);
+	node_set_next(n,ll->head);
+	ll->head->t = unreserved;
 	ll->head = n;
-	node_set_next(n,temp);
-	if(ll->tail == NULL)
-	  	ll->tail = n;
+	n->t = head;
 	return 0;
 }
 
 matrix*
 linked_list_get_last(linked_list *ll){
-  	return ll->tail->matr;
+  	return ll->tail->prev->matr;
 }
 
 matrix*
 linked_list_get_first(linked_list *ll){
-	return ll->head->matr;
+	return ll->head->next->matr;
 }
 
 matrix*
 linked_list_remove_first(linked_list *ll){
 	matrix *matr;
 	node *n;
-	matr = ll->head->matr;
-	n= ll->head;
-	ll->head = n->next;
+	matr = ll->head->next->matr;
+	n= ll->head->next;
+	ll->head->next = ll->head->next->next;
+	node_free(n);
 	return matr;
 }
 
