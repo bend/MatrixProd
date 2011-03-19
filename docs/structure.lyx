@@ -1,4 +1,4 @@
-#LyX 1.6.5 created this file. For more info see http://www.lyx.org/
+#LyX 1.6.8 created this file. For more info see http://www.lyx.org/
 \lyxformat 345
 \begin_document
 \begin_header
@@ -36,6 +36,7 @@
 \tracking_changes false
 \output_changes false
 \author "" 
+\author "" 
 \end_header
 
 \begin_body
@@ -67,44 +68,10 @@ linked_list :
 \begin_deeper
 \begin_layout Itemize
 head: node de type head 
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-Initialisation à implémenter
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Itemize
 tail: node de type tail 
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-Initialisation à implémenter
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Itemize
-size: 0
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-A retirer
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
 \end_deeper
@@ -121,7 +88,7 @@ matr: pointer to matrix
 \end_layout
 
 \begin_layout Itemize
-type: head, tail, free, reserved
+type: head, tail, unreserved, reserved
 \end_layout
 
 \begin_layout Itemize

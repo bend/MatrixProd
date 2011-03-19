@@ -1,8 +1,6 @@
 #include "state.h"
 
 
-
-
 int
 state_alloc(state** s){
 	*s = malloc(sizeof(state));

@@ -1,3 +1,6 @@
+#ifndef __MY_SEM_H__
+#define __MY_SEM_H__
+
 #include <semaphore.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -46,3 +49,5 @@ my_sem_post(my_sem *sem, unsigned int nb);
  */
 int
 my_sem_close(my_sem *sem);
+
+#endif

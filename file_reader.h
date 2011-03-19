@@ -1,3 +1,6 @@
+#ifndef __FILE_READER_H__
+#define __FILE_READER_H__
+
 #include <stdio.h>
 
 #include "matrix.h"
@@ -45,3 +48,5 @@ file_read_line(FILE* f, int tab[], unsigned int size);
  */
 int
 file_read_next_matrix(FILE* f, matrix** matr);
+
+#endif
