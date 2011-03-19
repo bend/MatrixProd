@@ -6,7 +6,9 @@ void
 test_consumer_on_manual_linked_list() {
 	matrix* matr,*m_result;
 	state* state;
-	int m1[]={ 3, 56, -2, 20, 4, 0 }, m2[]={ 45, 34, 2, 2, 1, 1}, result[]={ 247, 158, 62,   -50, -48, 16,     180, 136, 8 };
+	int m1[]={ 3, 56, -2, 20, 4, 0 }, 
+		m2[]={ 45, 34, 2, 2, 1, 1}, 
+		result[]={ 247, 158, 62,   -50, -48, 16,     180, 136, 8 };
 
 	/* initialise state
 	 */
@@ -54,6 +56,8 @@ test_consumer_on_manual_linked_list() {
 	/* Check that the only matrix in the linked list is the result
 	 */
 	matrix_print(m_result);
+	matrix_print(linked_list_get_first(state->ll));
+	assert(state->ll->head->next->next==state->ll->tail);
 	assert(matrix_cmp(m_result, linked_list_get_first(state->ll))==0);
 	assert(matrix_cmp(m_result, linked_list_get_last(state->ll))==0);
 
@@ -61,6 +65,8 @@ test_consumer_on_manual_linked_list() {
 }
 
 int 
-main(int argc, char const * argv[]){
+main(){
 	test_consumer_on_manual_linked_list();
+	printf("All consumer tests passed\n");
+	return 0;
 }
