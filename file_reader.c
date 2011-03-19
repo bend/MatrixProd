@@ -16,10 +16,12 @@ int
 file_read_matrix_size(FILE* f, unsigned int *l, unsigned int *c){
 	char x;
 	char a;
-	
+	int r;
 	fscanf(f,"%c",&a);
-	while(a == '\n'||a ==' '){
-		fscanf(f,"%c",&a);
+	while(a == '\n'||a ==' '|| a==EOF){
+		r = fscanf(f,"%c",&a);
+		if(r==EOF)
+			return -1;
 	}
 	fseek(f, -1, SEEK_CUR);
 	
@@ -35,9 +37,11 @@ int
 file_read_line(FILE* f, int tab[], unsigned int size){
 	unsigned int i;
   	char t;
+	int r;
 	for(i=0; i<size; i++)
-	  	if(fscanf(f,"%d",&tab[i])==0)
-		  	return -1;
+	  	r=fscanf(f,"%d",&tab[i]);
+		if(r==0||r==EOF )
+			return -1;
 	t = getc(f);
 	if(t!='\n')
 		return -1;
