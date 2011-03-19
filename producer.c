@@ -30,8 +30,6 @@ producer_start(producer* p){
 			return -1;
 		}
 	}
-	printf("here");
-	fflush(stdout);
 	p->s->producer_finished = true;
 	return 0;
 }
