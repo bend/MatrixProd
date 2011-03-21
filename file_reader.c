@@ -17,7 +17,8 @@ file_read_matrix_size(FILE* f, unsigned int *l, unsigned int *c){
 	char x;
 	char a;
 	int r;
-	fscanf(f,"%c",&a);
+	if(fscanf(f,"%c",&a) == EOF)
+		return -1;
 	while(a == '\n'||a ==' '|| a==EOF){
 		r = fscanf(f,"%c",&a);
 		if(r==EOF)
@@ -25,7 +26,8 @@ file_read_matrix_size(FILE* f, unsigned int *l, unsigned int *c){
 	}
 	fseek(f, -1, SEEK_CUR);
 	
-	if(fscanf(f,"%u%c%u",l,&x,c) !=3)
+	r=fscanf(f,"%u%c%u",l,&x,c);
+	if(r!=3 || r==EOF)
 	  	return -1;
 	if(x!='x')
 	  	return -1;

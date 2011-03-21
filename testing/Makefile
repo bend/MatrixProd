@@ -1,5 +1,5 @@
 CFLAGS+=-W -Wall -lpthread -lgmp -Werror -ansi -pedantic
-EXEC=matrix
+EXEC=matrixprod
 SOURCES=$(wildcard *.c)
 LIBS=$(filter-out ../main.c, $(wildcard ../*.c))
 #echo $(filter-out ../main.c, $(LIBS)) ;

@@ -14,14 +14,17 @@ test_node_create(){
 
 void 
 test_node_set_get(){
-	node *n1,*n2;
+	node *n1,*n2,*nres;
 	assert(node_alloc(&n1)==0);
 	assert(node_alloc(&n2)==0);
 	assert(node_set_next(n1,n2)==0);
-	assert(node_get_next(n1)==n2);
+	assert(node_get_next(n1,&nres)==0);
+	assert(nres == n2);
 	assert(node_set_next(n2,n1)==0);
-	assert(node_get_prev(n1)==n2);
-	assert(node_get_next(n2)==n1);
+	assert(node_get_prev(n1,&nres)==0);
+	assert(n2==nres);
+	assert(node_get_next(n2,&nres)==0);
+	assert(nres==n1);
 }
 
 void

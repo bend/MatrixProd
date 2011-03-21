@@ -22,14 +22,20 @@ node_set_next(node* n, node* next){
 	return 0;
 }
 
-node*
-node_get_next(node* n){
-  	return n->next;
+int
+node_get_next(node* n,node** res){
+  	if(n->next == NULL) 
+		return -1;
+	*res = n->next;
+	return 0;
 }
 
-node*
-node_get_prev(node* n){
-	return n->prev;
+int
+node_get_prev(node* n, node** res){
+	if(n->prev == NULL)
+		return -1;
+	*res = n->prev;
+	return 0;
 }
 
 int

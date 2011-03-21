@@ -43,8 +43,8 @@ node_set_next(node* n, node* next);
  * @param n: a pointer to the node
  * @return a pointer to the next node
  */
-node*
-node_get_next(node* n);
+int
+node_get_next(node* n, node** res);
 
 
 /*
@@ -52,8 +52,8 @@ node_get_next(node* n);
  * @param n: a pointer to the node
  * @return a pointer to the next node
  */
-node*
-node_get_prev(node* n);
+int
+node_get_prev(node* n, node**res);
 
 /*
  * Sets the element of the node
