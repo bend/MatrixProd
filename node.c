@@ -9,6 +9,7 @@ node_alloc(node** n){
 	}
 	(*n)->next = NULL;
 	(*n)->prev = NULL;
+	(*n)->matr = NULL;
 	return 0;
 }
 

@@ -52,22 +52,22 @@ linked_list_add_first(linked_list *ll, matrix *matr);
  * @param ll: a pointer to the linked_list
  * @return the matrix that is at the end of the ll.
  */
-matrix*
-linked_list_get_last(linked_list *ll);
+int
+linked_list_get_last(linked_list *ll, matrix **matr);
 
 /*
  * returns the element at the begining of the list, but does not remove it
  * @param ll: a pointer to the linked_list
  * @return the matrix that is at the begining of the ll
  */
-matrix*
-linked_list_get_first(linked_list *ll);
+int
+linked_list_get_first(linked_list *ll, matrix **matr);
 
 /*
  * removes the elements at end of the linked_list
  */
-matrix*
-linked_list_remove_first(linked_list *ll);
+int 
+linked_list_remove_first(linked_list *ll, matrix **matr);
 
 #endif
 

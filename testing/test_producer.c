@@ -32,11 +32,13 @@ producer_thread(void* arg){
 void test_producer_start(){
 	state *s;
 	pthread_t *t;
+	matrix *mat;
 	assert(state_alloc(&s) == 0);
 	pthread_create(t,NULL,producer_thread,(void*)s);
 	while(s->producer_finished==false){
 		sem_wait(s->consumer_allowed_mutex);
-		matrix_print(linked_list_remove_first(s->ll));
+		linked_list_remove_first(s->ll, &mat);
+		matrix_print(mat);
 		fflush(stdout);
 		sem_post(s->can_produce_sem);
 	}

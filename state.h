@@ -8,9 +8,9 @@
 #include "node.h"
 #include "linked_list.h"
 
-#define LIST_ACCESS_MUTEX	"list_mutex"
-#define CONS_MUTEX			"adjacent_mutex"
-#define CAN_PRODUCE_SEM		"can_produce_mutex"
+#define LIST_ACCESS_MUTEX	"/list_mutex"
+#define CONS_MUTEX			"/adjacent_mutex"
+#define CAN_PRODUCE_SEM		"/can_produce_mutex"
 #define BUFFER_SIZE			 2
 
 struct state{

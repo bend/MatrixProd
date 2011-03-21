@@ -39,6 +39,7 @@ test_node_set_elem(){
 
 void test_linked_list(){
 	linked_list *ll;
+	matrix *matr;
 	matrix *m,*m1,*m2;
 	mpz_t v1,v2,v3,r1,r2,r3;
 	mpz_init_set_si(v1,1);
@@ -62,20 +63,27 @@ void test_linked_list(){
 	assert(linked_list_add_first(ll, m)==0);
 	assert(linked_list_add_first(ll, m1)==0);
 	assert(linked_list_add_last(ll, m2)==0);
-
-	matrix_get_elem_at(r1,0,0,linked_list_get_first(ll));
+	
+	assert(linked_list_get_first(ll,&matr)==0);
+	matrix_get_elem_at(r1,0,0,matr);
 	assert(mpz_cmp(r1,v2)==0);
-	matrix_get_elem_at(r1,0,0,linked_list_remove_first(ll));
+	assert(linked_list_remove_first(ll,&matr) == 0);
+	matrix_get_elem_at(r1,0,0,matr);
 	assert(mpz_cmp(r1,v2)==0);
 	             
-	matrix_get_elem_at(r2,0,0,linked_list_get_first(ll));
-	assert(mpz_cmp(r2,v1)==0);
-	matrix_get_elem_at(r2,0,0,linked_list_remove_first(ll));
+	assert(linked_list_get_first(ll, &matr)==0);
+	matrix_get_elem_at(r2,0,0,matr);
 	assert(mpz_cmp(r2,v1)==0);
 
-	matrix_get_elem_at(r3,0,0,linked_list_get_first(ll));
+	assert(linked_list_remove_first(ll,&matr)==0);
+	matrix_get_elem_at(r2,0,0,matr);
+	assert(mpz_cmp(r2,v1)==0);
+
+	assert(linked_list_get_first(ll, &matr) == 0);
+	matrix_get_elem_at(r3,0,0,matr);
 	assert(mpz_cmp(r3,v3)==0);
-	matrix_get_elem_at(r3,0,0,linked_list_remove_first(ll));
+	assert(linked_list_remove_first(ll,&matr)==0);
+	matrix_get_elem_at(r3,0,0,matr);
 	assert(mpz_cmp(r3,v3)==0);
 }
 

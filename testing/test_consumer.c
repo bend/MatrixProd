@@ -6,6 +6,7 @@ void
 test_consumer_on_manual_linked_list_2_elements() {
 	matrix* matr,*m_result;
 	state* state;
+	matrix* mat;
 	int m1[]={ 3, 56, -2, 20, 4, 0 }, 
 		m2[]={ 45, 34, 2, 2, 1, 1}, 
 		result[]={ 247, 158, 62,   -50, -48, 16,     180, 136, 8 };
@@ -35,7 +36,7 @@ test_consumer_on_manual_linked_list_2_elements() {
 	 */
 	if (matrix_alloc(&matr,2,3)==-1){
 		perror("Could not allocate m2 in test_consumer_on_manual_linked_list");
-		exit(1);
+		exit(-1);
 	}
 	matrix_fill(matr,m2);
 	linked_list_add_last(state->ll, matr);
@@ -55,15 +56,19 @@ test_consumer_on_manual_linked_list_2_elements() {
 
 	/* Check that the only matrix in the linked list is the result
 	 */
-	if (matrix_cmp(m_result, linked_list_get_first(state->ll))!=0){
+	linked_list_get_first(state->ll,&mat);
+	if (matrix_cmp(m_result, mat)!=0){
 		printf("Expected this matrix: \n");
 		matrix_print(m_result);
 		printf("But computed result is: \n");
-		matrix_print(linked_list_get_first(state->ll));
+		linked_list_get_first(state->ll,&mat);
+		matrix_print(matr);
 	}
 	assert(state->ll->head->next->next==state->ll->tail);
-	assert(matrix_cmp(m_result, linked_list_get_first(state->ll))==0);
-	assert(matrix_cmp(m_result, linked_list_get_last(state->ll))==0);
+	linked_list_get_first(state->ll,&mat);
+	assert(matrix_cmp(m_result, mat)==0);
+	linked_list_get_last(state->ll,&mat);
+	assert(matrix_cmp(m_result,mat)==0);
 
 
 }
@@ -71,6 +76,7 @@ test_consumer_on_manual_linked_list_2_elements() {
 void
 test_consumer_on_manual_linked_list_4_elements() {
 	matrix* matr,*m_result;
+	matrix* mat;
 	state* state;
 	int m1[]={
                32 , -100 ,   46 ,   17,  
@@ -164,15 +170,19 @@ test_consumer_on_manual_linked_list_4_elements() {
 
 	/* Check that the only matrix in the linked list is the result
 	 */
-	if (matrix_cmp(m_result, linked_list_get_first(state->ll))!=0){
+	linked_list_get_first(state->ll, &mat);
+	if (matrix_cmp(m_result, mat)!=0){
 		printf("Expected this matrix: \n");
 		matrix_print(m_result);
 		printf("But computed result is: \n");
-		matrix_print(linked_list_get_first(state->ll));
+		linked_list_get_first(state->ll, &mat);
+		matrix_print(mat);
 	}
 	assert(state->ll->head->next->next==state->ll->tail);
-	assert(matrix_cmp(m_result, linked_list_get_first(state->ll))==0);
-	assert(matrix_cmp(m_result, linked_list_get_last(state->ll))==0);
+	linked_list_get_first(state->ll,&mat);
+	assert(matrix_cmp(m_result, mat)==0);
+	linked_list_get_first(state->ll,&mat);
+	assert(matrix_cmp(m_result, mat)==0);
 
 
 }

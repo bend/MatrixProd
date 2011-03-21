@@ -54,25 +54,32 @@ linked_list_add_first(linked_list *ll, matrix *matr){
 	return 0;
 }
 
-matrix*
-linked_list_get_last(linked_list *ll){
-  	return ll->tail->prev->matr;
+int
+linked_list_get_last(linked_list *ll, matrix **matr){
+  	*matr = ll->tail->prev->matr;
+	if(*matr == NULL)
+		return -1;
+	return 0;
 }
 
-matrix*
-linked_list_get_first(linked_list *ll){
-	return ll->head->next->matr;
+int
+linked_list_get_first(linked_list *ll, matrix **matr){
+	*matr = ll->head->next->matr;
+	if(*matr == NULL)
+		return -1;
+	return 0;
 }
 
-matrix*
-linked_list_remove_first(linked_list *ll){
-	matrix *matr;
+int
+linked_list_remove_first(linked_list *ll, matrix **matr){
 	node *n;
-	matr = ll->head->next->matr;
+	*matr = ll->head->next->matr;
+	if(*matr == NULL)
+		return -1;
 	n= ll->head->next;
 	ll->head->next = ll->head->next->next;
 	node_free(n);
-	return matr;
+	return 0;
 }
 
 
