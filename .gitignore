@@ -7,5 +7,8 @@ test
 testing/test_linked_list
 testing/test_matrix
 testing/test_file
+testing/test_producer
+testing/test_consumer
+testing/matrix_producer
 tag
 *.lyx~
