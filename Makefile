@@ -1,7 +1,7 @@
 CFLAGS+=-W -Wall -Lpthread -Lgmp -Werror -ansi -pedantic 
 #CFLAGS+=-W -Wall -Lpthread -Lgmp  -ansi -pedantic 
 LDFLAGS+=-lpthread -lgmp
-EXEC=matrix
+EXEC=matrix_prod
 SOURCES=$(wildcard *.c)
 OBJECTS=$(SOURCES:.c=.o)
 

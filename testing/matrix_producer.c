@@ -25,12 +25,12 @@ produce_matrices(FILE* f, unsigned int nb_lines, unsigned int nb_matrices){
 }
 
 int main(int argc, char**argv){
+	FILE* f;
+	char path[] ="test_files/gen.txt";
 	if(argc<3){
 		printf("usage: matrixproducer nb_m nb_lines_first\n");
 		return -1;
 	}
-	FILE* f;
-	char path[] ="test_files/gen.txt";
 	file_wopen(&f,path);
 	produce_matrices(f,atoi(argv[1]), atoi(argv[2]));
 	return 1;

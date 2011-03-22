@@ -2,7 +2,6 @@ CFLAGS+=-W -Wall -lpthread -lgmp -Werror -ansi -pedantic
 EXEC=matrixprod
 SOURCES=$(wildcard *.c)
 LIBS=$(filter-out ../main.c, $(wildcard ../*.c))
-#echo $(filter-out ../main.c, $(LIBS)) ;
 OBJECTS=$(SOURCES:.c=.o)
 LDFLAGS+=-Lpthread -Lgmp
 all: tests
@@ -13,14 +12,14 @@ exec:
 	@for f in $(SOURCES:.c=) ;  \
   	  do \
 		$(CC) $(CFLAGS) -o $$f $$f.c $(LIBS) ;\
-	  done
+	done
 
 tests: exec
 	@for f in $(SOURCES:.c=) ;  \
 		do \
 		  ./$$f ; \
 	done
-
+	
 #%.o: %.c
 #	$(CC) $(CFLAGS) -c -o $@ $<
 
