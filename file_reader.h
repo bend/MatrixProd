@@ -11,7 +11,7 @@
  * @return the file descriptor
  */
 int
-file_open(FILE** f, char* path);
+file_ropen(FILE** f, char* path);
 
 /*
  * Closes the file

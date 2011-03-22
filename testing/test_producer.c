@@ -7,7 +7,7 @@
 #include <assert.h>
 #include <pthread.h>
 
-#define PATH "test_files/test4.txt"
+#define PATH "test_files/gen.txt"
 
 void
 test_producer_alloc(){

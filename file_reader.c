@@ -1,7 +1,7 @@
 #include "file_reader.h"
 
 int
-file_open(FILE** f, char* path){
+file_ropen(FILE** f, char* path){
 	if((*f = fopen(path, "r"))==NULL)
 		return -1;
 	return 0;
