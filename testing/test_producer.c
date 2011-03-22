@@ -7,7 +7,7 @@
 #include <assert.h>
 #include <pthread.h>
 
-#define PATH "test_files/gen.txt"
+#define PATH "test_files/test4.txt"
 
 void
 test_producer_alloc(){
@@ -33,13 +33,37 @@ void test_producer_start(){
 	state *s;
 	pthread_t *t;
 	matrix *mat;
+	matrix *mat1,*mat2,*mat3;
+	int m1[] = {1,
+				1};
+	int m2[] = {2,2,
+				2,2};
+	int m3[] = {1,2,3,
+				1,2,3,
+				1,2,3};
+	assert(matrix_alloc(&mat1,2,1)==0);
+	assert(matrix_alloc(&mat2,2,2)==0);
+	assert(matrix_alloc(&mat3,3,3)==0);
+	assert(matrix_fill(mat1,m1)==0);
+	assert(matrix_fill(mat2,m2)==0);
+	assert(matrix_fill(mat3,m3)==0);
 	assert(state_alloc(&s) == 0);
 	pthread_create(t,NULL,producer_thread,(void*)s);
 	while(s->producer_finished==false ){
 		sem_wait(s->consumer_allowed_mutex);
-	 	linked_list_remove_first(s->ll, &mat);
-		matrix_print(mat);
-		fflush(stdout);
+	 	
+		assert(linked_list_remove_first(s->ll, &mat)==0);
+		assert(matrix_cmp(mat,mat1)==0);
+		sem_post(s->can_produce_sem);
+	 	
+		sem_wait(s->consumer_allowed_mutex);
+		assert(linked_list_remove_first(s->ll, &mat)==0);
+		assert(matrix_cmp(mat,mat2)==0);
+		sem_post(s->can_produce_sem);
+	 	
+		sem_wait(s->consumer_allowed_mutex);
+		assert(linked_list_remove_first(s->ll, &mat)==0);
+		assert(matrix_cmp(mat,mat3)==0);
 		sem_post(s->can_produce_sem);
 	}
 	pthread_join(*t,NULL);
