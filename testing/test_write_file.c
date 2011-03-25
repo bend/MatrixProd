@@ -15,5 +15,5 @@ int
 main(){
 
 	printf("All write_file tests succeded\n");
-	return 1;
+	return 0;
 }
