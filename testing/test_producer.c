@@ -31,7 +31,7 @@ producer_thread(void* arg){
 
 void test_producer_start(){
 	state *s;
-	pthread_t *t;
+	pthread_t t;
 	matrix *mat;
 	matrix *mat1,*mat2,*mat3;
 	int m1[] = {1,
@@ -48,7 +48,7 @@ void test_producer_start(){
 	assert(matrix_fill(mat2,m2)==0);
 	assert(matrix_fill(mat3,m3)==0);
 	assert(state_alloc(&s) == 0);
-	pthread_create(t,NULL,producer_thread,(void*)s);
+	pthread_create(&t,NULL,producer_thread,(void*)s);
 	while(s->producer_finished==false ){
 		sem_wait(s->consumer_allowed_mutex);
 	 	
@@ -66,7 +66,7 @@ void test_producer_start(){
 		assert(matrix_cmp(mat,mat3)==0);
 		sem_post(s->can_produce_sem);
 	}
-	pthread_join(*t,NULL);
+	pthread_join(t,NULL);
 }
 
 
