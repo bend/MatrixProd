@@ -33,3 +33,23 @@ producer_start(producer* p){
 	p->s->producer_finished = true;
 	return 0;
 }
+
+void*
+producer_thread_init(void* arg){
+	producer *p;
+	p=(producer*)arg;
+	if(producer_start(p)==-1){
+		perror("error while starting producer");
+		pthread_exit((void*)-1);
+	}
+	pthread_exit((void*)0);
+}
+
+int
+producer_thread_start(producer* p,pthread_t** thread){
+	if(pthread_create(*thread,NULL, producer_thread_init,(void*)p)==-1){
+		perror("error while creating producer thread");
+		return -1;
+	}
+	return 0;
+}
