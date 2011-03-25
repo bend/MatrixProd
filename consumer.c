@@ -1,5 +1,9 @@
 #include "consumer.h"
 
+/* This is the function doing the work of one consumer
+ * @param state : current state
+ * @return: 0 if success, -1 otherwise
+ */ 
 int consumer_start(state * state){
 	node *node1, *node2;
 	matrix *result;
@@ -30,7 +34,7 @@ int consumer_start(state * state){
 			if (matrix_multiply(&result, node1->matr, node2->matr)==-1){
 				perror("multiplication failed!\n");
 				/*FIXME: noeed some cleanup here */
-				exit(1);/* FIXME Needs return -1 instead of exit ??*/
+				return -1;
 			}
 #ifdef DEBUG
 	printf("done multiplying 2 matrices, will put result back in list\n");
@@ -59,7 +63,7 @@ int consumer_start(state * state){
 			sem_post(state->can_produce_sem);
 		}
 	}
-	return 1;
+	return 0;
 }
 
 bool
@@ -82,4 +86,24 @@ consumer_search_adjacent_and_mark(state* state, node** n1, node** n2){
 	}
 	sem_post(state->list_access_mutex);
 	return found;
+}
+
+void
+* consumer_thread(void * params) {
+	state * s = (state *) params;
+	if (consumer_start(s)==0)
+		pthread_exit( NULL );
+	else
+		pthread_exit( (void *) -1);
+}
+
+int
+consumer_threads_start(int i, pthread_t **threads , state *s){
+	int j;
+	for (j=0; j<i; j++) {
+		if (pthread_create(threads[i], NULL, consumer_thread, s )==-1)
+			return -1; /*FIXME: add some cleanup */
+	}
+	return 0;
+
 }
