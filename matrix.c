@@ -173,7 +173,8 @@ matrix_print(matrix *m){
 	for (i=0; i<m->l; i++){
 		for(j=0; j<m->c;j++){
 			matrix_get_elem_at(v,i,j,m);
-			printf("\t%ld", mpz_get_si(v)); 
+			gmp_printf("\t%Zd",v);
+			/*printf("\t%ld", mpz_get_si(v)); */
 		}
 		printf("\n");
 	}
