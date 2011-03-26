@@ -1,12 +1,13 @@
-CFLAGS+=-W -Wall -lpthread -lgmp -Werror -std=c99 -pedantic
+CFLAGS+=-W -Wall -lpthread -lgmp -Werror -pedantic -std=c99 -I/opt/csw/include/ -lrt
 EXEC=matrixprod
 SOURCES=$(wildcard *.c)
 LIBS=$(filter-out ../main.c, $(wildcard ../*.c))
 OBJECTS=$(SOURCES:.c=.o)
-LDFLAGS+=-Lpthread -Lgmp
+LDFLAGS+=-Lpthread -Lgmp -lrt
 all: tests
-debug: CFLAGS= -g -DDEBUG -lgmp -lpthread -std=c99
+debug: CFLAGS= -W -Wall -g -DDEBUG -lgmp -lpthread -lrt -I/opt/csw/include/ -std=c99
 debug: exec
+CC=gcc
 
 exec: 
 	@for f in $(SOURCES:.c=) ;  \

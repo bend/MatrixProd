@@ -107,7 +107,7 @@ int consumer_start(state * state){
 
 #ifdef DEBUG
 	
-	printf("%u: Thread finished successfully, will return 0\n",(unsigned int)pthread_self(),(unsigned int)pthread_self());
+	printf("%u: Thread finished successfully, will return 0\n",(unsigned int)pthread_self());
 #endif
 	/* allow consumers to unblock those waiting */
 	sem_post(state->consumer_allowed_mutex);
@@ -124,7 +124,11 @@ consumer_search_adjacent_and_mark(state* state, node** n1, node** n2){
 	sem_wait(state->list_access_mutex);
 	/* iterate over list starting at first matrix node */
 	current_node=state->ll->head->next;
-	while(current_node->next->t!=tail && found==false){
+	/* stop when current node is tail (in case of empty list
+	 *      when current_node->next is tail
+	 *      when found = true
+	 */
+	while( current_node->t!=tail && current_node->next->t!=tail && found==false){
 #ifdef DEBUG
 		printf("%u: Adjacent matrices search: while loop;\n",(unsigned int)pthread_self());
 #endif
@@ -145,6 +149,10 @@ consumer_search_adjacent_and_mark(state* state, node** n1, node** n2){
 	return found;
 }
 
+/*
+ * does a malloc of the retval returned by the thread.
+ * This needs to be freed after joining the thread and getting its return value
+ */
 void
 * consumer_thread(void * params) {
 	int * retval;
