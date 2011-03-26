@@ -1,11 +1,11 @@
-CFLAGS+=-W -Wall -lpthread -lgmp -Werror -ansi -pedantic
+CFLAGS+=-W -Wall -lpthread -lgmp -Werror -std=c99 -pedantic
 EXEC=matrixprod
 SOURCES=$(wildcard *.c)
 LIBS=$(filter-out ../main.c, $(wildcard ../*.c))
 OBJECTS=$(SOURCES:.c=.o)
 LDFLAGS+=-Lpthread -Lgmp
 all: tests
-debug: CFLAGS= -g -DDEBUG -lgmp -lpthread
+debug: CFLAGS= -g -DDEBUG -lgmp -lpthread -std=c99
 debug: exec
 
 exec: 

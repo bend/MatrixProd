@@ -195,7 +195,7 @@ test_consumer_on_manual_linked_list_4_elements_3_thread() {
 	matrix* mat;
 	state* state;
 	int j, retval_i, number_of_threads=5;
-	pthread_t threads[5];
+	pthread_t threads[number_of_threads];
 	int * retval;
 	int m1[]={
                32 , -100 ,   46 ,   17,  
