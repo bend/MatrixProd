@@ -11,7 +11,7 @@ int consumer_start(state * state){
 #ifdef DEBUG
 	printf("%u: Starting consumer\n",(unsigned int)pthread_self());
 #endif
-
+	sem_wait(state->consumer_allowed_mutex);
 	/* Loop as long as producer active and list longer than one matrix node */
 	while (state->producer_finished!=true || state->ll->head->next->next->t!=tail) {
 #ifdef DEBUG
