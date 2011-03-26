@@ -17,12 +17,12 @@ file_read_matrix_size(FILE* f, unsigned int *l, unsigned int *c){
 	char x;
 	char a;
 	int r;
-	if(fscanf(f,"%c",&a) == EOF)
-		return -1;
+	if(fscanf(f,"%c",&a) == EOF)			/* Tests the end of file */
+		return 2;
 	while(a == '\n'||a ==' '|| a==EOF){
 		r = fscanf(f,"%c",&a);
 		if(r==EOF)
-			return -1;
+			return 2;
 	}
 	fseek(f, -1, SEEK_CUR);
 	
@@ -54,8 +54,9 @@ int
 file_read_next_matrix(FILE *f, matrix** matr){
 	unsigned int l, c, i;
 	int tab[3000];
-	if(file_read_matrix_size(f, &l, &c)==-1)
-		return -1;
+	int r;
+	if((r=file_read_matrix_size(f, &l, &c))==-1||r==2)
+		return r;
 	if(matrix_alloc(matr,l,c)==-1)
 		return -1;
 	for(i=0; i<l; i++){

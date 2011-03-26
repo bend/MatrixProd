@@ -29,7 +29,7 @@ producer_alloc(char* filename,state* s,producer** p);
 /*
  * Starts the producer. The producer in NOT created in a thread.
  * @param p: a pointer to the producer desciptor
- * @return 0 if success, -1 otherwise
+ * @return 0 or 2 if success, -1 otherwise
  */
 int
 producer_start(producer* p);
@@ -38,7 +38,9 @@ producer_start(producer* p);
  * function called by pthread_create.
  * DO NOT USE ELSEWHERE
  * @param arg: a pointer to the param descriptor
- * @return : void, but a error code is set to 0 in pthread_exit if success and to -1 othrewise
+ * @return : void, but a status code is set to 0 or 2 in pthread_exit if success and to -1 othrewise, and can be retrieved with pthread_join
+ * DO NOT FORGET TO FREE THE STATUS CODE AFTER RETRIEVING
+ *
  */
 void*
 producer_thread_init(void* arg);
@@ -48,7 +50,7 @@ producer_thread_init(void* arg);
  * @param p: a pointer to the producer descriptor
  * @param thread: a pointer to the pointer of the thread
  * This function does not call pthread_join function. This function may be called in the main function
- * @return 0 if success, -1 otherwise
+ * @return 0 or 2 if success, -1 otherwise
  */
 int
 producer_thread_start(producer *p, pthread_t** thread);
