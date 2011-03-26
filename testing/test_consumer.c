@@ -17,6 +17,7 @@ test_consumer_on_manual_linked_list_2_elements() {
 			perror("Could not initialise state in test_consumer_on_manual_linked_list");
 			exit(1);
 	}
+	state->producer_finished=true;
 	
 	/* First matrix:
 	 *  3  56
@@ -124,6 +125,7 @@ test_consumer_on_manual_linked_list_4_elements() {
 			perror("Could not initialise state in test_consumer_on_manual_linked_list");
 			exit(1);
 	}
+	state->producer_finished=true;
 	
 	/* First matrix:
 	 */
@@ -192,9 +194,9 @@ test_consumer_on_manual_linked_list_4_elements_3_thread() {
 	matrix* matr,*m_result;
 	matrix* mat;
 	state* state;
-	pthread_t * threads[2];
+	int j, retval_i, number_of_threads=5;
+	pthread_t threads[5];
 	int * retval;
-	int j, retval_i;
 	int m1[]={
                32 , -100 ,   46 ,   17,  
              -120 ,    1 ,   10 , -114,
@@ -241,6 +243,7 @@ test_consumer_on_manual_linked_list_4_elements_3_thread() {
 			perror("Could not initialise state in test_consumer_on_manual_linked_list");
 			exit(1);
 	}
+	state->producer_finished=true;
 	
 	/* First matrix:
 	 */
@@ -283,10 +286,17 @@ test_consumer_on_manual_linked_list_4_elements_3_thread() {
 	matrix_fill(m_result, result);
 
 	/* start consumers */
-	consumer_threads_start(2, threads, state);
+	consumer_threads_start(number_of_threads, threads, state);
+	/*
+	for(j=0; j<4; j++){
+		sem_post(state->list_access_mutex);
+	}
+	*/
 
-	for (j=0; j<2; j++) {
-		pthread_join(*(threads[j]), (void **) &retval);
+	for (j=0; j<number_of_threads; j++) {
+		printf("will join thread %d\n", j);
+		pthread_join(threads[j], (void **) &retval);
+		printf("joined thread %d\n", j);
 		retval_i = *((int *) retval);
 		assert(retval_i==0);
 	}
@@ -318,7 +328,9 @@ main(){
 /*
 	test_consumer_on_manual_linked_list_2_elements();
 */
+	test_consumer_on_manual_linked_list_2_elements();
 	test_consumer_on_manual_linked_list_4_elements();
+	test_consumer_on_manual_linked_list_4_elements_3_thread();
 	printf("All consumer tests passed\n");
 	return 0;
 }

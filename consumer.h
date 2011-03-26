@@ -7,6 +7,9 @@
 #include "node.h"
 #include "state.h"
 #include <pthread.h>
+#ifdef DEBUG
+#include <unistd.h>
+#endif
 
 
 
@@ -43,6 +46,6 @@ consumer_search_adjacent_and_mark(state* s, node** n1, node** n2);
  * @param s: current state
  */
 int
-consumer_threads_start(int i, pthread_t **threads, state *s);
+consumer_threads_start(int i, pthread_t *threads, state *s);
 
 #endif
