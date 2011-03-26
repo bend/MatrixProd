@@ -35,7 +35,7 @@ multiplier_init(state **s, producer **p, char* input_file);
  * @param : TODO
  */
 int 
-multiplier_create_producer(producer* p, pthread_t *thread);
+multiplier_create_producer(producer* p, pthread_t **thread);
 
 /*
  * Creates the consumers threads
