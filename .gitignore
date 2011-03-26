@@ -11,4 +11,5 @@ testing/test_producer
 testing/test_consumer
 testing/matrix_producer
 tag
+gen.txt
 *.lyx~

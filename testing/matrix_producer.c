@@ -21,6 +21,7 @@ produce_matrices(FILE* f, unsigned int nb_lines, unsigned int nb_matrices){
 				fprintf(f,"%d ",rand()%127);
 		}
 	}
+
 	produce_matrices(f,nb_columns,nb_matrices-1);
 }
 
