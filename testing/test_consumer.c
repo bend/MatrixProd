@@ -294,9 +294,7 @@ test_consumer_on_manual_linked_list_4_elements_3_thread() {
 	*/
 
 	for (j=0; j<number_of_threads; j++) {
-		printf("will join thread %d\n", j);
 		pthread_join(threads[j], (void **) &retval);
-		printf("joined thread %d\n", j);
 		retval_i = *((int *) retval);
 		free(retval);
 		assert(retval_i==0);

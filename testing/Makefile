@@ -17,7 +17,7 @@ exec:
 tests: exec
 	@for f in $(SOURCES:.c=) ;  \
 		do \
-		  ./$$f ; \
+		  	[ $$f != "matrix_producer" ] &&  ./$$f ; \
 	done
 	
 #%.o: %.c
