@@ -18,7 +18,8 @@ producer_alloc(char* filename,state* s,producer** p){
 int
 producer_start(producer* p){
 	matrix *matr;
-	while(file_read_next_matrix(p->f,&matr) ==0){
+	int r;
+	while((r=file_read_next_matrix(p->f,&matr)) == 0){
 		if(sem_wait(p->s->can_produce_sem) ==-1){
 			perror("sem wait error");
 			return -1;
@@ -31,23 +32,37 @@ producer_start(producer* p){
 		}
 	}
 	p->s->producer_finished = true;
-	return 0;
+	return r;
 }
 
 void*
 producer_thread_init(void* arg){
 	producer *p;
+	int *l;
+	int r;
 	p=(producer*)arg;
-	if(producer_start(p)==-1){
-		perror("error while starting producer");
-		pthread_exit((void*)-1);
+	l = malloc(sizeof(int));
+	if(l==NULL){
+		perror("failed allocating memory for status code");
+		pthread_exit(NULL);
 	}
-	pthread_exit((void*)0);
+	if((r=producer_start(p))==-1){
+		perror("error while executing  producer");
+		*l=-1;
+		pthread_exit((void*)l);
+	}
+	*l=r;
+	pthread_exit((void*)l);
 }
 
 int
 producer_thread_start(producer* p,pthread_t** thread){
-	if(pthread_create(*thread,NULL, producer_thread_init,(void*)p)==-1){
+
+	if(*thread == NULL){
+		perror("Malloc Failed");
+		return -1;
+	}
+	if(pthread_create(*thread,NULL,producer_thread_init,(void*)p)==-1){
 		perror("error while creating producer thread");
 		return -1;
 	}

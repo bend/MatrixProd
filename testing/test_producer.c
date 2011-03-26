@@ -7,7 +7,8 @@
 #include <assert.h>
 #include <pthread.h>
 
-#define PATH "test_files/test4.txt"
+#define PATH 	"test_files/test4.txt"
+#define PATH2 	"test_files/test_fail.txt"
 
 void
 test_producer_alloc(){
@@ -25,7 +26,7 @@ producer_thread(void* arg){
 	s =(state*)arg;
 	assert(producer_alloc(PATH,s,&p)==0);
 	assert(p->f!=NULL);
-	assert(producer_start(p)==0);
+	assert(producer_start(p)>=0);
 	return NULL;
 }
 
@@ -76,7 +77,7 @@ test_producer_thread(){
 	pthread_t *t;
 	matrix *mat;
 	matrix *mat1,*mat2,*mat3;
-	int *ret_val;
+	void *status;
 	int m1[] = {1,
 				1};
 	int m2[] = {2,2,
@@ -93,7 +94,7 @@ test_producer_thread(){
 	
 	assert(state_alloc(&s) == 0);
 	assert(producer_alloc(PATH,s,&p)==0);
-	producer_thread_start(p,&t);
+	assert(producer_thread_start(p,&t)==0);
 	
 	while(s->producer_finished==false ){
 		sem_wait(s->consumer_allowed_mutex);
@@ -112,8 +113,29 @@ test_producer_thread(){
 		assert(matrix_cmp(mat,mat3)==0);
 		sem_post(s->can_produce_sem);
 	}
-	pthread_join(*t,(void**)&ret_val);
+
+	pthread_join(*t, &status);
+	assert((*(int*)status) >= 0);
+	free(status);
 }
+
+void
+test_producer_thread_failure(){
+	
+	state *s;
+	producer *p;
+	pthread_t *t;
+	void *status;
+	
+	assert(state_alloc(&s) == 0);
+	assert(producer_alloc(PATH2,s,&p)==0);
+	assert(producer_thread_start(p,&t)==0);
+	
+	pthread_join(*t, &status);
+	assert((*(int*)status) == -1);
+	free(status);
+}
+
 
 
 int
@@ -121,6 +143,7 @@ main(){
 	test_producer_alloc();
 	test_producer_start();
 	test_producer_thread();
+	test_producer_thread_failure();
 	printf("All producer tests succeded\n");
 	return EXIT_SUCCESS;
 }

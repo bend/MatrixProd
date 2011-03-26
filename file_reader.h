@@ -26,7 +26,7 @@ file_close(FILE* f);
  * @param f; the file descriptor
  * @param l : the length read
  * @param c : the rows read
- * @return 0 if succes, -1 otherwise
+ * @return 0 or 2(EOF) if succes,-1 otherwise
  */
 int
 file_read_matrix_size(FILE* f, unsigned int *l, unsigned int *c);
@@ -36,6 +36,7 @@ file_read_matrix_size(FILE* f, unsigned int *l, unsigned int *c);
  * @param f: the file descriptor
  * @param tab : the tab that will be filled with numbers
  * @param size: the number of columns of the matrix
+ * @return 0 or 2(EOF) if success, -1 otherwise
  */
 int
 file_read_line(FILE* f, int tab[], unsigned int size);
@@ -44,7 +45,7 @@ file_read_line(FILE* f, int tab[], unsigned int size);
  * Reads the next matrix in the file
  * @param f: the file descriptor
  * @param matr: the matrix not initialized
- * @return 0 if success, -1 otherwise
+ * @return 0 or 2(EOF) if success or  -1 otherwise
  */
 int
 file_read_next_matrix(FILE* f, matrix** matr);
