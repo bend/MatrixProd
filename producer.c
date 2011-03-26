@@ -57,7 +57,7 @@ producer_thread_init(void* arg){
 
 int
 producer_thread_start(producer* p,pthread_t** thread){
-
+	*thread  = malloc(sizeof(pthread_t));
 	if(*thread == NULL){
 		perror("Malloc Failed");
 		return -1;

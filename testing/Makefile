@@ -1,4 +1,4 @@
-CFLAGS+=-W -Wall -lpthread -lgmp -Werror -ansi -pedantic
+CFLAGS+=-W -Wall -lpthread -lgmp -Werror -std=c99 -pedantic
 EXEC=matrixprod
 SOURCES=$(wildcard *.c)
 LIBS=$(filter-out ../main.c, $(wildcard ../*.c))
