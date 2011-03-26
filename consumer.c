@@ -124,7 +124,11 @@ consumer_search_adjacent_and_mark(state* state, node** n1, node** n2){
 	sem_wait(state->list_access_mutex);
 	/* iterate over list starting at first matrix node */
 	current_node=state->ll->head->next;
-	while(current_node->next->t!=tail && found==false){
+	/* stop when current node is tail (in case of empty list
+	 *      when current_node->next is tail
+	 *      when found = true
+	 */
+	while( current_node->t!=tail && current_node->next->t!=tail && found==false){
 #ifdef DEBUG
 		printf("%u: Adjacent matrices search: while loop;\n",(unsigned int)pthread_self());
 #endif

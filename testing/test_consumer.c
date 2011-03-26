@@ -330,6 +330,8 @@ main(){
 	test_consumer_on_manual_linked_list_2_elements();
 	test_consumer_on_manual_linked_list_4_elements();
 	test_consumer_on_manual_linked_list_4_elements_3_thread();
+	/* FIXME: test when empty list is passed
+	 */
 	printf("All consumer tests passed\n");
 	return 0;
 }
