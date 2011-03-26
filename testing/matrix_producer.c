@@ -29,7 +29,7 @@ int main(int argc, char**argv){
 	FILE* f;
 	char path[] ="test_files/gen.txt";
 	if(argc<3){
-		printf("usage: matrixproducer nb_m nb_lines_first\n");
+		printf("usage: matrixproducer nb_lines_first nb_matrices\n");
 		return -1;
 	}
 	file_wopen(&f,path);
