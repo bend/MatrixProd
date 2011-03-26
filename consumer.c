@@ -107,7 +107,7 @@ int consumer_start(state * state){
 
 #ifdef DEBUG
 	
-	printf("%u: Thread finished successfully, will return 0\n",(unsigned int)pthread_self(),(unsigned int)pthread_self());
+	printf("%u: Thread finished successfully, will return 0\n",(unsigned int)pthread_self());
 #endif
 	/* allow consumers to unblock those waiting */
 	sem_post(state->consumer_allowed_mutex);
