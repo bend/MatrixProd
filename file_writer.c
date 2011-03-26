@@ -16,14 +16,14 @@ file_write_matrix_size(FILE* f, unsigned int l, unsigned int c){
 }
 
 int
-file_write_line(FILE *f, int tab[], unsigned int size){
+file_write_line(FILE *f, mpz_t tab[], unsigned int size){
 	unsigned int i;
 	for(i=0; i<size; i++){
 		if(i==size-1){
-			if(fprintf(f,"%d\n",tab[i]) == 0)
+			if(gmp_fprintf(f,"%Zd\n",tab[i]) == 0)
 				return -1;
 		}else{
-			if(fprintf(f,"%d ",tab[i]) == 0)
+			if(gmp_fprintf(f,"%Zd ",tab[i]) == 0)
 				return -1;
 		}
 	}
@@ -33,8 +33,20 @@ file_write_line(FILE *f, int tab[], unsigned int size){
 
 int
 file_write_matrix(FILE* f, matrix* matr){
-	fprintf(f," ");
-	printf("%d\n",matr->l);
+	mpz_t v;
+	mpz_init(v);
+	unsigned int i,j;
+	file_write_matrix_size(f, matr->l, matr->c);
+	
+	for (i=0; i<matr->l; i++){
+		for(j=0; j<matr->c;j++){
+			matrix_get_elem_at(v,i,j,matr);
+			gmp_fprintf(f,"\t%Zd",v);
+		}
+		gmp_fprintf(f,"\n");
+	}
+	
+	
 	return 0;
 
 }

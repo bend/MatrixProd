@@ -7,18 +7,32 @@ multiplier_start(unsigned int nb_threads, char* path_to_input_file, char* path_t
 	state *s;
 	unsigned int i;
 	producer *p;
+	FILE *f;
 	pthread_t *producer_thread;
 	pthread_t consumer_threads[nb_threads-1];
 	
-	multiplier_init(&s,&p, path_to_input_file);
-	multiplier_create_producer(p, &producer_thread);
-	multiplier_create_consumers(nb_threads-1, consumer_threads,s);
+	if(multiplier_init(&s,&p, path_to_input_file)==-1){
+		return -1;
+	}
+	if(multiplier_create_producer(p, &producer_thread)==-1){
+		return -1;
+	}
+	if(multiplier_create_consumers(nb_threads-1, consumer_threads,s)==-1){
+		return -1;
+	}
 	
-	pthread_join(*producer_thread,NULL);
-	for(i=0; i<nb_threads-1; i++)
-		pthread_join(consumer_threads[i],NULL);
+	if(pthread_join(*producer_thread,NULL)==-1){
+		return -1;
+	}
+	for(i=0; i<nb_threads-1; i++){
+		if(pthread_join(consumer_threads[i],NULL)==-1){
+			return -1;
+		}
+	}
+
 	matrix_print(s->ll->head->next->matr);
-	
+	file_wopen(&f,path_to_output_file);
+	file_write_matrix(f,s->ll->head->next->matr);
 	printf("%s",path_to_output_file);
 	printf("%s",path_to_input_file);
 	printf("%d",nb_threads);
