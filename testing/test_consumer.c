@@ -52,8 +52,12 @@ test_consumer_on_manual_linked_list_2_elements() {
 	matrix_alloc(&m_result, 3, 3);
 	matrix_fill(m_result, result);
 
+	/* triggers immediate start of consumers */
+	sem_post(state->consumer_allowed_mutex);
+
 	/* start consumer */
 	consumer_start(state);
+
 
 	/* Check that the only matrix in the linked list is the result
 	 */
@@ -167,6 +171,9 @@ test_consumer_on_manual_linked_list_4_elements() {
 	matrix_alloc(&m_result, 5, 3);
 	matrix_fill(m_result, result);
 
+	/* triggers immediate start of consumers */
+	sem_post(state->consumer_allowed_mutex);
+
 	/* start consumer */
 	consumer_start(state);
 
@@ -278,6 +285,8 @@ test_consumer_on_manual_linked_list_4_elements_wrong_size() {
 	matrix_alloc(&m_result, 5, 3);
 	matrix_fill(m_result, result);
 
+	/* triggers immediate start of consumers */
+	sem_post(state->consumer_allowed_mutex);
 	/* start consumer */
 	assert(consumer_start(state)==-1);
 
@@ -304,7 +313,7 @@ test_consumer_on_manual_linked_list_4_elements_3_thread() {
 	matrix* matr,*m_result;
 	matrix* mat;
 	state* state;
-	int j, retval_i, number_of_threads=5;
+	int i, j, retval_i, number_of_threads=5;
 	pthread_t threads[number_of_threads];
 	int * retval;
 	int m1[]={
@@ -395,6 +404,10 @@ test_consumer_on_manual_linked_list_4_elements_3_thread() {
 	matrix_alloc(&m_result, 5, 3);
 	matrix_fill(m_result, result);
 
+	for (i=0; i<number_of_threads; i++){
+		/* triggers immediate start of consumers */
+		sem_post(state->consumer_allowed_mutex);
+	}
 	/* start consumers */
 	consumer_threads_start(number_of_threads, threads, state);
 	/*
