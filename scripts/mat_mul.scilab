@@ -1,0 +1,8 @@
+stacksize(2.0d0**25)
+Max=3
+Res = fscanfMat('/tmp/M1')
+for i=2 : 1: Max
+  M = fscanfMat('/tmp/M'+msprintf("%d",i))
+  Res = Res*M
+end
+fprintfMat('/tmp/Res',Res)
