@@ -23,23 +23,37 @@ int
 multiplier_start(unsigned int nb_threads, char* path_to_input_file, char* path_to_output_file);
 
 /*
+ * Writes the matrix to the output file
+ * @param matr: a pointer to the matrix
+ * @param output_file : the output file
+ */
+int
+multiplier_write_result(matrix* matr, char* output_file);
+
+/*
  * Initializes the producer descriptor, the state descriptor
- * @param 
- *
+ * @param s: a pointer to the pointer of the state descriptor
+ * @param p: a pointer to the pointer of the producer descriptor
+ * @return 0 if success, -1 otherwise
  */
 int
 multiplier_init(state **s, producer **p, char* input_file);
 
 /*
  * Creates the producer thread
- * @param : TODO
+ * @param p: a pointer to the pointer of the producer descriptor
+ * @param thread : a pointer to the pointer of the thread descriptor
+ * @return 0 if success, -1 otherwise
  */
 int 
 multiplier_create_producer(producer* p, pthread_t **thread);
 
 /*
  * Creates the consumers threads
- * @param: TODO
+ * @param nb_threads: the number of threads
+ * @param threads: a pointer to the array of threads
+ * @param s: a pointer to the state
+ * @return 0 if success, -1 otherwise
  */
 int
 multiplier_create_consumers(unsigned int nb_threads, pthread_t *threads, state *s);

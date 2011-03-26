@@ -7,7 +7,6 @@ multiplier_start(unsigned int nb_threads, char* path_to_input_file, char* path_t
 	state *s;
 	unsigned int i;
 	producer *p;
-	FILE *f;
 	pthread_t *producer_thread;
 	pthread_t consumer_threads[nb_threads-1];
 	
@@ -29,15 +28,20 @@ multiplier_start(unsigned int nb_threads, char* path_to_input_file, char* path_t
 			return -1;
 		}
 	}
-
-	matrix_print(s->ll->head->next->matr);
-	file_wopen(&f,path_to_output_file);
-	file_write_matrix(f,s->ll->head->next->matr);
-	printf("%s",path_to_output_file);
-	printf("%s",path_to_input_file);
-	printf("%d",nb_threads);
+	if(multiplier_write_result(s->ll->head->next->matr,path_to_output_file) == -1)
+		return -1;
 	return 0;
 
+}
+
+int
+multiplier_write_result(matrix* matr, char* output_file){
+	FILE *f;
+	if(file_wopen(&f,output_file)==-1)
+		return -1;
+	if(file_write_matrix(f,matr)==-1)
+		return -1;
+	return 0;
 }
 
 
