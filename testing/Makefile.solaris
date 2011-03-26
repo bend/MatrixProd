@@ -1,0 +1,36 @@
+CFLAGS+=-W -Wall -lpthread -lgmp -Werror -pedantic -std=c99 -I/opt/csw/include/ -lrt
+EXEC=matrixprod
+SOURCES=$(wildcard *.c)
+LIBS=$(filter-out ../main.c, $(wildcard ../*.c))
+OBJECTS=$(SOURCES:.c=.o)
+LDFLAGS+=-Lpthread -Lgmp -lrt
+all: tests
+debug: CFLAGS= -W -Wall -g -DDEBUG -lgmp -lpthread -lrt -I/opt/csw/include/ -std=c99
+debug: exec
+CC=gcc
+
+exec: 
+	@for f in $(SOURCES:.c=) ;  \
+  	  do \
+		$(CC) $(CFLAGS) -o $$f $$f.c $(LIBS) ;\
+	done
+
+tests: exec
+	@for f in $(SOURCES:.c=) ;  \
+		do \
+		  	[ $$f != "matrix_producer" ] &&  ./$$f ; \
+	done
+	
+#%.o: %.c
+#	$(CC) $(CFLAGS) -c -o $@ $<
+
+.PHONY: clean mrproper
+
+clean:
+	@for f in $(SOURCES:.c=) ;  \
+		do \
+		  rm ./$$f ; \
+	done
+
+mrproper:
+	@rm $(EXEC)

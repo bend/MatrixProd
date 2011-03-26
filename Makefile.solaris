@@ -1,0 +1,25 @@
+CFLAGS+=-W -Wall -Lpthread -Lgmp -Werror -pedantic -std=gnu99 -I/opt/csw/include/
+#CFLAGS+=-W -Wall -Lpthread -Lgmp  -ansi -pedantic 
+LDFLAGS+=-lpthread -lgmp -lrt
+EXEC=matrix_prod
+SOURCES=$(wildcard *.c)
+OBJECTS=$(SOURCES:.c=.o)
+CC=gcc 
+
+all: $(EXEC)
+debug: CFLAGS+= -DDEBUG -g
+debug: $(EXEC)
+
+$(EXEC): $(OBJECTS)
+	$(CC) -o $@ $(OBJECTS) $(LDFLAGS)
+
+%.o: %.c
+	$(CC) $(CFLAGS) -c -o $@ $<
+
+.PHONY: clean mrproper
+
+clean:
+	@rm $(OBJECTS)
+
+mrproper:
+	@rm $(EXEC)
