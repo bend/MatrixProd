@@ -145,6 +145,10 @@ consumer_search_adjacent_and_mark(state* state, node** n1, node** n2){
 	return found;
 }
 
+/*
+ * does a malloc of the retval returned by the thread.
+ * This needs to be freed after joining the thread and getting its return value
+ */
 void
 * consumer_thread(void * params) {
 	int * retval;

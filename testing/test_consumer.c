@@ -298,6 +298,7 @@ test_consumer_on_manual_linked_list_4_elements_3_thread() {
 		pthread_join(threads[j], (void **) &retval);
 		printf("joined thread %d\n", j);
 		retval_i = *((int *) retval);
+		free(retval);
 		assert(retval_i==0);
 	}
 	/* Check that the only matrix in the linked list is the result
