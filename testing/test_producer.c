@@ -9,12 +9,12 @@
 
 #define PATH 	"test_files/test4.txt"
 #define PATH2 	"test_files/test_fail.txt"
-
+#define BUFFER_SIZE	10
 void
 test_producer_alloc(){
 	producer *p;
 	state *s;
-	assert(state_alloc(&s)==0);
+	assert(state_alloc(&s,BUFFER_SIZE)==0);
 	assert(producer_alloc(PATH,s,&p)==0);
 	assert(p->f!=NULL);
 }
@@ -48,7 +48,7 @@ void test_producer_start(){
 	assert(matrix_fill(mat1,m1)==0);
 	assert(matrix_fill(mat2,m2)==0);
 	assert(matrix_fill(mat3,m3)==0);
-	assert(state_alloc(&s) == 0);
+	assert(state_alloc(&s,BUFFER_SIZE) == 0);
 	pthread_create(&t,NULL,producer_thread,(void*)s);
 	while(s->producer_finished==false ){
 		sem_wait(s->consumer_allowed_mutex);
@@ -92,7 +92,7 @@ test_producer_thread(){
 	assert(matrix_fill(mat2,m2)==0);
 	assert(matrix_fill(mat3,m3)==0);
 	
-	assert(state_alloc(&s) == 0);
+	assert(state_alloc(&s,BUFFER_SIZE) == 0);
 	assert(producer_alloc(PATH,s,&p)==0);
 	assert(producer_thread_start(p,&t)==0);
 	
@@ -127,7 +127,7 @@ test_producer_thread_failure(){
 	pthread_t *t;
 	void *status;
 	
-	assert(state_alloc(&s) == 0);
+	assert(state_alloc(&s,BUFFER_SIZE) == 0);
 	assert(producer_alloc(PATH2,s,&p)==0);
 	assert(producer_thread_start(p,&t)==0);
 	

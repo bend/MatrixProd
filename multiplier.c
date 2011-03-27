@@ -9,8 +9,7 @@ multiplier_start(unsigned int nb_threads, char* path_to_input_file, char* path_t
 	producer *p;
 	pthread_t *producer_thread;
 	pthread_t consumer_threads[nb_threads-1];
-	/*void* status[nb_threads];*/
-	
+	void* status[nb_threads];
 	if(multiplier_init(&s,&p, path_to_input_file)==-1){
 		return -1;
 	}
@@ -20,24 +19,27 @@ multiplier_start(unsigned int nb_threads, char* path_to_input_file, char* path_t
 	if(multiplier_create_consumers(nb_threads-1, consumer_threads,s)==-1){
 		return -1;
 	}
-	
-	if(pthread_join(*producer_thread,NULL)==-1){
+	/* Join the threads and put the status code in a array*/
+	if(pthread_join(*producer_thread,&status[0])==-1){
 		return -1;
 	}
 	for(i=0; i<nb_threads-1; i++){
-		if(pthread_join(consumer_threads[i],NULL)==-1){
+		if(pthread_join(consumer_threads[i],&status[i+1])==-1){
 			return -1;
 		}
 	}
-	/*FIXME
+	/* Check the return status of the threads */
 	for(i=0; i<nb_threads; i++)
-		if(*(int*)status[i] == -1)
+		/* If thread failed  */
+		if(*(int*)status[i]== -1)
 			return -1;
-
-	*/
+	
+	/* Write result to the output file */
 	if(multiplier_write_result(s->ll->head->next->matr,path_to_output_file) == -1)
 		return -1;
+	
 	/*FIXME: add cleanup code */
+
 	state_free(s);
 	free(producer_thread);
 	return 0;
