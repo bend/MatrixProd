@@ -12,6 +12,7 @@
 #include "matrix.h"
 #include "state.h"
 
+#define RATIO 3
 /*
  * Starts the multiplier with nb_threads threads: nb_threads-1 consumer and 1 producer
  * @param nb_threads: the number of threads to be used including the producers and the consumers. The main threads is not included
@@ -37,7 +38,7 @@ multiplier_write_result(matrix* matr, char* output_file);
  * @return 0 if success, -1 otherwise
  */
 int
-multiplier_init(state **s, producer **p, char* input_file);
+multiplier_init(state **s, producer **p, char* input_file,unsigned int nb_threads);
 
 /*
  * Creates the producer thread
