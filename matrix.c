@@ -19,7 +19,6 @@ matrix_alloc(matrix ** matr,unsigned int l, unsigned int c){
 		(*matr)->matrix[i] = malloc(sizeof(mpz_t)*c);
 		if((*matr)->matrix[i] == NULL){
 		  	perror("malloc error");
-			/*FIXME is this correct: free the other cells allocated ? */
 			for(j=0; j<i; j++)
 			{
 				free((*matr)->matrix[j]);
@@ -87,7 +86,6 @@ int
 matrix_fill_line(matrix* matr, int line, int from[]){
 	mpz_t v;
 	unsigned int i;
-	/* TODO check matrix size and compare to tab size */
 	mpz_init(v);
 	for(i=0; i<matr->c; i++){
 		mpz_set_si(v,from[i]);
