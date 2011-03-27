@@ -30,11 +30,13 @@ producer_start(producer* p){
 		}
 		if(linked_list_add_last(p->s->ll,matr)==-1)
 			return -1;
+		/* Tell to a consumer that a new matrix is added */
 		if(sem_post(p->s->consumer_allowed_mutex)==-1){
 			perror("sem_post error");
 			return -1;
 		}
 	}
+	/* set the finish state to true to signal a consumer that no new matrices will be added */
 	p->s->producer_finished = true;
 	return r;
 }
@@ -48,7 +50,9 @@ producer_thread_init(void* arg){
 	l = malloc(sizeof(int));
 	if(l==NULL){
 		perror("failed allocating memory for status code");
+		/* increment the exit_on_error value to stop consumers, free the mem and exit the program */
 		p->s->exit_on_error++;
+		/* post the mutex to unblock waiting consumers.*/
 		if(sem_post(p->s->consumer_allowed_mutex)==-1){
 			perror("post error");
 		}
@@ -57,7 +61,9 @@ producer_thread_init(void* arg){
 	if((r=producer_start(p))==-1){
 		perror("error while executing  producer");
 		*l=-1;
+		/* increment the exit_on_error value to stop consumers, free the mem and exit the program */
 		p->s->exit_on_error++;
+		/* post the mutex to unblock waiting consumers.*/
 		if(sem_post(p->s->consumer_allowed_mutex)==-1){
 			perror("post error");
 		}
