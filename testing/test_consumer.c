@@ -1,6 +1,6 @@
 #include "../consumer.h"
 #include <assert.h>
-
+#define BUFFER_SIZE 10
 
 void
 test_consumer_on_manual_linked_list_2_elements() {
@@ -13,7 +13,7 @@ test_consumer_on_manual_linked_list_2_elements() {
 
 	/* initialise state
 	 */
-	if (state_alloc(&state)==-1){
+	if (state_alloc(&state,BUFFER_SIZE)==-1){
 			perror("Could not initialise state in test_consumer_on_manual_linked_list");
 			exit(1);
 	}
@@ -125,7 +125,7 @@ test_consumer_on_manual_linked_list_4_elements() {
 
 	/* initialise state
 	 */
-	if (state_alloc(&state)==-1){
+	if (state_alloc(&state,BUFFER_SIZE)==-1){
 			perror("Could not initialise state in test_consumer_on_manual_linked_list");
 			exit(1);
 	}
@@ -239,7 +239,7 @@ test_consumer_on_manual_linked_list_4_elements_wrong_size() {
 
 	/* initialise state
 	 */
-	if (state_alloc(&state)==-1){
+	if (state_alloc(&state,BUFFER_SIZE)==-1){
 			perror("Could not initialise state in test_consumer_on_manual_linked_list");
 			exit(1);
 	}
@@ -359,7 +359,7 @@ test_consumer_on_manual_linked_list_4_elements_3_thread() {
 
 	/* initialise state
 	 */
-	if (state_alloc(&state)==-1){
+	if (state_alloc(&state,BUFFER_SIZE)==-1){
 			perror("Could not initialise state in test_consumer_on_manual_linked_list");
 			exit(1);
 	}
