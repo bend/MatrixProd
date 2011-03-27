@@ -13,12 +13,12 @@
 #define CAN_PRODUCE_SEM		"/can_produce_mutex"
 
 struct state{
-	sem_t *list_access_mutex;
-	sem_t *consumer_allowed_mutex;
-	sem_t *can_produce_sem;
-	linked_list* ll;
-	bool producer_finished;
-	unsigned exit_on_error;
+	sem_t *list_access_mutex;		/* to ensure that only on thread can access the list of matrices when doing changes requiring exclusive access */
+	sem_t *consumer_allowed_mutex;	/* to notify waiting consumer that one consumer can continue and look for matrices to multiply. This is a semaphore. */
+	sem_t *can_produce_sem;			/* to notify the producer that it should add a matrix to the linked list */
+	linked_list* ll;				/* linked list of nodes containing one matrix each */
+	bool producer_finished;			/* flag indicating if producer is finished, ie no new matrix will me added to the linked list */
+	unsigned exit_on_error;			/* flag indicating if an error happened. if >0, threads finish immediately and exit */
 };
 typedef struct state state;
 
