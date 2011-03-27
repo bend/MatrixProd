@@ -19,7 +19,7 @@ matrix_alloc(matrix ** matr,unsigned int l, unsigned int c){
 		(*matr)->matrix[i] = malloc(sizeof(mpz_t)*c);
 		if((*matr)->matrix[i] == NULL){
 		  	perror("malloc error");
-			/*free the other cells allocated ? */
+			/*FIXME is this correct: free the other cells allocated ? */
 			for(j=0; j<i; j++)
 			{
 				free((*matr)->matrix[j]);
@@ -39,6 +39,8 @@ matrix_alloc(matrix ** matr,unsigned int l, unsigned int c){
 int
 matrix_free(matrix* matr){
 	unsigned int i,j;
+	if (matr==NULL) 
+		return 0;
 	for (i=0; i<matr->l; i++){
 		for(j=0;j<matr->c;j++){
 			mpz_clear(matr->matrix[i][j]);
@@ -47,7 +49,7 @@ matrix_free(matrix* matr){
 	}
 	free(matr->matrix);
   	free(matr);
-	return 1;
+	return 0; /* FIXME: was 1; Raph changed it in return 0 for success. Check this is correct  */
 }
 
 int 

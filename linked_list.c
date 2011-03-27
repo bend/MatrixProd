@@ -24,7 +24,13 @@ linked_list_alloc(linked_list **ll){
 
 void
 linked_list_free(linked_list *ll){
-  	/*TODO : FREE ALL THE NODES ?*/
+	node *n, *next;
+	n=ll->head;
+    while (n!=NULL) {
+		next=n->next;
+		node_free(n);
+		n=next;
+	}
   	free(ll);
 }
 
