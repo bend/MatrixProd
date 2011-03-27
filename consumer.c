@@ -11,7 +11,7 @@ int consumer_start(state * state){
 	sem_wait(state->consumer_allowed_mutex);
 	/* Loop as long as producer active and list longer than one matrix node 
 	 * and no error happened anywhere else in the code */
-	while ((state->producer_finished!=true || state->ll->head->next->next->t!=tail) && state->exit_on_error==0) {
+	while (state->ll->head->next->t!=tail && (state->producer_finished!=true || state->ll->head->next->next->t!=tail) && state->exit_on_error==0) {
 		/* Reinitialise pointers to null at start of loop as they're freed at
 		 * the end iof the loop*/
 		node1=NULL;
@@ -22,7 +22,6 @@ int consumer_start(state * state){
 		 */
 		/* try to find matrices to multiply as long as producer active and list
 		 * has more than one matrix node */
-		/* FIXME: check that second test is ok when list empty */
 		while (!consumer_search_adjacent_and_mark(state, &node1, &node2) &&  state->ll->head->next->next->t!=tail && state->exit_on_error==0){
 			sem_wait(state->consumer_allowed_mutex);
 		}
@@ -34,7 +33,6 @@ int consumer_start(state * state){
 			/* compute the multiplication of m1 and m2 */
 			if (matrix_multiply(&result, node1->matr, node2->matr)==-1){
 				perror("multiplication failed!\n");
-				/*FIXME: noeed some cleanup here */
 				return -1;
 			}
 
