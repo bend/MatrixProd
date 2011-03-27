@@ -9,8 +9,9 @@ int consumer_start(state * state){
 	matrix *result;
 
 	sem_wait(state->consumer_allowed_mutex);
-	/* Loop as long as producer active and list longer than one matrix node */
-	while (state->producer_finished!=true || state->ll->head->next->next->t!=tail) {
+	/* Loop as long as producer active and list longer than one matrix node 
+	 * and no error happened anywhere else in the code */
+	while ((state->producer_finished!=true || state->ll->head->next->next->t!=tail) && state->exit_on_error==0) {
 		/* Reinitialise pointers to null at start of loop as they're freed at
 		 * the end iof the loop*/
 		node1=NULL;
@@ -22,14 +23,14 @@ int consumer_start(state * state){
 		/* try to find matrices to multiply as long as producer active and list
 		 * has more than one matrix node */
 		/* FIXME: check that second test is ok when list empty */
-		while (!consumer_search_adjacent_and_mark(state, &node1, &node2) &&  state->ll->head->next->next->t!=tail){
+		while (!consumer_search_adjacent_and_mark(state, &node1, &node2) &&  state->ll->head->next->next->t!=tail && state->exit_on_error==0){
 			sem_wait(state->consumer_allowed_mutex);
 		}
 		/* if node1 and node2!=null , it means we reserved 2 instances,
 		 * otherwise the computation is finished and we will get out of the
 		 * while loop too.
 		 * */
-		if (node1!=NULL && node2!=NULL) {
+		if (node1!=NULL && node2!=NULL && state->exit_on_error==0) {
 			/* compute the multiplication of m1 and m2 */
 			if (matrix_multiply(&result, node1->matr, node2->matr)==-1){
 				perror("multiplication failed!\n");
@@ -78,7 +79,7 @@ consumer_search_adjacent_and_mark(state* state, node** n1, node** n2){
 	 *      when current_node->next is tail
 	 *      when found = true
 	 */
-	while( current_node->t!=tail && current_node->next->t!=tail && found==false){
+	while( current_node->t!=tail && current_node->next->t!=tail && found==false && state->exit_on_error==0 ){
 		if (current_node->t==unreserved && current_node->next->t==unreserved) {
 			/* two adjacent unreserved nodes found!
 			 *  take matrices and mark nodes as reserved */
@@ -96,6 +97,7 @@ consumer_search_adjacent_and_mark(state* state, node** n1, node** n2){
 		}
 	}
 	sem_post(state->list_access_mutex);
+
 	return found;
 }
 
@@ -106,22 +108,16 @@ consumer_search_adjacent_and_mark(state* state, node** n1, node** n2){
 void
 * consumer_thread(void * params) {
 	int * retval;
+	state *s;
 	retval=malloc(sizeof(int));
-#ifdef DEBUG
-	printf("%u: will sleep\n",(unsigned int)pthread_self());
-	fflush(stdout);
-	sleep(rand()%20);
-	printf("%u: done sleep\n",(unsigned int)pthread_self());
-	fflush(stdout);
-	printf("%u: Begin of consumer_thread\n",(unsigned int)pthread_self());
-	fflush(stdout);
-#endif
-	if (consumer_start( (state *) params )==0){
+	s = (state *) params;
+	if (consumer_start( s )==0){
 		*retval=0;
 		pthread_exit( (void *) retval);
 	}
 	else {
 		*retval=-1;
+		s->exit_on_error++;
 		pthread_exit( (void *) retval);
 	}
 }
