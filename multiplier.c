@@ -29,16 +29,15 @@ multiplier_start(unsigned int nb_threads, char* path_to_input_file, char* path_t
 		}
 	}
 	/* Check the return status of the threads */
-	for(i=0; i<nb_threads; i++)
+	for(i=0; i<nb_threads; i++){
 		/* If thread failed  */
 		if(*(int*)status[i]== -1)
 			return -1;
+	}
 	
 	/* Write result to the output file */
 	if(multiplier_write_result(s->ll->head->next->matr,path_to_output_file) == -1)
 		return -1;
-	
-	/*FIXME: add cleanup code */
 
 	producer_free(p);
 	free(producer_thread);

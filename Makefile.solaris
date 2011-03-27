@@ -1,7 +1,7 @@
 CFLAGS+=-W -Wall -Lpthread -Lgmp -Werror -pedantic -std=gnu99 -I/opt/csw/include/
 #CFLAGS+=-W -Wall -Lpthread -Lgmp  -ansi -pedantic 
 LDFLAGS+=-lpthread -lgmp -lrt
-EXEC=matrix_prod
+EXEC=matrixprod
 SOURCES=$(wildcard *.c)
 OBJECTS=$(SOURCES:.c=.o)
 CC=gcc 

@@ -28,6 +28,7 @@ state_alloc(state** s, unsigned int buf_size){
 	}
 	linked_list_alloc(&(*s)->ll);
 	(*s)->producer_finished = false;
+	(*s)->exit_on_error = 0;
 	return 0;
 }
 

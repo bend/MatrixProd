@@ -18,6 +18,7 @@ struct state{
 	sem_t *can_produce_sem;
 	linked_list* ll;
 	bool producer_finished;
+	unsigned exit_on_error;
 };
 typedef struct state state;
 
