@@ -93,6 +93,7 @@ matrix_fill_line(matrix* matr, int line, int from[]){
 		mpz_set_si(v,from[i]);
 		matrix_set_elem_at(line,i,matr,v);
 	}
+	mpz_clear(v);
 	return 0;
 }
 
