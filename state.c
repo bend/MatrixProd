@@ -2,7 +2,7 @@
 
 
 int
-state_alloc(state** s){
+state_alloc(state** s, unsigned int buf_size){
 	*s = malloc(sizeof(state));
 	if(*s == NULL){
 		perror("malloc error");
@@ -21,7 +21,7 @@ state_alloc(state** s){
 		return -1;
 	}
 	sem_unlink(CAN_PRODUCE_SEM);
-	(*s)->can_produce_sem = sem_open(CAN_PRODUCE_SEM, O_CREAT|O_EXCL,0666,BUFFER_SIZE);
+	(*s)->can_produce_sem = sem_open(CAN_PRODUCE_SEM, O_CREAT|O_EXCL,0666,buf_size);
 	if((*s)->can_produce_sem == NULL){
 		perror("mutex error");
 		return -1;

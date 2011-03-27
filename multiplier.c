@@ -10,7 +10,7 @@ multiplier_start(unsigned int nb_threads, char* path_to_input_file, char* path_t
 	pthread_t *producer_thread;
 	pthread_t consumer_threads[nb_threads-1];
 	void* status[nb_threads];
-	if(multiplier_init(&s,&p, path_to_input_file)==-1){
+	if(multiplier_init(&s,&p, path_to_input_file, nb_threads)==-1){
 		return -1;
 	}
 	if(multiplier_create_producer(p, &producer_thread)==-1){
@@ -57,8 +57,8 @@ multiplier_write_result(matrix* matr, char* output_file){
 
 
 int 
-multiplier_init(state **s, producer **p, char* input_file){
-	if(state_alloc(s)==-1)
+multiplier_init(state **s, producer **p, char* input_file, unsigned int nb_threads){
+	if(state_alloc(s,nb_threads*RATIO)==-1)
 		return -1;
 	if(producer_alloc(input_file, *s, p)==-1){
 		state_free(*s);

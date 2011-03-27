@@ -11,7 +11,6 @@
 #define LIST_ACCESS_MUTEX	"/list_mutex"
 #define CONS_MUTEX			"/adjacent_mutex"
 #define CAN_PRODUCE_SEM		"/can_produce_mutex"
-#define BUFFER_SIZE			 4
 
 struct state{
 	sem_t *list_access_mutex;
@@ -32,7 +31,7 @@ typedef struct state state;
  * @return 0 if success, -1 otherwise
  */ 
 int
-state_alloc(state** s);
+state_alloc(state** s, unsigned int buf_size);
 
 /*
  * Frees the state;
