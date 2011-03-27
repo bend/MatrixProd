@@ -49,7 +49,7 @@ producer_thread_init(void* arg){
 		pthread_exit(NULL);
 	}
 	if((r=producer_start(p))==-1){
-		perror("error while executing  producer");
+		fprintf(stderr, "error while executing producer\n");
 		*l=-1;
 		pthread_exit((void*)l);
 	}
