@@ -51,11 +51,9 @@ producer_thread_init(void* arg){
 	if((r=producer_start(p))==-1){
 		perror("error while executing  producer");
 		*l=-1;
-		file_close(p->f);
 		pthread_exit((void*)l);
 	}
 	*l=r;
-	file_close(p->f);
 	pthread_exit((void*)l);
 }
 
@@ -72,4 +70,11 @@ producer_thread_start(producer* p,pthread_t** thread){
 		return -1;
 	}
 	return 0;
+}
+
+void
+producer_free(producer *p) {
+	state_free(p->s);
+	file_close(p->f);
+	free(p);
 }

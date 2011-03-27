@@ -160,6 +160,7 @@ matrix_compute_cell(matrix* res, unsigned int l, unsigned int c, matrix *m1, mat
 	matrix_set_elem_at(l,c,res, result);
 	mpz_clear(c1);
 	mpz_clear(c2);
+	mpz_clear(result);
 	/*printf("has set result(%i,%i)\n",l,c);*/
 	return 0;
 }

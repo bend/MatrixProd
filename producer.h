@@ -56,11 +56,11 @@ int
 producer_thread_start(producer *p, pthread_t** thread);
 
 /*
- * Stops the producer
- * TODO
+ * Free the producer struct
+ * @param p: pointer to producer
  */
-int
-producer_halt(producer *p, pthread_t *thread);
+void
+producer_free(producer *p);
 
 
 #endif

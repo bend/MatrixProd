@@ -40,7 +40,7 @@ multiplier_start(unsigned int nb_threads, char* path_to_input_file, char* path_t
 	
 	/*FIXME: add cleanup code */
 
-	state_free(s);
+	producer_free(p);
 	free(producer_thread);
 	return 0;
 
