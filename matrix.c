@@ -120,7 +120,7 @@ matrix_multiply(matrix** result, matrix* m1, matrix* m2){
 	unsigned int i,j;
 	if ( m1->c!=m2->l)
 	{
-		perror("lines and columns don't match for multiplication\n");
+		perror("Lines and columns don't match for multiplication\n");
 		return -1;
 	}
 	if (matrix_alloc(result, m1->l, m2->c)==-1)
