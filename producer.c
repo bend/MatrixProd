@@ -21,7 +21,9 @@ int
 producer_start(producer* p){
 	matrix *matr;
 	int r;
-	while((r=file_read_next_matrix(p->f,&matr)) == 0){
+	/* while there is a matrix in the file that is correct and there is no error in consumers threads */ 
+	while((r=file_read_next_matrix(p->f,&matr)) == 0 && p->s->exit_on_error==0){
+		/* If the buffer is not full */
 		if(sem_wait(p->s->can_produce_sem) ==-1){
 			perror("sem wait error");
 			return -1;
@@ -46,11 +48,19 @@ producer_thread_init(void* arg){
 	l = malloc(sizeof(int));
 	if(l==NULL){
 		perror("failed allocating memory for status code");
+		p->s->exit_on_error++;
+		if(sem_post(p->s->consumer_allowed_mutex)==-1){
+			perror("post error");
+		}
 		pthread_exit(NULL);
 	}
 	if((r=producer_start(p))==-1){
 		perror("error while executing  producer");
 		*l=-1;
+		p->s->exit_on_error++;
+		if(sem_post(p->s->consumer_allowed_mutex)==-1){
+			perror("post error");
+		}
 		pthread_exit((void*)l);
 	}
 	*l=r;
