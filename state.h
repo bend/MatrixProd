@@ -11,7 +11,7 @@
 #define LIST_ACCESS_MUTEX	"/list_mutex"
 #define CONS_MUTEX			"/adjacent_mutex"
 #define CAN_PRODUCE_SEM		"/can_produce_mutex"
-#define BUFFER_SIZE			 10
+#define BUFFER_SIZE			 4
 
 struct state{
 	sem_t *list_access_mutex;

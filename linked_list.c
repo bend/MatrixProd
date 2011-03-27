@@ -84,7 +84,7 @@ linked_list_remove_first(linked_list *ll, matrix **matr){
 		return -1;
 	n= ll->head->next;
 	ll->head->next = ll->head->next->next;
-	node_free(n);
+	node_only_free(n);
 	return 0;
 }
 

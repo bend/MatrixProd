@@ -51,3 +51,8 @@ node_free(node* n){
 	matrix_free(n->matr);
   	free(n);
 }
+
+void
+node_only_free(node* n){
+	free(n);
+}

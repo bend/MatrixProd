@@ -93,9 +93,9 @@ void test_linked_list(){
 
 int 
 main(){
-	test_node_create();
+	/*test_node_create();
 	test_node_set_get();
-	test_node_set_elem();
+	test_node_set_elem();*/
 	test_linked_list();
 	printf("All linked list tests Succeeded\n");
 	return EXIT_SUCCESS;

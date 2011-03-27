@@ -65,9 +65,15 @@ int
 node_set_elem(node* n, matrix* matr);
 
 /*
- * Frees the node
+ * Frees the node and the matrix 
  * @param n: a pointer to the node
  */
 void
 node_free(node* n);
+
+/*
+ * Frees only the node, without freeing the matrix
+ */
+void
+node_only_free(node* n);
 #endif
