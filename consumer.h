@@ -7,9 +7,6 @@
 #include "node.h"
 #include "state.h"
 #include <pthread.h>
-#ifdef DEBUG
-#include <unistd.h>
-#endif
 
 
 

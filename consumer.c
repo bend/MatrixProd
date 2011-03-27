@@ -76,6 +76,7 @@ consumer_search_adjacent_and_mark(state* state, node** n1, node** n2){
 	/* stop when current node is tail (in case of empty list
 	 *      when current_node->next is tail
 	 *      when found = true
+	 *      when exit_on_error is not zero
 	 */
 	while( current_node->t!=tail && current_node->next->t!=tail && found==false && state->exit_on_error==0 ){
 		if (current_node->t==unreserved && current_node->next->t==unreserved) {
@@ -124,20 +125,8 @@ int
 consumer_threads_start(int i, pthread_t *threads , state *s){
 	int j;
 	for (j=0; j<i; j++) {
-#ifdef DEBUG
-		printf("Starting thread %d\n",j);
-#endif
 		if (pthread_create(&threads[j], NULL, consumer_thread, s )==-1){
-#ifdef DEBUG
-			printf("Problem creating consumer thread\n");
-#endif
-			return -1; /*FIXME: add some cleanup */
-			/*FIXME: we need to free the threads pointers allocated in the array!*/
-		}
-		else {
-#ifdef DEBUG
-			printf("Created consumer thread %d successfully\n",j);
-#endif
+			return -1; 
 		}
 	}
 	return 0;
