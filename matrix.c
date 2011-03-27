@@ -157,6 +157,8 @@ matrix_compute_cell(matrix* res, unsigned int l, unsigned int c, matrix *m1, mat
 	}
 	/*printf("will set result(%i,%i)\n",l,c);*/
 	matrix_set_elem_at(l,c,res, result);
+	mpz_clear(c1);
+	mpz_clear(c2);
 	/*printf("has set result(%i,%i)\n",l,c);*/
 	return 0;
 }

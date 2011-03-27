@@ -39,6 +39,7 @@ multiplier_start(unsigned int nb_threads, char* path_to_input_file, char* path_t
 		return -1;
 	/*FIXME: add cleanup code */
 	state_free(s);
+	free(producer_thread);
 	return 0;
 
 }
@@ -48,8 +49,11 @@ multiplier_write_result(matrix* matr, char* output_file){
 	FILE *f;
 	if(file_wopen(&f,output_file)==-1)
 		return -1;
-	if(file_write_matrix(f,matr)==-1)
+	if(file_write_matrix(f,matr)==-1){
+		file_close(f);
 		return -1;
+	}
+	file_close(f);
 	return 0;
 }
 

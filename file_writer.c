@@ -54,6 +54,7 @@ file_write_matrix(FILE* f, matrix* matr){
 			return -1;
 		}
 	}
+	mpz_clear(v);
 	
 	
 	return 0;

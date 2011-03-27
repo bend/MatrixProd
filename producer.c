@@ -8,8 +8,10 @@ producer_alloc(char* filename,state* s,producer** p){
 		perror("malloc failed");
 		return -1;
 	}
-	if(file_ropen(&(*p)->f,filename) ==-1)
+	if(file_ropen(&(*p)->f,filename) ==-1){
+		free(p);
 		return -1;
+	}
 	(*p)->s = s;
 	return 0;
 }
@@ -49,9 +51,11 @@ producer_thread_init(void* arg){
 	if((r=producer_start(p))==-1){
 		perror("error while executing  producer");
 		*l=-1;
+		file_close(p->f);
 		pthread_exit((void*)l);
 	}
 	*l=r;
+	file_close(p->f);
 	pthread_exit((void*)l);
 }
 
@@ -63,6 +67,7 @@ producer_thread_start(producer* p,pthread_t** thread){
 		return -1;
 	}
 	if(pthread_create(*thread,NULL,producer_thread_init,(void*)p)==-1){
+		free(thread);
 		perror("error while creating producer thread");
 		return -1;
 	}
