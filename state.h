@@ -35,10 +35,11 @@ int
 state_alloc(state** s);
 
 /*
- * TODO
+ * Frees the state;
+ * @param s : state to be freed
  */
 void
-state_free();
+state_free(state *s);
 
 #endif
 

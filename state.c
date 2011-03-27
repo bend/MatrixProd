@@ -34,5 +34,19 @@ state_alloc(state** s){
 
 
 void
-state_free(){
+state_free(state *s){
+	/* close and unlink semaphores */
+	sem_close(s->list_access_mutex);
+	sem_unlink(LIST_ACCESS_MUTEX);
+
+	sem_close(s->consumer_allowed_mutex);
+	sem_unlink(CONS_MUTEX);
+
+	sem_close(s->can_produce_sem);
+	sem_unlink(CAN_PRODUCE_SEM);
+
+	/* free all linked list */
+	linked_list_free(s->ll);
+
+	free(s);
 }

@@ -37,6 +37,8 @@ multiplier_start(unsigned int nb_threads, char* path_to_input_file, char* path_t
 	*/
 	if(multiplier_write_result(s->ll->head->next->matr,path_to_output_file) == -1)
 		return -1;
+	/*FIXME: add cleanup code */
+	state_free(s);
 	return 0;
 
 }
@@ -56,8 +58,10 @@ int
 multiplier_init(state **s, producer **p, char* input_file){
 	if(state_alloc(s)==-1)
 		return -1;
-	if(producer_alloc(input_file, *s, p)==-1)
+	if(producer_alloc(input_file, *s, p)==-1){
+		state_free(*s);
 		return -1;
+	}
 	return 0;
 }
 
