@@ -25,9 +25,8 @@ matrix_alloc(matrix **matr, unsigned int l, unsigned int c);
 /*
  * Frees the matrix
  * @param: a pointer to the matrix descriptor
- * @return 0 if succeeded, -1 otherwise
  */
-int
+void
 matrix_free(matrix* matr);
 
 /*

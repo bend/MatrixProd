@@ -36,11 +36,11 @@ matrix_alloc(matrix ** matr,unsigned int l, unsigned int c){
 	return 0;
 }
 
-int
+void
 matrix_free(matrix* matr){
 	unsigned int i,j;
 	if (matr==NULL) 
-		return 0;
+		return;
 	for (i=0; i<matr->l; i++){
 		for(j=0;j<matr->c;j++){
 			mpz_clear(matr->matrix[i][j]);
@@ -49,7 +49,6 @@ matrix_free(matrix* matr){
 	}
 	free(matr->matrix);
   	free(matr);
-	return 0; /* FIXME: was 1; Raph changed it in return 0 for success. Check this is correct  */
 }
 
 int 
