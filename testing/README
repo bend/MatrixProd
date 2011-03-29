@@ -1,0 +1,4 @@
+to build the tests and run then on linux or macos type:
+	make
+on solaris type:
+	gmake -f Makefile.solaris
