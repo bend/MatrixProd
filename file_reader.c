@@ -2,6 +2,7 @@
 
 int
 file_ropen(FILE** f, char* path){
+	/* open file in ro mode */
 	if((*f = fopen(path, "r"))==NULL)
 		return -1;
 	return 0;
@@ -19,13 +20,15 @@ file_read_matrix_size(FILE* f, unsigned int *l, unsigned int *c){
 	int r;
 	if(fscanf(f,"%c",&a) == EOF)			/* Tests the end of file */
 		return 2;
+	/* while the next char is \n or EOF or a space, we skip them */
 	while(a == '\n'||a ==' '|| a==EOF){
 		r = fscanf(f,"%c",&a);
 		if(r==EOF)
 			return 2;
 	}
+	/* seek -1 because we read a char that is not a blank */
 	fseek(f, -1, SEEK_CUR);
-	
+	/* We read the matrix header */
 	r=fscanf(f,"%u%c%u",l,&x,c);
 	if(r!=3 || r==EOF)
 	  	return -1;
@@ -40,13 +43,15 @@ file_read_line(FILE* f, int tab[], unsigned int size){
 	unsigned int i;
   	char t;
 	int r;
+	/* Read the whole line */
 	for(i=0; i<size; i++)
 	  	r=fscanf(f,"%d",&tab[i]);
 		if(r==0||r==EOF )
 			return -1;
+	/* read a character and see if its a \n"*/
 	t = getc(f);
 	if(t!='\n')
-		return -1;
+		return -1;/* If not the matrix is not valid */
 	return 0;
 }
 
