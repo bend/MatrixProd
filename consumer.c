@@ -32,7 +32,7 @@ int consumer_start(state * state){
 		if (node1!=NULL && node2!=NULL && state->exit_on_error==0) {
 			/* compute the multiplication of m1 and m2 */
 			if (matrix_multiply(&result, node1->matr, node2->matr)==-1){
-				perror("multiplication failed!\n");
+				fprintf(stderr, "multiplication failed!\n");
 				return -1;
 			}
 

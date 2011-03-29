@@ -5,7 +5,7 @@ int
 producer_alloc(char* filename,state* s,producer** p){
 	*p = malloc(sizeof(producer));
 	if(*p == NULL){
-		perror("malloc failed");
+		fprintf(stderr,"malloc failed");
 		return -1;
 	}
 	if(file_ropen(&(*p)->f,filename) ==-1){
@@ -25,14 +25,14 @@ producer_start(producer* p){
 	while((r=file_read_next_matrix(p->f,&matr)) == 0 && p->s->exit_on_error==0){
 		/* If the buffer is not full */
 		if(sem_wait(p->s->can_produce_sem) ==-1){
-			perror("sem wait error");
+			fprintf(stderr,"sem wait error");
 			return -1;
 		}
 		if(linked_list_add_last(p->s->ll,matr)==-1)
 			return -1;
 		/* Tell to a consumer that a new matrix is added */
 		if(sem_post(p->s->consumer_allowed_mutex)==-1){
-			perror("sem_post error");
+			fprintf(stderr,"sem_post error");
 			return -1;
 		}
 	}
@@ -49,12 +49,12 @@ producer_thread_init(void* arg){
 	p=(producer*)arg;
 	l = malloc(sizeof(int));
 	if(l==NULL){
-		perror("failed allocating memory for status code");
+		fprintf(stderr,"failed allocating memory for status code");
 		/* increment the exit_on_error value to stop consumers, free the mem and exit the program */
 		p->s->exit_on_error++;
 		/* post the mutex to unblock waiting consumers.*/
 		if(sem_post(p->s->consumer_allowed_mutex)==-1){
-			perror("post error");
+			fprintf(stderr,"post error");
 		}
 		pthread_exit(NULL);
 	}
@@ -65,7 +65,7 @@ producer_thread_init(void* arg){
 		p->s->exit_on_error++;
 		/* post the mutex to unblock waiting consumers.*/
 		if(sem_post(p->s->consumer_allowed_mutex)==-1){
-			perror("post error");
+			fprintf(stderr,"post error");
 		}
 		pthread_exit((void*)l);
 	}
@@ -77,12 +77,12 @@ int
 producer_thread_start(producer* p,pthread_t** thread){
 	*thread  = malloc(sizeof(pthread_t));
 	if(*thread == NULL){
-		perror("Malloc Failed");
+		fprintf(stderr,"Malloc Failed");
 		return -1;
 	}
 	if(pthread_create(*thread,NULL,producer_thread_init,(void*)p)==-1){
 		free(thread);
-		perror("error while creating producer thread");
+		fprintf(stderr,"error while creating producer thread");
 		return -1;
 	}
 	return 0;

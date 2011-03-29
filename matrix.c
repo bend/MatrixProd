@@ -5,12 +5,12 @@ matrix_alloc(matrix ** matr,unsigned int l, unsigned int c){
 	unsigned int i, j;
   	*matr = malloc(sizeof(matrix));				/* Allocate memory for the structure */
 	if(*matr == NULL){							/* Check if malloc succeeded	   	 */
-	  	perror("malloc error");					/* If not print error			     */
+	  	fprintf(stderr,"malloc error");					/* If not print error			     */
 		return -1;
 	}
 	(*matr)->matrix = malloc(sizeof(mpz_t*)*l);		/* Allocate memory for columns of the matrix*/
 	if((*matr)->matrix == NULL){
-	  	perror("malloc error");
+	  	fprintf(stderr,"malloc error");
 		free(*matr);
 		return -1;
 	}
@@ -18,7 +18,7 @@ matrix_alloc(matrix ** matr,unsigned int l, unsigned int c){
 	for(i=0; i<l; i++){
 		(*matr)->matrix[i] = malloc(sizeof(mpz_t)*c);
 		if((*matr)->matrix[i] == NULL){
-		  	perror("malloc error");
+		  	fprintf(stderr,"malloc error");
 			for(j=0; j<i; j++)
 			{
 				free((*matr)->matrix[j]);
@@ -119,12 +119,12 @@ matrix_multiply(matrix** result, matrix* m1, matrix* m2){
 	unsigned int i,j;
 	if ( m1->c!=m2->l)
 	{
-		perror("Lines and columns don't match for multiplication\n");
+		fprintf(stderr,"Lines and columns don't match for multiplication\n");
 		return -1;
 	}
 	if (matrix_alloc(result, m1->l, m2->c)==-1)
 	{
-		perror("error allocatinig memory to result matrix\n");
+		fprintf(stderr,"error allocatinig memory to result matrix\n");
 		return -1;
 	}
 	for (i=0; i<m1->l; i++){
@@ -132,7 +132,7 @@ matrix_multiply(matrix** result, matrix* m1, matrix* m2){
 			/*printf("will compute result cell (%i,%i)\n", i, j);*/
 			if (matrix_compute_cell(*result, i, j, m1, m2)==-1)
 			{
-				perror("Error computing cell\n" );
+				fprintf(stderr,"Error computing cell\n" );
 				return -1;
 			}
 		}

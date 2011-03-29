@@ -4,7 +4,7 @@ int
 node_alloc(node** n){
 	*n = malloc(sizeof(node));
 	if(n == NULL){
-	  	perror("malloc error");
+	  	fprintf(stderr,"malloc error");
 		return -1;
 	}
 	(*n)->next = NULL;

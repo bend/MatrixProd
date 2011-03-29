@@ -11,7 +11,7 @@ file_wopen(FILE** f, char* path){
 int
 file_write_matrix_size(FILE* f, unsigned int l, unsigned int c){
 	if(fprintf(f,"%ux%u\n",l,c)<1){
-		perror("Error while writing to file");
+		fprintf(stderr,"Error while writing to file");
 		return -1;
 	}
 	return 0;
@@ -45,12 +45,12 @@ file_write_matrix(FILE* f, matrix* matr){
 		for(j=0; j<matr->c;j++){
 			matrix_get_elem_at(v,i,j,matr);
 			if(gmp_fprintf(f," %Zd",v)==-1){
-				perror("error while writing to file");
+				fprintf(stderr,"error while writing to file");
 				return -1;
 			}
 		}
 		if(gmp_fprintf(f,"\n")==-1){
-			perror("error while writing to file");
+			fprintf(stderr,"error while writing to file");
 			return -1;
 		}
 	}
