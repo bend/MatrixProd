@@ -11,6 +11,7 @@ test_create_matrix(){
 	int i,j;
 	mpz_t v;
 	mpz_init_set_si(v,0);
+	/* alloc matrix */
 	assert(matrix_alloc(&matr,10,10)==0);
 	assert(matr!=NULL);
 	assert(matr->l =10);
@@ -92,7 +93,9 @@ test_fill_line(){
 	int i, j,k;
 	mpz_t v,r;
   	matrix *matr;
-	int  array[3][3]={{1,2,3},{4,5,6},{7,8,9}};
+	int  array[3][3]={	{1,2,3},
+						{4,5,6},
+						{7,8,9}};
 	mpz_init(v);
 	mpz_init(r);
 	k=0;

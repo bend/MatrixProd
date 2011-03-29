@@ -2,8 +2,6 @@
 
 int
 linked_list_alloc(linked_list **ll){
-	/* TODO ADD HEAD AND TAIL NODE */
-
 	node *h, *t;
 	*ll = malloc(sizeof(linked_list));
 	if(*ll == NULL){
@@ -14,8 +12,10 @@ linked_list_alloc(linked_list **ll){
 		return -1;
 	if(node_alloc(&t) == -1)
 		return -1;
+	/* Set nodes type */
 	h->t= head;
 	t->t = tail;
+	/* Set head and tail node */
 	(*ll)->head = h;
 	node_set_next(h,t);
 	(*ll)->tail = t;
