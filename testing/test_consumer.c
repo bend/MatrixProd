@@ -14,7 +14,7 @@ test_consumer_on_manual_linked_list_2_elements() {
 	/* initialise state
 	 */
 	if (state_alloc(&state,BUFFER_SIZE)==-1){
-			perror("Could not initialise state in test_consumer_on_manual_linked_list");
+			fprintf(stderr,"Could not initialise state in test_consumer_on_manual_linked_list");
 			exit(1);
 	}
 	state->producer_finished=true;
@@ -25,7 +25,7 @@ test_consumer_on_manual_linked_list_2_elements() {
 	 *  4   0
 	 */
 	if (matrix_alloc(&matr,3,2)==-1){
-		perror("Could not allocate m1 in test_consumer_on_manual_linked_list");
+		fprintf(stderr,"Could not allocate m1 in test_consumer_on_manual_linked_list");
 		exit(1);
 	}
 	matrix_fill(matr,m1);
@@ -36,7 +36,7 @@ test_consumer_on_manual_linked_list_2_elements() {
 	 *   2   1  1
 	 */
 	if (matrix_alloc(&matr,2,3)==-1){
-		perror("Could not allocate m2 in test_consumer_on_manual_linked_list");
+		fprintf(stderr,"Could not allocate m2 in test_consumer_on_manual_linked_list");
 		exit(-1);
 	}
 	matrix_fill(matr,m2);
@@ -126,7 +126,7 @@ test_consumer_on_manual_linked_list_4_elements() {
 	/* initialise state
 	 */
 	if (state_alloc(&state,BUFFER_SIZE)==-1){
-			perror("Could not initialise state in test_consumer_on_manual_linked_list");
+			fprintf(stderr,"Could not initialise state in test_consumer_on_manual_linked_list");
 			exit(1);
 	}
 	state->producer_finished=true;
@@ -134,7 +134,7 @@ test_consumer_on_manual_linked_list_4_elements() {
 	/* First matrix:
 	 */
 	if (matrix_alloc(&matr,5,4)==-1){
-		perror("Could not allocate m1 in test_consumer_on_manual_linked_list");
+		fprintf(stderr,"Could not allocate m1 in test_consumer_on_manual_linked_list");
 		exit(1);
 	}
 	matrix_fill(matr,m1);
@@ -143,7 +143,7 @@ test_consumer_on_manual_linked_list_4_elements() {
 	/* Second matrix:
 	 */
 	if (matrix_alloc(&matr,4,6)==-1){
-		perror("Could not allocate m2 in test_consumer_on_manual_linked_list");
+		fprintf(stderr,"Could not allocate m2 in test_consumer_on_manual_linked_list");
 		exit(1);
 	}
 	matrix_fill(matr,m2);
@@ -152,7 +152,7 @@ test_consumer_on_manual_linked_list_4_elements() {
 	/* Third matrix:
 	 */
 	if (matrix_alloc(&matr,6,10)==-1){
-		perror("Could not allocate m2 in test_consumer_on_manual_linked_list");
+		fprintf(stderr,"Could not allocate m2 in test_consumer_on_manual_linked_list");
 		exit(1);
 	}
 	matrix_fill(matr,m3);
@@ -160,7 +160,7 @@ test_consumer_on_manual_linked_list_4_elements() {
 	/* Fourth matrix:
 	 */
 	if (matrix_alloc(&matr,10,3)==-1){
-		perror("Could not allocate m2 in test_consumer_on_manual_linked_list");
+		fprintf(stderr,"Could not allocate m2 in test_consumer_on_manual_linked_list");
 		exit(1);
 	}
 	matrix_fill(matr,m4);
@@ -240,7 +240,7 @@ test_consumer_on_manual_linked_list_4_elements_wrong_size() {
 	/* initialise state
 	 */
 	if (state_alloc(&state,BUFFER_SIZE)==-1){
-			perror("Could not initialise state in test_consumer_on_manual_linked_list");
+			fprintf(stderr,"Could not initialise state in test_consumer_on_manual_linked_list");
 			exit(1);
 	}
 	state->producer_finished=true;
@@ -248,7 +248,7 @@ test_consumer_on_manual_linked_list_4_elements_wrong_size() {
 	/* First matrix:
 	 */
 	if (matrix_alloc(&matr,5,4)==-1){
-		perror("Could not allocate m1 in test_consumer_on_manual_linked_list");
+		fprintf(stderr,"Could not allocate m1 in test_consumer_on_manual_linked_list");
 		exit(1);
 	}
 	matrix_fill(matr,m1);
@@ -257,7 +257,7 @@ test_consumer_on_manual_linked_list_4_elements_wrong_size() {
 	/* Second matrix:
 	 */
 	if (matrix_alloc(&matr,4,6)==-1){
-		perror("Could not allocate m2 in test_consumer_on_manual_linked_list");
+		fprintf(stderr,"Could not allocate m2 in test_consumer_on_manual_linked_list");
 		exit(1);
 	}
 	matrix_fill(matr,m2);
@@ -266,7 +266,7 @@ test_consumer_on_manual_linked_list_4_elements_wrong_size() {
 	/* Third matrix:
 	 */
 	if (matrix_alloc(&matr,6,10)==-1){
-		perror("Could not allocate m2 in test_consumer_on_manual_linked_list");
+		fprintf(stderr,"Could not allocate m2 in test_consumer_on_manual_linked_list");
 		exit(1);
 	}
 	matrix_fill(matr,m3);
@@ -274,7 +274,7 @@ test_consumer_on_manual_linked_list_4_elements_wrong_size() {
 	/* Fourth matrix:
 	 */
 	if (matrix_alloc(&matr,7,2)==-1){
-		perror("Could not allocate m2 in test_consumer_on_manual_linked_list");
+		fprintf(stderr,"Could not allocate m2 in test_consumer_on_manual_linked_list");
 		exit(1);
 	}
 	matrix_fill(matr,m4);
@@ -360,7 +360,7 @@ test_consumer_on_manual_linked_list_4_elements_3_thread() {
 	/* initialise state
 	 */
 	if (state_alloc(&state,BUFFER_SIZE)==-1){
-			perror("Could not initialise state in test_consumer_on_manual_linked_list");
+			fprintf(stderr,"Could not initialise state in test_consumer_on_manual_linked_list");
 			exit(1);
 	}
 	state->producer_finished=true;
@@ -368,7 +368,7 @@ test_consumer_on_manual_linked_list_4_elements_3_thread() {
 	/* First matrix:
 	 */
 	if (matrix_alloc(&matr,5,4)==-1){
-		perror("Could not allocate m1 in test_consumer_on_manual_linked_list");
+		fprintf(stderr,"Could not allocate m1 in test_consumer_on_manual_linked_list");
 		exit(1);
 	}
 	matrix_fill(matr,m1);
@@ -377,7 +377,7 @@ test_consumer_on_manual_linked_list_4_elements_3_thread() {
 	/* Second matrix:
 	 */
 	if (matrix_alloc(&matr,4,6)==-1){
-		perror("Could not allocate m2 in test_consumer_on_manual_linked_list");
+		fprintf(stderr,"Could not allocate m2 in test_consumer_on_manual_linked_list");
 		exit(1);
 	}
 	matrix_fill(matr,m2);
@@ -386,7 +386,7 @@ test_consumer_on_manual_linked_list_4_elements_3_thread() {
 	/* Third matrix:
 	 */
 	if (matrix_alloc(&matr,6,10)==-1){
-		perror("Could not allocate m2 in test_consumer_on_manual_linked_list");
+		fprintf(stderr,"Could not allocate m2 in test_consumer_on_manual_linked_list");
 		exit(1);
 	}
 	matrix_fill(matr,m3);
@@ -394,7 +394,7 @@ test_consumer_on_manual_linked_list_4_elements_3_thread() {
 	/* Fourth matrix:
 	 */
 	if (matrix_alloc(&matr,10,3)==-1){
-		perror("Could not allocate m2 in test_consumer_on_manual_linked_list");
+		fprintf(stderr,"Could not allocate m2 in test_consumer_on_manual_linked_list");
 		exit(1);
 	}
 	matrix_fill(matr,m4);
