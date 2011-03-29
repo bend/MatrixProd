@@ -6,7 +6,7 @@
 #include "matrix.h"
 
 /*
- * Opens the file in write mode
+ * Opens the file in write mode, and overwrites it
  * @param f: a pointer to the pointer of the file descriptor uninitialiszed.
  * @param path : the path to the file
  * @return 0 if success, -1 otherwise
