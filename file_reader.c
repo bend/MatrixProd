@@ -49,7 +49,12 @@ file_read_line(FILE* f, int tab[], unsigned int size){
 		if(r==0||r==EOF )
 			return -1;
 	/* read a character and see if its a \n"*/
-	t = getc(f);
+	do{
+		t = getc(f);
+		if(t!=' ' && t!='\n')
+			return -1;
+	}while(t!='\n');
+
 	if(t!='\n')
 		return -1;/* If not the matrix is not valid */
 	return 0;
