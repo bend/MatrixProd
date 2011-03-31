@@ -44,7 +44,7 @@ file_write_matrix(FILE* f, matrix* matr){
 	for (i=0; i<matr->l; i++){
 		for(j=0; j<matr->c;j++){
 			matrix_get_elem_at(v,i,j,matr);
-			if(gmp_fprintf(f," %Zd",v)==-1){
+			if(gmp_fprintf(f,"%Zd ",v)==-1){
 				fprintf(stderr,"error while writing to file");
 				return -1;
 			}
