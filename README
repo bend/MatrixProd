@@ -1,5 +1,6 @@
 To build the sources on linux or macosx type:
 	make all;
 on solaris type:
+	export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/csw/lib
 	gmake -l Makefile.solaris
 
