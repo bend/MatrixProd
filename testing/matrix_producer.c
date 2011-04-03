@@ -1,14 +1,14 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "../file_writer.h"
-
+#define NB_COL_MAX	3000
 void
 produce_matrices(FILE* f, unsigned int nb_lines, unsigned int nb_matrices){
 	unsigned int nb_columns;
 	unsigned int i,j,s;
 	if(nb_matrices == 0)
 		return ;
-	nb_columns = rand()%3000+1;
+	nb_columns = rand()%NB_COL_MAX+1;
 	file_write_matrix_size(f, nb_lines, nb_columns);
 	for(i=0; i<nb_lines; i++){
 		for(j=0; j<nb_columns; j++){
