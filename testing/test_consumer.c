@@ -53,7 +53,7 @@ test_consumer_on_manual_linked_list_2_elements() {
 	matrix_fill(m_result, result);
 
 	/* triggers immediate start of consumers */
-	sem_post(state->consumer_allowed_mutex);
+	sem_post(state->consumer_allowed_sem);
 
 	/* start consumer */
 	consumer_start(state);
@@ -172,7 +172,7 @@ test_consumer_on_manual_linked_list_4_elements() {
 	matrix_fill(m_result, result);
 
 	/* triggers immediate start of consumers */
-	sem_post(state->consumer_allowed_mutex);
+	sem_post(state->consumer_allowed_sem);
 
 	/* start consumer */
 	consumer_start(state);
@@ -286,7 +286,7 @@ test_consumer_on_manual_linked_list_4_elements_wrong_size() {
 	matrix_fill(m_result, result);
 
 	/* triggers immediate start of consumers */
-	sem_post(state->consumer_allowed_mutex);
+	sem_post(state->consumer_allowed_sem);
 	/* start consumer */
 	assert(consumer_start(state)==-1);
 
@@ -407,7 +407,7 @@ test_consumer_on_manual_linked_list_4_elements_3_thread() {
 
 	for (i=0; i<number_of_threads; i++){
 		/* triggers immediate start of consumers */
-		sem_post(state->consumer_allowed_mutex);
+		sem_post(state->consumer_allowed_sem);
 	}
 	/* start consumers */
 	consumer_threads_start(number_of_threads, threads, state);

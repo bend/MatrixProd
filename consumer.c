@@ -8,7 +8,7 @@ int consumer_start(state * state){
 	node *node1, *node2;
 	matrix *result;
 
-	sem_wait(state->consumer_allowed_mutex);
+	sem_wait(state->consumer_allowed_sem);
 	/* Loop as long as producer active and list longer than one matrix node 
 	 * and no error happened anywhere else in the code */
 	while (state->ll->head->next->t!=tail && (state->producer_finished!=true || state->ll->head->next->next->t!=tail) && state->exit_on_error==0) {
@@ -23,7 +23,7 @@ int consumer_start(state * state){
 		/* try to find matrices to multiply as long as producer active and list
 		 * has more than one matrix node */
 		while (!consumer_search_adjacent_and_mark(state, &node1, &node2) &&  state->ll->head->next->next->t!=tail && state->exit_on_error==0){
-			sem_wait(state->consumer_allowed_mutex);
+			sem_wait(state->consumer_allowed_sem);
 		}
 		/* if node1 and node2!=null , it means we reserved 2 instances,
 		 * otherwise the computation is finished and we will get out of the
@@ -48,7 +48,7 @@ int consumer_start(state * state){
 			node1->t=unreserved;
 			/* if previous or next matrix is unreserved, notify a consumer that he can take a look at the list */
 			if (node1->prev->t==unreserved || node1->next->t==unreserved){
-				sem_post(state->consumer_allowed_mutex);
+				sem_post(state->consumer_allowed_sem);
 			}
 			sem_post(state->list_access_mutex);
 			/*************************************************************************
@@ -61,7 +61,7 @@ int consumer_start(state * state){
 	}
 
 	/* allow consumers to unblock those waiting */
-	sem_post(state->consumer_allowed_mutex);
+	sem_post(state->consumer_allowed_sem);
 	return 0;
 }
 

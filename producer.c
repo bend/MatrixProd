@@ -31,7 +31,7 @@ producer_start(producer* p){
 		if(linked_list_add_last(p->s->ll,matr)==-1)
 			return -1;
 		/* Tell to a consumer that a new matrix is added */
-		if(sem_post(p->s->consumer_allowed_mutex)==-1){
+		if(sem_post(p->s->consumer_allowed_sem)==-1){
 			fprintf(stderr,"sem_post error");
 			return -1;
 		}
@@ -53,7 +53,7 @@ producer_thread_init(void* arg){
 		/* increment the exit_on_error value to stop consumers, free the mem and exit the program */
 		p->s->exit_on_error++;
 		/* post the mutex to unblock waiting consumers.*/
-		if(sem_post(p->s->consumer_allowed_mutex)==-1){
+		if(sem_post(p->s->consumer_allowed_sem)==-1){
 			fprintf(stderr,"post error");
 		}
 		pthread_exit(NULL);
@@ -64,7 +64,7 @@ producer_thread_init(void* arg){
 		/* increment the exit_on_error value to stop consumers, free the mem and exit the program */
 		p->s->exit_on_error++;
 		/* post the mutex to unblock waiting consumers.*/
-		if(sem_post(p->s->consumer_allowed_mutex)==-1){
+		if(sem_post(p->s->consumer_allowed_sem)==-1){
 			fprintf(stderr,"post error");
 		}
 		pthread_exit((void*)l);

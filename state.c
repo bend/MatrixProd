@@ -15,8 +15,8 @@ state_alloc(state** s, unsigned int buf_size){
 		return -1;
 	}
 	sem_unlink(CONS_MUTEX);
-	(*s)->consumer_allowed_mutex = sem_open(CONS_MUTEX, O_CREAT|O_EXCL,0666,0);
-	if((*s)->consumer_allowed_mutex == NULL){
+	(*s)->consumer_allowed_sem = sem_open(CONS_MUTEX, O_CREAT|O_EXCL,0666,0);
+	if((*s)->consumer_allowed_sem == NULL){
 		fprintf(stderr,"mutex error");
 		return -1;
 	}
@@ -40,7 +40,7 @@ state_free(state *s){
 	sem_close(s->list_access_mutex);
 	sem_unlink(LIST_ACCESS_MUTEX);
 
-	sem_close(s->consumer_allowed_mutex);
+	sem_close(s->consumer_allowed_sem);
 	sem_unlink(CONS_MUTEX);
 
 	sem_close(s->can_produce_sem);

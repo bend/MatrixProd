@@ -54,7 +54,7 @@ list_access_mutex = 1
 \end_layout
 
 \begin_layout Itemize
-consumer_allowed_mutex = 0
+consumer_allowed_sem = 0
 \end_layout
 
 \begin_layout Itemize
@@ -150,7 +150,7 @@ change type of old tail node: linked_list.tail.prev.type=free
 \end_layout
 
 \begin_layout Enumerate
-up consumer_allowed_mutex
+up consumer_allowed_sem
 \end_layout
 
 \end_deeper
@@ -186,7 +186,7 @@ if (empty_list and state.producer_finished)
 
 \begin_deeper
 \begin_layout Enumerate
-up consumer_allowed_mutex
+up consumer_allowed_sem
 \end_layout
 
 \begin_layout Enumerate
@@ -200,7 +200,7 @@ else
 
 \begin_deeper
 \begin_layout Enumerate
-if !found { down consumer_allowed_mutex }
+if !found { down consumer_allowed_sem }
 \end_layout
 
 \end_deeper
@@ -235,7 +235,7 @@ if found adjacent matrices
 
 \begin_deeper
 \begin_layout Enumerate
-up consumer_allowed_mutex
+up consumer_allowed_sem
 \end_layout
 
 \end_deeper
