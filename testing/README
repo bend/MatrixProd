@@ -2,3 +2,10 @@ to build the tests and run then on linux or macos type:
 	make
 on solaris type:
 	gmake -f Makefile.solaris
+
+Note that the consumer and the producer tests will each issue one error
+message.  This is because we test these functions with incorrect data to be
+sure we detect the errors.
+The side-effect is that an error message is displayed. But as long as you see
+"All producer tests succeded" and "All consumer tests succeded", everything is
+going fine.
