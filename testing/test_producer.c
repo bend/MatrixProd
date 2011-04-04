@@ -50,22 +50,24 @@ void test_producer_start(){
 	assert(matrix_fill(mat3,m3)==0);
 	assert(state_alloc(&s,BUFFER_SIZE) == 0);
 	pthread_create(&t,NULL,producer_thread,(void*)s);
-	while(s->producer_finished==false ){
+	while(s->producer_finished==false || s->ll->head->next->t!=tail){
 		sem_wait(s->consumer_allowed_sem);
-	 	
-		assert(linked_list_remove_first(s->ll, &mat)==0);
-		assert(matrix_cmp(mat,mat1)==0);
+	 	if(s->ll->head->next->t!=tail  && s->producer_finished!=false ){ 
+			assert(linked_list_remove_first(s->ll, &mat)==0);
+			assert(matrix_cmp(mat,mat1)==0);
+			sem_post(s->can_produce_sem);
+			
+			sem_wait(s->consumer_allowed_sem);
+			assert(linked_list_remove_first(s->ll, &mat)==0);
+			assert(matrix_cmp(mat,mat2)==0);
+			sem_post(s->can_produce_sem);
+			
+			sem_wait(s->consumer_allowed_sem);
+			assert(linked_list_remove_first(s->ll, &mat)==0);
+			assert(matrix_cmp(mat,mat3)==0);
+		}
 		sem_post(s->can_produce_sem);
-	 	
-		sem_wait(s->consumer_allowed_sem);
-		assert(linked_list_remove_first(s->ll, &mat)==0);
-		assert(matrix_cmp(mat,mat2)==0);
-		sem_post(s->can_produce_sem);
-	 	
-		sem_wait(s->consumer_allowed_sem);
-		assert(linked_list_remove_first(s->ll, &mat)==0);
-		assert(matrix_cmp(mat,mat3)==0);
-		sem_post(s->can_produce_sem);
+		sem_post(s->consumer_allowed_sem);
 	}
 	pthread_join(t,NULL);
 }
@@ -96,22 +98,24 @@ test_producer_thread(){
 	assert(producer_alloc(PATH,s,&p)==0);
 	assert(producer_thread_start(p,&t)==0);
 	
-	while(s->producer_finished==false ){
+	while(s->producer_finished==false || s->ll->head->next->t!=tail){
 		sem_wait(s->consumer_allowed_sem);
-	 	
-		assert(linked_list_remove_first(s->ll, &mat)==0);
-		assert(matrix_cmp(mat,mat1)==0);
+	 	if(s->ll->head->next->t!=tail  && s->producer_finished!=false ){ 
+			assert(linked_list_remove_first(s->ll, &mat)==0);
+			assert(matrix_cmp(mat,mat1)==0);
+			sem_post(s->can_produce_sem);
+			
+			sem_wait(s->consumer_allowed_sem);
+			assert(linked_list_remove_first(s->ll, &mat)==0);
+			assert(matrix_cmp(mat,mat2)==0);
+			sem_post(s->can_produce_sem);
+			
+			sem_wait(s->consumer_allowed_sem);
+			assert(linked_list_remove_first(s->ll, &mat)==0);
+			assert(matrix_cmp(mat,mat3)==0);
+		}
 		sem_post(s->can_produce_sem);
-	 	
-		sem_wait(s->consumer_allowed_sem);
-		assert(linked_list_remove_first(s->ll, &mat)==0);
-		assert(matrix_cmp(mat,mat2)==0);
-		sem_post(s->can_produce_sem);
-	 	
-		sem_wait(s->consumer_allowed_sem);
-		assert(linked_list_remove_first(s->ll, &mat)==0);
-		assert(matrix_cmp(mat,mat3)==0);
-		sem_post(s->can_produce_sem);
+		sem_post(s->consumer_allowed_sem);
 	}
 
 	pthread_join(*t, &status);
@@ -121,7 +125,6 @@ test_producer_thread(){
 
 void
 test_producer_thread_failure(){
-	
 	state *s;
 	producer *p;
 	pthread_t *t;
