@@ -1,0 +1,360 @@
+#LyX 1.6.8 created this file. For more info see http://www.lyx.org/
+\lyxformat 345
+\begin_document
+\begin_header
+\textclass IEEEtran
+\options onecolumn
+\use_default_options false
+\language english
+\inputencoding default
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\float_placement tbh
+\paperfontsize 10
+\spacing single
+\use_hyperref false
+\papersize a4paper
+\use_geometry false
+\use_amsmath 0
+\use_esint 0
+\cite_engine basic
+\use_bibtopic false
+\paperorientation portrait
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\defskip medskip
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\author "" 
+\author "" 
+\end_header
+
+\begin_body
+
+\begin_layout Title
+Parallélisation de produit matricel
+\end_layout
+
+\begin_layout Author
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+Remember that initial submissions don't show the authors
+\end_layout
+
+\begin_layout Plain Layout
+names so you'll need to make this a 'Comment'.
+\end_layout
+
+\end_inset
+
+Groupe 22: Benoît Daccache, Raphaël Bauduin
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+Your name is with xyz Department\SpecialChar \ldots{}
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Architecture
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+Don't panic the section numbering may look different in
+\end_layout
+
+\begin_layout Plain Layout
+LyX but LaTeX uses the correct Roman numerals and
+\end_layout
+
+\begin_layout Plain Layout
+Alpha for section counters.
+\end_layout
+
+\begin_layout Plain Layout
+It's just that LyX doesn't handle counters other than arabic
+\end_layout
+
+\begin_layout Plain Layout
+numerals.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+PARstart{N}{ous}
+\end_layout
+
+\end_inset
+
+ avons choisi de travailler avec des threads parce que ceux-ci sont plus
+ légers à gérer (par les développeurs et par l’OS) et parce que le type
+ de partage de données requis pour ce projet le permettait (il n’est pas
+ nécessaire de partager de la mémoire avec un processus tiers).
+\end_layout
+
+\begin_layout Standard
+Nous avons pris une approche producteur/consommateur, le producteur étant
+ le thread lisant le fichier d’entrée, les consommateurs étant les thread
+ calculant les produits de deux matrices.
+\end_layout
+
+\begin_layout Standard
+Notre structure de données principale est une liste chaînée.
+ Chaque noeud de cette liste contient une matrice, et le type de ce noeud:
+ head, unreserved, reserved ou tail.
+ Nous avons implémenté la liste chaînée avec des sentinelles (de statuts
+ head et tail respectivement pour le premier et le dernier noeud de la liste)
+ ne contenant pas de matrice.
+ Tous les autres noeuds contiennent une matrice et ont le type réserve (pour
+ une matrice utilisée actuellement par un thread pour calculer son produit
+ avec une autre matrice) ou unreserved (pour une matrice qui n’est pas actuellem
+ent utilisée par un thread calculant le produit de deux matrices).
+\end_layout
+
+\begin_layout Standard
+La parallélisation se fait au niveau du produit matriciel: plusieurs produits
+ matriciels sont calculés en parallèle.
+ Chaque thread consommateur calcule le produit des deux matrices dans la
+ liste dont il a marqué les noeuds comme réservés en leur assignant le type
+ réserve.
+ Lorsque le calcul est terminé, le consommateur remplace les noeuds des
+ deux matrices réservés dans la liste par un noeud dont la matrice est le
+ résultat de leur produit.
+ Le thread est alors prêt à calculer un autre produit matriciel, et va recherche
+r dans la liste chaînée deux noeuds adjacents de type unreserved.
+ S’il les trouve, il les marque comme réservés, et commence le produit des
+ matrices contenues dans ces noeuds.
+ S’il ne trouve pas de matrices adjacentes, il se place dans une liste d’attente
+ (bloquant sur un sémaphore consumer_allowed_sem) dont il pourra sortir
+ lorsque le producteur aura placé une nouvelle matrice dans la liste, ou
+ lorsqu’un consommateur détecte qu’un noeud adjacent au noeud résultat qu’il
+ place dans la liste est de statuts unreserved.
+\end_layout
+
+\begin_layout Standard
+La liste chaînée est elle-même placée dans une structure nommée state représenta
+nt l’état du programme.
+ Tous les sémaphores sont également placés dans cette structure:
+\end_layout
+
+\begin_layout Itemize
+list_access_mutex permet d’obtenir un accès exclusif à la liste chaînée.
+ Utilisé le moins possible et uniquement lorsque requis pour s’assurer la
+ cohérence des données: lors de la recherche de matrices adjacente dont
+ le noeud est unreserved, lors d’un changement de statuts d’un noeud de
+ la liste, lors du placement dans la liste du résultat d’un produit matriciel.
+ Le producteur n’utilise pas ce mutex car il ne fait que rajouter des noeuds
+ à la fin de la liste.
+ 
+\end_layout
+
+\begin_layout Itemize
+consumer_allowed_sem permet au producteur lors de l’ajout d’un noeud avec
+ matrice dans la liste chaînée et au consommateur détectant qu’un noeud
+ adjacent au noeud résultat qu’il vient de placer dans la liste est du statuts
+ unreserved, de notifier les consommateur en attente de rechercher deux
+ noeuds unreserved adjacents dans la liste chaînée.
+ 
+\end_layout
+
+\begin_layout Itemize
+can_produce_sem permet aux consommateurs de notifier le producteur qu’il
+ peut rajouter un noeud avec matrice dans la liste chaînée.
+\end_layout
+
+\begin_layout Standard
+La structure state reprend également deux flags:
+\end_layout
+
+\begin_layout Itemize
+producer_finished indiquant que le producteur a terminé de lire le fichier
+ d’entrée, et qu’il ne rajoutera donc plus de noeud à la liste chaînée.
+ 
+\end_layout
+
+\begin_layout Itemize
+exit_on_error: ce flag est mis à vrai lorsque le producteur ou un consommateur
+ rencontre une situation d’erreur (fichier de format incorrect, matrice
+ de dimensions incorrectes pour le produit matriciel, etc).
+ Les consommateurs et producteurs arrêtent leurs opérations dès qu’il détecte
+ que ce flag a été mis à vrai.
+\end_layout
+
+\begin_layout Standard
+Pour éviter les deadlocks, notre stratégie a été de bloquer l’accès à la
+ liste le moins possible.
+ Nous avons donc, avant d’écrire la moindre ligne de code, analysé tous
+ les scénarii que nous pouvions imaginer.
+ Nous en sommes arrivés à cette solution où l’accès exclusif à la liste
+ n’est nécessaire que par le consommateur lorsqu’il recherche deux noeuds
+ adjacent unreserved (parcours d’une liste chaînée de taille limitée, donc
+ rapide) et lorsqu’il place le noeud résultat dans la liste (et là encore
+ nous avons essayé d’optimiser les opérations: les noeuds étant marqué reserved
+ n’étant jamais considérés par d’autres consommateurs, les matrices de ces
+ noeuds peuvent être manipulé librement.
+ C’est ainsi que la matrice résultat est placée dans le premier noeud sans
+ nécessiter de lock, et ce n’est que lorsque la structure de la liste est
+ modifiée qu’un accès exclusif est requis).
+ Durant tout le calcul du produit matriciel par le consommateur, l’accès
+ à la liste n’est donc pas bloqué.
+ La taille de la liste chaînée est de trois fois le nombre de consommateur.
+ Cette taille permet d’assurer que chaque consommateur aura la possibilité
+ de calculer un produit matriciel même dans le pire cas où un consommateur
+ sur deux termine rapidement (et que donc une matrice sur deux est dans
+ un noeud unreserved, ce qui empêche de trouver deux noeuds unreserved adjacents
+ parmi les 2n premiers noeud originaux lorsqu’on lance n threads).
+\end_layout
+
+\begin_layout Standard
+Le code est modulaire et peut être optimisé.
+ Un exemple en est le choix des deux matrices à multiplier que le consommateur
+ doit faire.
+ Ce choix se fait dans une fonction qui est la seule à être modifiée si
+ l'on veut optimiser le choix des matrices à multiplier.
+ Il en est de même pour le calcul lui-même du produit matriciel.
+ Lorsque, à la fin du calcul, la taille de la liste chaînée devient trop
+ petite pour avoir tous les consommateurs actifs, il pourrait être intéressant
+ d'évaluer les possibilités de paralléliser le calcul d'un produit de deux
+ matrices.
+ Ceci peut se faire dans la fonction calculant le produit matriciel, sans
+ devoir toucher à d'autres parties du code.
+\end_layout
+
+\begin_layout Section
+Stratégie de tests
+\end_layout
+
+\begin_layout Standard
+Notre code est très modulaire, ce qui nous a permis de suivre le conseil
+ d’écrire d’abord les tests avant d’écrire le code.
+ Une fois les différents modules écrits et testés, il nous a suffi de les
+ combiner pour obtenir notre solution finale.
+ Cette modularisation nous a également permis de répartir le travail de
+ manière efficace.
+ Nous avons rassemblé nos tests dans le sous-répertoire testing, qui contient
+ un fichier de test par module, ainsi qu’un Makefile.
+ Lancer la commande ‘make’ compile et lance les tests de chaque module.
+ Chaque module est testé indépendement.
+ Nous avons décidé que chaque fonction (mises à part les fonction *_free)
+ retourne une valeur indiquant le succès ou non de l’opération effectuée
+ (en retournant respectivement une valeur non-négative ou -1).
+ Cela nous permet non seulement de facilement remonter une erreur dans notre
+ programme, mais également de tester les fonctions.
+ Lorsque nous passons une valeur correcte dans nos tests, nous vérifions
+ que les appels à nos fonctions retournent bien 0, et lorsque nous passons
+ de mauvaises données, nous vérifions que ces fonctions retournent bien
+ -1.
+ Le seul petit souci des tests effectués avec des valeurs incorrectes est
+ que le message d’erreur correspondant est affiché.
+ Ceci ne veut pas dire que le test ne passe pas, comme le montre le message
+ ‘All tests succeded’ ! Nous avons convenu que la possible confusion introduite
+ par ces messages valait la peine en regard des avantages apportés par les
+ tests supplémentaires.
+\end_layout
+
+\begin_layout Section
+Mesures de performance et interprétations
+\end_layout
+
+\begin_layout Standard
+Nous avons effectué nos tests de performance sur une machine Core 2 Quad
+ avec 4Gb de Ram et tournant sur CentOS.
+ Nous avons effectué les tests plusieurs fois et fait une moyenne en éliminant
+ les valeurs extrèmes.
+ Nous avons également effectué des tests sur Sirius avec un grand nombre
+ de threads.
+ 
+\end_layout
+
+\begin_layout Standard
+Nous obtenons ces deux graphiques:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename Screen shot 2011-04-06 at 8.47.20 AM.png
+	scale 60
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Ce graphique représente le nombre de threads par rapport au temps.
+ On peut voir que le temps diminue quand on a plus de threads jusqu'a un
+ certain niveau(à peu près le nombre de coeurs) et augmente ensuite.
+ Quand le nombre de threads est très grand, le temps recommence à diminuer
+ légèrement.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename Screen shot 2011-04-06 at 8.48.54 AM.png
+	scale 60
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Ce graphique représente la taille des matrices par rapport au temps nécessaire
+ pour effectuer le calcul du produit matriciel.
+ On peut voir que la courbe représentée à la forme d'une courbe 
+\begin_inset Formula $y=x^{3}$
+\end_inset
+
+.
+ En effet, la multiplication entre 2 matrices est en O(n) ou n est la taille
+ de la matrice.
+\end_layout
+
+\begin_layout Section
+Portabilité UNIX
+\end_layout
+
+\begin_layout Standard
+La modularité de notre code nous rassurait également lors du portage vers
+ les différents UNIX utilisés.
+ Mais ayant écrit du code C standard, nous n’avons pas eu à modifier notre
+ code.
+ Les seules modifications qui ont du être apportées l’ont été à nos Makefiles.
+\end_layout
+
+\end_body
+\end_document

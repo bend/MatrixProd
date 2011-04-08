@@ -6,17 +6,21 @@
 
 void
 usage(void){
-    printf("Usage: [matrixprod -o OUTPUT_FILE -n NUM_THREADS INPUT_FILE]\n");
+    printf("Usage: [matrixprod -o OUTPUT_FILE -n NUM_THREADS>1 INPUT_FILE]\n");
 }
 
 void check_params(char* file, char* nflag, char* oflag){
+	int n;
 	if(file == NULL){
 		usage();
 		exit(0);
 	}
-	if(nflag==NULL|| strtol(nflag,NULL,10)==0){
-		usage();
-		exit(0);
+	if(nflag!=NULL){
+		n = strtol(nflag,NULL,10);
+		if(n<2){
+			usage();
+			exit(0);
+		}
 	}
 	if(oflag==NULL){
 		usage();
@@ -30,6 +34,7 @@ int main(int argc, char** argv){
 	char* input_file;
 	char* nflag;
 	char* oflag;
+	int n;
 
 	if (argc < 2) {
 		usage();
@@ -52,8 +57,11 @@ int main(int argc, char** argv){
 
 	input_file = argv[argc-1];
 	check_params(input_file, nflag, oflag);
-	
-	if(multiplier_start((int)strtol(nflag,NULL,10), input_file, oflag ) ==-1)
+	if(nflag == NULL)
+		n = 2;
+	else
+		n = (int)strtol(nflag,NULL,10);
+	if(multiplier_start(n, input_file, oflag ) ==-1)
 		return EXIT_FAILURE;
 	return EXIT_SUCCESS;
 }
