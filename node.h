@@ -6,19 +6,19 @@
 #include "matrix.h"
 
 typedef enum {
-	head,
-	tail,
-	unreserved,
-	reserved
-}type;
+    head,
+    tail,
+    unreserved,
+    reserved
+} type;
 
 typedef struct node node;
 
-struct node{
-  node* next;
-  node* prev;
-  matrix* matr;
-  type t;
+struct node {
+    node* next;
+    node* prev;
+    matrix* matr;
+    type t;
 };
 
 
@@ -65,7 +65,7 @@ int
 node_set_elem(node* n, matrix* matr);
 
 /*
- * Frees the node and the matrix 
+ * Frees the node and the matrix
  * @param n: a pointer to the node
  */
 void

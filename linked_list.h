@@ -9,9 +9,9 @@
 
 typedef struct linked_list linked_list;
 
-struct linked_list{
-	node* head;
-	node* tail;
+struct linked_list {
+    node* head;
+    node* tail;
 };
 
 
@@ -66,7 +66,7 @@ linked_list_get_first(linked_list *ll, matrix **matr);
 /*
  * removes the elements at end of the linked_list
  */
-int 
+int
 linked_list_remove_first(linked_list *ll, matrix **matr);
 
 #endif

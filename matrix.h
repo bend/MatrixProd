@@ -5,10 +5,10 @@
 #include <stdio.h>
 #include <gmp.h>
 
-struct matrix{
-	mpz_t **matrix;
-	unsigned int l;
-	unsigned int c;
+struct matrix {
+    mpz_t **matrix;
+    unsigned int l;
+    unsigned int c;
 };
 
 typedef struct matrix matrix;
@@ -35,7 +35,7 @@ matrix_free(matrix* matr);
  * @param matr: a pointer to the matrix descriptor
  * @return -1 if failed, 0 otherwise.
  */
-int 
+int
 matrix_get_elem_at(mpz_t result, unsigned int l, unsigned int c, matrix* matr);
 
 /*
@@ -47,7 +47,7 @@ int
 matrix_set_elem_at(unsigned int l, unsigned int c, matrix* matr, mpz_t val);
 
 /*
- * Fills the matrix with the elements in the tab, 
+ * Fills the matrix with the elements in the tab,
  * the matrix and the array must have the same number of row and columns
  * @param matr : the matrix descriptor
  * @param from : the 2 dim array
@@ -57,7 +57,7 @@ int
 matrix_fill(matrix* matr, int from[]);
 
 /*
- * Fills one line of the matrix with the elements in the tab, 
+ * Fills one line of the matrix with the elements in the tab,
  * the matrix and the array must have the same number of columns
  * @param matr : the matrix descriptor
  * @param line : line number to be filled, starting at 0
@@ -95,7 +95,7 @@ matrix_multiply(matrix** result, matrix* m1, matrix* m2);
  * @return 0 if success -1 otherwise
  */
 int
-matrix_compute_cell(matrix *res,unsigned int l, unsigned int c, matrix* m1, matrix* m2);
+matrix_compute_cell(matrix *res, unsigned int l, unsigned int c, matrix* m1, matrix* m2);
 
 /*
  * Prints matrix to standard output
@@ -103,4 +103,4 @@ matrix_compute_cell(matrix *res,unsigned int l, unsigned int c, matrix* m1, matr
  */
 void
 matrix_print(matrix *m);
-#endif 
+#endif
