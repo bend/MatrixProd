@@ -38,7 +38,7 @@ multiplier_write_result(matrix* matr, char* output_file);
  * @return 0 if success, -1 otherwise
  */
 int
-multiplier_init(state **s, producer **p, char* input_file, unsigned int nb_threads);
+multiplier_init(state** s, producer** p, char* input_file, unsigned int nb_threads);
 
 /*
  * Creates the producer thread
@@ -47,7 +47,7 @@ multiplier_init(state **s, producer **p, char* input_file, unsigned int nb_threa
  * @return 0 if success, -1 otherwise
  */
 int
-multiplier_create_producer(producer* p, pthread_t **thread);
+multiplier_create_producer(producer* p, pthread_t** thread);
 
 /*
  * Creates the consumers threads
@@ -57,6 +57,6 @@ multiplier_create_producer(producer* p, pthread_t **thread);
  * @return 0 if success, -1 otherwise
  */
 int
-multiplier_create_consumers(unsigned int nb_threads, pthread_t *threads, state *s);
+multiplier_create_consumers(unsigned int nb_threads, pthread_t* threads, state* s);
 
 #endif

@@ -29,7 +29,7 @@ file_close(FILE* f);
  * @return 0 or 2(EOF) if succes,-1 otherwise
  */
 int
-file_read_matrix_size(FILE* f, unsigned int *l, unsigned int *c);
+file_read_matrix_size(FILE* f, unsigned int* l, unsigned int* c);
 
 /*
  * Reads a whole the line of the matrix, the number of numbers per line must be equal to size

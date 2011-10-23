@@ -32,7 +32,7 @@ file_write_matrix_size(FILE* f, unsigned int l, unsigned int c);
  * @return 0 is success, -1 otherwise
  */
 int
-file_write_line(FILE *f, mpz_t tab[], unsigned int size);
+file_write_line(FILE* f, mpz_t tab[], unsigned int size);
 
 /*
  * writes the whole matrix in the file

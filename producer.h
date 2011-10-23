@@ -11,7 +11,8 @@
 
 typedef struct producer producer;
 
-struct producer {
+struct producer
+{
     FILE* f;
     state* s;
 };
@@ -53,14 +54,14 @@ producer_thread_init(void* arg);
  * @return 0 or 2 if success, -1 otherwise
  */
 int
-producer_thread_start(producer *p, pthread_t** thread);
+producer_thread_start(producer* p, pthread_t** thread);
 
 /*
  * Free the producer struct
  * @param p: pointer to producer
  */
 void
-producer_free(producer *p);
+producer_free(producer* p);
 
 
 #endif

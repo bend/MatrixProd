@@ -5,7 +5,8 @@
 #include <stdlib.h>
 #include "matrix.h"
 
-typedef enum {
+typedef enum
+{
     head,
     tail,
     unreserved,
@@ -14,7 +15,8 @@ typedef enum {
 
 typedef struct node node;
 
-struct node {
+struct node
+{
     node* next;
     node* prev;
     matrix* matr;
@@ -53,7 +55,7 @@ node_get_next(node* n, node** res);
  * @return a pointer to the next node
  */
 int
-node_get_prev(node* n, node**res);
+node_get_prev(node* n, node** res);
 
 /*
  * Sets the element of the node

@@ -5,8 +5,9 @@
 #include <stdio.h>
 #include <gmp.h>
 
-struct matrix {
-    mpz_t **matrix;
+struct matrix
+{
+    mpz_t** matrix;
     unsigned int l;
     unsigned int c;
 };
@@ -20,7 +21,7 @@ typedef struct matrix matrix;
  * @return the matrix descriptor
  */
 int
-matrix_alloc(matrix **matr, unsigned int l, unsigned int c);
+matrix_alloc(matrix** matr, unsigned int l, unsigned int c);
 
 /*
  * Frees the matrix
@@ -95,12 +96,12 @@ matrix_multiply(matrix** result, matrix* m1, matrix* m2);
  * @return 0 if success -1 otherwise
  */
 int
-matrix_compute_cell(matrix *res, unsigned int l, unsigned int c, matrix* m1, matrix* m2);
+matrix_compute_cell(matrix* res, unsigned int l, unsigned int c, matrix* m1, matrix* m2);
 
 /*
  * Prints matrix to standard output
  * @param m: matrix to print
  */
 void
-matrix_print(matrix *m);
+matrix_print(matrix* m);
 #endif
