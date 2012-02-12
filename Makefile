@@ -1,5 +1,5 @@
-CFLAGS+=-W -Wall -Lpthread -Lgmp -Werror -std=c99 -pedantic
-#CFLAGS+=-W -Wall -Lpthread -Lgmp  -ansi -pedantic 
+#CFLAGS+=-W -Wall -Lpthread -Lgmp -Werror -std=c99 -pedantic
+CFLAGS+=-W -Wall -Lpthread -Lgmp  -ansi -pedantic 
 LDFLAGS+=-lpthread -lgmp
 EXEC=matrixprod
 SOURCES=$(wildcard *.c)
